@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/hydrogen.feature_0.0.0.jar" id="hydrogen.feature" version="0.0.0">
+    <category name="hydrogen"/>
+   </feature>
+   <feature url="features/hydrogen.feature.source_0.0.0.jar" id="hydrogen.feature.source" version="0.0.0">
+    <category name="hydrogen Developer Resources"/>
+   </feature>
+</site>
