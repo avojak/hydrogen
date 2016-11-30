@@ -1,0 +1,8 @@
+
+*.prefs
+
+.project
+
+hydrogen.core/.classpath
+
+hydrogen.test/.classpath
