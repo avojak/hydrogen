@@ -29,4 +29,11 @@ public enum TCPServerOptions {
 		this.param = param;
 	}
 
+	/**
+	 * @return
+	 */
+	public String getParam() {
+		return param;
+	}
+
 }

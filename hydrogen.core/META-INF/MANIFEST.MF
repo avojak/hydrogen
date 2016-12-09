@@ -5,6 +5,7 @@ Bundle-SymbolicName: hydrogen.core;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: com.thedesertmonk.plugin.hydrogen.core.Activator
 Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime
+ org.eclipse.core.runtime,
+ org.eclipse.ui.console;bundle-version="3.6.200"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
