@@ -32,8 +32,8 @@
                label="Sample &amp;Menu">
             <command
                   commandId="command.sample.id"
-                  mnemonic="S"
-                  id="command.sample.menu.memonic.id">
+                  id="command.sample.menu.memonic.id"
+                  mnemonic="S">
             </command>
          </menu>
       </menuContribution>
@@ -44,8 +44,9 @@
             <command
                   commandId="command.sample.id"
                   icon="icons/sample.gif"
-                  tooltip="&amp;sample Sample Action"
-                  id="sampleAction.id">
+                  id="sampleAction.id"
+                  style="pulldown"
+                  tooltip="&amp;sample Sample Action">
             </command>
          </toolbar>
       </menuContribution>

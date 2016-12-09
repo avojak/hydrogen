@@ -3,7 +3,6 @@
 
 .project
 
-hydrogen.core/.classpath
 hydrogen.test/.classpath
 
 hydrogen.core/target/*
