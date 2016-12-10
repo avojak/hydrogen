@@ -2,6 +2,7 @@ package com.thedesertmonk.plugin.hydrogen.core;
 
 import java.io.PrintStream;
 import java.sql.SQLException;
+import java.util.Map;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -10,15 +11,17 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.IElementUpdater;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.MessageConsole;
+import org.eclipse.ui.menus.UIElement;
 import org.h2.tools.Server;
 
 /**
  * Executed by click menu.<br/>
  */
-public class SampleHandler extends AbstractHandler {
+public class SampleHandler extends AbstractHandler implements IElementUpdater {
 
 	private final IWorkbenchWindow window;
 
@@ -49,9 +52,9 @@ public class SampleHandler extends AbstractHandler {
 		printStream.print("Hello, world!");
 		// Start server
 		try {
-			final Server server = Server.createTcpServer();
+			final Server server = Server.createWebServer();
 			server.setOut(printStream);
-			// server.start();
+			server.start();
 			// server.stop();
 		} catch (final SQLException e) {
 			// TODO Auto-generated catch block
@@ -59,6 +62,17 @@ public class SampleHandler extends AbstractHandler {
 		}
 
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.ui.commands.IElementUpdater#updateElement(org.eclipse.ui.menus.UIElement,
+	 *      java.util.Map)
+	 */
+	@Override
+	public void updateElement(final UIElement element, final Map parameters) {
+		// TODO Update icon
 	}
 
 }

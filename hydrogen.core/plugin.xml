@@ -43,10 +43,10 @@
                id="toolbar.sample.id">
             <command
                   commandId="command.sample.id"
-                  icon="icons/sample.gif"
+                  icon="icons/db-start.gif"
                   id="sampleAction.id"
                   style="pulldown"
-                  tooltip="&amp;sample Sample Action">
+                  tooltip="Start H2 Server">
             </command>
          </toolbar>
       </menuContribution>
