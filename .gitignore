@@ -5,7 +5,6 @@
 
 hydrogen.test/.classpath
 
-hydrogen.core/target/*
 hydrogen.feature/target/*
 hydrogen.test/target/*
 hydrogen.site/target/*
