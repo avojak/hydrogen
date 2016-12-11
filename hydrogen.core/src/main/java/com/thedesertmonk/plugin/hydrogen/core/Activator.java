@@ -4,8 +4,6 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import com.thedesertmonk.plugin.hydrogen.core.theme.HydrogenTheme;
-
 /**
  * The activator class controls the plug-in life cycle
  */
@@ -19,13 +17,10 @@ public class Activator extends AbstractUIPlugin {
 
 	boolean started;
 
-	private final HydrogenTheme theme; // TODO Use image registry instead!
-
 	/**
 	 * The constructor
 	 */
 	public Activator() {
-		theme = new HydrogenTheme();
 	}
 
 	/**
@@ -53,9 +48,6 @@ public class Activator extends AbstractUIPlugin {
 		System.out.println("> STOP");
 		plugin = null;
 		started = false;
-
-		theme.dispose();
-
 		super.stop(context);
 	}
 
