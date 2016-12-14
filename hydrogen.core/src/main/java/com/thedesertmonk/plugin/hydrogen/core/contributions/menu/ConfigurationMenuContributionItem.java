@@ -3,8 +3,6 @@
  */
 package com.thedesertmonk.plugin.hydrogen.core.contributions.menu;
 
-import java.text.MessageFormat;
-
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -16,9 +14,7 @@ import org.eclipse.swt.widgets.MenuItem;
  * @author andrewvojak
  *
  */
-public class RecentStartMenuContributionItem extends ContributionItem {
-
-	private static final String MENU_ITEM_FORMAT = "{0} {1}";
+public class ConfigurationMenuContributionItem extends ContributionItem {
 
 	/**
 	 * {@inheritDoc}
@@ -29,7 +25,7 @@ public class RecentStartMenuContributionItem extends ContributionItem {
 	@Override
 	public void fill(final Menu menu, final int index) {
 		final MenuItem menuItem = new MenuItem(menu, SWT.CHECK, index);
-		menuItem.setText(MessageFormat.format(MENU_ITEM_FORMAT, index + 1, "Hello, server!"));
+		menuItem.setText("Start Configurations...");
 		menuItem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {

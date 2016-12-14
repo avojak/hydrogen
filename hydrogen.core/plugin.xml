@@ -37,7 +37,7 @@
             allPopups="false"
             locationURI="menu:start.toolbar.item">
          <dynamic
-               class="com.thedesertmonk.plugin.hydrogen.core.contributions.menu.RecentStartMenuContributionItem"
+               class="com.thedesertmonk.plugin.hydrogen.core.contributions.menu.RecentMenuContributionItem"
                id="hydrogen.core.dynamic1">
          </dynamic>
          <separator
@@ -45,7 +45,15 @@
                visible="true">
          </separator>
          <dynamic
-               class="com.thedesertmonk.plugin.hydrogen.core.contributions.menu.StartConfigurationMenuContributionItem"
+               class="com.thedesertmonk.plugin.hydrogen.core.contributions.menu.WebServerMenuContributionItem"
+               id="hydrogen.core.dynamic3">
+         </dynamic>
+         <separator
+               name="hydrogen.core.separator2"
+               visible="true">
+         </separator>
+         <dynamic
+               class="com.thedesertmonk.plugin.hydrogen.core.contributions.menu.ConfigurationMenuContributionItem"
                id="hydrogen.core.dynamic2">
          </dynamic>
       </menuContribution>

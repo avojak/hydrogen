@@ -33,6 +33,27 @@ public class ServerDelegate {
 	}
 
 	/**
+	 * <pre>
+	 * Summary
+	 *
+	 * TODO http://www.h2database.com/html/features.html#in_memory_databases
+	 *
+	 * This plug allows a persistent, in-memory H2 Server for the life of the
+	 * JVM or until terminated. This is especially useful if multiple processes
+	 * need to access the same database, or the database needs to be accessed
+	 * from another computer.
+	 *
+	 * Might need to make a connection to the database to kick it off. This
+	 * would also allow for doing initial database population.
+	 *
+	 * Might need to start the web server in addition to the TCP server so that
+	 * it can also be managed from the browser? What is the PG server for?
+	 *
+	 * Look into compatibility modes! Would be a good preference page item.
+	 * </pre>
+	 */
+
+	/**
 	 * Starts the server.
 	 */
 	public void startServer() {
