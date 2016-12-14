@@ -1,8 +1,15 @@
 package com.thedesertmonk.plugin.hydrogen.core;
 
+import java.io.PrintStream;
+
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ui.console.ConsolePlugin;
+import org.eclipse.ui.console.IConsole;
+import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+
+import com.thedesertmonk.plugin.hydrogen.core.server.ServerDelegate;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -15,12 +22,20 @@ public class Activator extends AbstractUIPlugin {
 	// The shared instance
 	private static Activator plugin;
 
+	private final ServerDelegate serverDelegate;
+	private final MessageConsole messageConsole;
+
 	boolean started;
 
 	/**
 	 * The constructor
 	 */
 	public Activator() {
+		messageConsole = new MessageConsole("H2 Server Console", getImageDescriptor("icons/db.gif"));
+		ConsolePlugin.getDefault().getConsoleManager().addConsoles(new IConsole[] { messageConsole });
+
+		serverDelegate = new ServerDelegate(new PrintStream(messageConsole.newMessageStream(), true));
+
 	}
 
 	/**
@@ -51,6 +66,11 @@ public class Activator extends AbstractUIPlugin {
 		super.stop(context);
 	}
 
+	public void notifyOnStartButtonClicked() {
+		System.out.println("> Activator notified on start button clicked");
+		serverDelegate.startServer();
+	}
+
 	/**
 	 * Returns the shared instance
 	 *
@@ -70,4 +90,5 @@ public class Activator extends AbstractUIPlugin {
 	public static ImageDescriptor getImageDescriptor(final String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
+
 }

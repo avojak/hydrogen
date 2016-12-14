@@ -3,22 +3,17 @@
 <plugin>
    <extension
          point="org.eclipse.ui.commands">
-      <category
-            name="sample category"
-            id="category.sample.id">
-      </category>
       <command
-            name="sample command"
-            categoryId="category.sample.id"
-            id="command.sample.id">
+            name="Start"
+            id="command.start">
       </command>
    </extension>
 
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            commandId="command.sample.id"
-            class="com.thedesertmonk.plugin.hydrogen.core.SampleHandler">
+            commandId="command.start"
+            class="com.thedesertmonk.plugin.hydrogen.core.StartHandler">
       </handler>
    </extension>
 
@@ -27,15 +22,32 @@
       <menuContribution
             locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
          <toolbar
-               id="toolbar.sample.id">
+               id="toolbar.start"
+               label="Start H2 Server">
             <command
-                  commandId="command.sample.id"
+                  commandId="command.start"
                   icon="icons/db-start.gif"
-                  id="sampleAction.id"
+                  id="start.toolbar.item"
                   style="pulldown"
                   tooltip="Start H2 Server">
             </command>
          </toolbar>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:start.toolbar.item">
+         <dynamic
+               class="com.thedesertmonk.plugin.hydrogen.core.contributions.menu.RecentStartMenuContributionItem"
+               id="hydrogen.core.dynamic1">
+         </dynamic>
+         <separator
+               name="hydrogen.core.separator1"
+               visible="true">
+         </separator>
+         <dynamic
+               class="com.thedesertmonk.plugin.hydrogen.core.contributions.menu.StartConfigurationMenuContributionItem"
+               id="hydrogen.core.dynamic2">
+         </dynamic>
       </menuContribution>
    </extension>
 
