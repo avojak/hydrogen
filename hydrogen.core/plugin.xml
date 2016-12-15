@@ -26,7 +26,7 @@
                label="Start H2 Server">
             <command
                   commandId="command.start"
-                  icon="icons/db-start.gif"
+                  icon="icons/server-launch.png"
                   id="start.toolbar.item"
                   style="pulldown"
                   tooltip="Start H2 Server">

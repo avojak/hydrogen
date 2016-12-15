@@ -14,7 +14,7 @@ public class ActivatorTest {
 
 	@Test
 	public void veryStupidTest() {
-		assertEquals("hydrogen.core", Activator.PLUGIN_ID);
-		assertTrue("Plugin should be started", Activator.getDefault().started);
+		assertEquals("hydrogen.core", HydrogenActivator.PLUGIN_ID);
+		assertTrue("Plugin should be started", HydrogenActivator.getDefault().started);
 	}
 }

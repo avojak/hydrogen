@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: hydrogen Core Plugin
 Bundle-SymbolicName: hydrogen.core;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: com.thedesertmonk.plugin.hydrogen.core.Activator
+Bundle-Activator: com.thedesertmonk.plugin.hydrogen.core.HydrogenActivator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.ui.console;bundle-version="3.6.200",

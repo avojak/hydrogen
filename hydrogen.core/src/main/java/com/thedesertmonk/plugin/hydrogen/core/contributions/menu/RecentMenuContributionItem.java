@@ -28,7 +28,7 @@ public class RecentMenuContributionItem extends ContributionItem {
 	 */
 	@Override
 	public void fill(final Menu menu, final int index) {
-		final MenuItem menuItem = new MenuItem(menu, SWT.CHECK, index);
+		final MenuItem menuItem = new MenuItem(menu, SWT.PUSH, index);
 		menuItem.setText(MessageFormat.format(MENU_ITEM_FORMAT, index + 1, "Hello, server!"));
 		menuItem.addSelectionListener(new SelectionAdapter() {
 			@Override

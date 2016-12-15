@@ -24,7 +24,7 @@ public class WebServerMenuContributionItem extends ContributionItem {
 	 */
 	@Override
 	public void fill(final Menu menu, final int index) {
-		final MenuItem menuItem = new MenuItem(menu, SWT.CHECK, index);
+		final MenuItem menuItem = new MenuItem(menu, SWT.PUSH, index);
 		menuItem.setText("Start Web Server...");
 		menuItem.addSelectionListener(new SelectionAdapter() {
 			@Override

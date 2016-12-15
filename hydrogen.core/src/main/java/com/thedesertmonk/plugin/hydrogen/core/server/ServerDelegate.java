@@ -56,7 +56,7 @@ public class ServerDelegate {
 	/**
 	 * Starts the server.
 	 */
-	public void startServer() {
+	public void launchServer() {
 		if (server.isPresent()) {
 			if (server.get().isRunning(true)) {
 				System.out.println("Server already running");
@@ -79,7 +79,7 @@ public class ServerDelegate {
 	/**
 	 * Stops the server.
 	 */
-	public void stopServer() {
+	public void terminateServer() {
 		if (!server.isPresent()) {
 			System.out.println("Server instance not present");
 			return;

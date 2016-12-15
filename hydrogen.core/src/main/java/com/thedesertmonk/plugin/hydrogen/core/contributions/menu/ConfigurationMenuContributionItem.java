@@ -24,7 +24,7 @@ public class ConfigurationMenuContributionItem extends ContributionItem {
 	 */
 	@Override
 	public void fill(final Menu menu, final int index) {
-		final MenuItem menuItem = new MenuItem(menu, SWT.CHECK, index);
+		final MenuItem menuItem = new MenuItem(menu, SWT.PUSH, index);
 		menuItem.setText("Start Configurations...");
 		menuItem.addSelectionListener(new SelectionAdapter() {
 			@Override

@@ -1,41 +1,26 @@
 package com.thedesertmonk.plugin.hydrogen.core;
 
-import java.io.PrintStream;
-
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.ui.console.ConsolePlugin;
-import org.eclipse.ui.console.IConsole;
-import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
-
-import com.thedesertmonk.plugin.hydrogen.core.server.ServerDelegate;
 
 /**
  * The activator class controls the plug-in life cycle
  */
-public class Activator extends AbstractUIPlugin {
+public class HydrogenActivator extends AbstractUIPlugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "hydrogen.core"; //$NON-NLS-1$
 
 	// The shared instance
-	private static Activator plugin;
-
-	private final ServerDelegate serverDelegate;
-	private final MessageConsole messageConsole;
+	private static HydrogenActivator plugin;
 
 	boolean started;
 
 	/**
 	 * The constructor
 	 */
-	public Activator() {
-		messageConsole = new MessageConsole("H2 Server Console", getImageDescriptor("icons/db.gif"));
-		ConsolePlugin.getDefault().getConsoleManager().addConsoles(new IConsole[] { messageConsole });
-
-		serverDelegate = new ServerDelegate(new PrintStream(messageConsole.newMessageStream(), true));
-
+	public HydrogenActivator() {
 	}
 
 	/**
@@ -66,9 +51,10 @@ public class Activator extends AbstractUIPlugin {
 		super.stop(context);
 	}
 
-	public void notifyOnStartButtonClicked() {
-		System.out.println("> Activator notified on start button clicked");
-		serverDelegate.startServer();
+	public void notifyOnLaunchButtonClicked() {
+	}
+
+	public void notifyOnTerminateButtonClicked() {
 	}
 
 	/**
@@ -76,7 +62,7 @@ public class Activator extends AbstractUIPlugin {
 	 *
 	 * @return the shared instance
 	 */
-	public static Activator getDefault() {
+	public static HydrogenActivator getDefault() {
 		return plugin;
 	}
 
