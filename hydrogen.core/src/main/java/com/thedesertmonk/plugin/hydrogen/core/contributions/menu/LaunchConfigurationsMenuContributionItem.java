@@ -9,6 +9,9 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.ui.PlatformUI;
+
+import com.thedesertmonk.plugin.hydrogen.core.contributions.dialog.LaunchConfigurationsDialog;
 
 /**
  * @author andrewvojak
@@ -29,7 +32,9 @@ public class LaunchConfigurationsMenuContributionItem extends ContributionItem {
 		menuItem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
-				// TODO Open preferences window
+				final LaunchConfigurationsDialog dialog = new LaunchConfigurationsDialog(
+						PlatformUI.getWorkbench().getModalDialogShellProvider().getShell());
+				dialog.open();
 			}
 		});
 	}
