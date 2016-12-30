@@ -50,6 +50,9 @@ public class ServerDelegate {
 	 * it can also be managed from the browser? What is the PG server for?
 	 *
 	 * Look into compatibility modes! Would be a good preference page item.
+	 *
+	 * For a TCP server, need to start a timer to periodically check the status
+	 * of the server in case another process has killed it.
 	 * </pre>
 	 */
 
@@ -66,7 +69,8 @@ public class ServerDelegate {
 		}
 		try {
 			printStream.println("> Creating server...");
-			server = Optional.of(Server.createWebServer("-trace"));
+			// server = Optional.of(Server.createWebServer("-trace"));
+			server = Optional.of(Server.createTcpServer());
 			server.get().setOut(printStream);
 			printStream.println(server.get().getStatus());
 			server.get().start();

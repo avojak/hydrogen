@@ -48,12 +48,20 @@
                class="com.thedesertmonk.plugin.hydrogen.core.contributions.menu.WebServerMenuContributionItem"
                id="hydrogen.core.dynamic3">
          </dynamic>
+         <dynamic
+               class="com.thedesertmonk.plugin.hydrogen.core.contributions.menu.TCPServerMenuContributionItem"
+               id="hydrogen.core.dynamic1">
+         </dynamic>
+         <dynamic
+               class="com.thedesertmonk.plugin.hydrogen.core.contributions.menu.PGServerMenuContributionItem"
+               id="hydrogen.core.dynamic2">
+         </dynamic>
          <separator
                name="hydrogen.core.separator2"
                visible="true">
          </separator>
          <dynamic
-               class="com.thedesertmonk.plugin.hydrogen.core.contributions.menu.ConfigurationMenuContributionItem"
+               class="com.thedesertmonk.plugin.hydrogen.core.contributions.menu.LaunchConfigurationsMenuContributionItem"
                id="hydrogen.core.dynamic2">
          </dynamic>
       </menuContribution>

@@ -10,6 +10,8 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
+import com.thedesertmonk.plugin.hydrogen.core.HydrogenActivator;
+
 /**
  * @author andrewvojak
  *
@@ -32,6 +34,20 @@ public class WebServerMenuContributionItem extends ContributionItem {
 				// TODO Open preferences window
 			}
 		});
+		if (HydrogenActivator.getDefault().isServerRunning()) {
+			menuItem.setEnabled(false);
+			menuItem.setToolTipText("Server already running");
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.jface.action.ContributionItem#isDynamic()
+	 */
+	@Override
+	public boolean isDynamic() {
+		return true;
 	}
 
 }

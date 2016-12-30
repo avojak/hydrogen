@@ -53,6 +53,7 @@ public class StartHandler extends AbstractHandler implements IElementUpdater {
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		System.out.println("> Handler execute");
 		if (!serverDelegate.isServerRunning()) {
+			HydrogenActivator.getDefault().notifyOnLaunchButtonClicked();
 			messageConsole.clearConsole();
 			messageConsole.activate();
 			serverDelegate.launchServer();
@@ -60,6 +61,7 @@ public class StartHandler extends AbstractHandler implements IElementUpdater {
 			// RadioState.PARAMETER_ID);
 		} else {
 			serverDelegate.terminateServer();
+			HydrogenActivator.getDefault().notifyOnTerminateButtonClicked();
 		}
 		return null;
 	}

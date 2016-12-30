@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.MenuItem;
  * @author andrewvojak
  *
  */
-public class ConfigurationMenuContributionItem extends ContributionItem {
+public class LaunchConfigurationsMenuContributionItem extends ContributionItem {
 
 	/**
 	 * {@inheritDoc}
@@ -25,7 +25,7 @@ public class ConfigurationMenuContributionItem extends ContributionItem {
 	@Override
 	public void fill(final Menu menu, final int index) {
 		final MenuItem menuItem = new MenuItem(menu, SWT.PUSH, index);
-		menuItem.setText("Start Configurations...");
+		menuItem.setText("Launch Configurations...");
 		menuItem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {

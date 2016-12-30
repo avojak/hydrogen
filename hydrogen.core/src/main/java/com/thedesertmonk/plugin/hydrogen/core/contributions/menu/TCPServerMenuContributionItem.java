@@ -3,8 +3,6 @@
  */
 package com.thedesertmonk.plugin.hydrogen.core.contributions.menu;
 
-import java.text.MessageFormat;
-
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -18,9 +16,7 @@ import com.thedesertmonk.plugin.hydrogen.core.HydrogenActivator;
  * @author andrewvojak
  *
  */
-public class RecentMenuContributionItem extends ContributionItem {
-
-	private static final String MENU_ITEM_FORMAT = "{0} {1}";
+public class TCPServerMenuContributionItem extends ContributionItem {
 
 	/**
 	 * {@inheritDoc}
@@ -31,7 +27,7 @@ public class RecentMenuContributionItem extends ContributionItem {
 	@Override
 	public void fill(final Menu menu, final int index) {
 		final MenuItem menuItem = new MenuItem(menu, SWT.PUSH, index);
-		menuItem.setText(MessageFormat.format(MENU_ITEM_FORMAT, index + 1, "Hello, server!"));
+		menuItem.setText("Start TCP Server...");
 		menuItem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {

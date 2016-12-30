@@ -17,10 +17,13 @@ public class HydrogenActivator extends AbstractUIPlugin {
 
 	boolean started;
 
+	private boolean isServerRunning;
+
 	/**
 	 * The constructor
 	 */
 	public HydrogenActivator() {
+		isServerRunning = false;
 	}
 
 	/**
@@ -52,9 +55,17 @@ public class HydrogenActivator extends AbstractUIPlugin {
 	}
 
 	public void notifyOnLaunchButtonClicked() {
+		System.out.println("HydrogenActivator notified on launch button clicked");
+		isServerRunning = true;
 	}
 
 	public void notifyOnTerminateButtonClicked() {
+		System.out.println("HydrogenActivator notified on terminate button clicked");
+		isServerRunning = false;
+	}
+
+	public boolean isServerRunning() {
+		return isServerRunning;
 	}
 
 	/**
