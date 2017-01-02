@@ -9,12 +9,19 @@ import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 
 /**
  * @author andrewvojak
@@ -31,6 +38,18 @@ public class LaunchConfigurationsDialog {
 	 */
 	public LaunchConfigurationsDialog(final Shell shell) {
 		dialog = new TitleAreaDialog(shell) {
+			/**
+			 * {@inheritDoc}
+			 *
+			 * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.
+			 *      widgets.Shell)
+			 */
+			@Override
+			protected void configureShell(final Shell newShell) {
+				super.configureShell(newShell);
+				newShell.setText("Launch Configurations");
+			}
+
 			/**
 			 * {@inheritDoc}
 			 *
@@ -52,17 +71,52 @@ public class LaunchConfigurationsDialog {
 				baseComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 				baseComposite.setLayout(new GridLayout());
 
-				final SashForm sashForm = new SashForm(baseComposite, SWT.VERTICAL);
+				final SashForm sashForm = new SashForm(baseComposite, SWT.HORIZONTAL);
 				sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 				sashForm.setLayout(new GridLayout(2, false));
 
-				final Composite leftComposite = new Composite(sashForm, SWT.NONE);
-				leftComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-				leftComposite.setLayout(new GridLayout());
+				final Composite configurationListPanelBaseComposite = new Composite(sashForm, SWT.BORDER);
+				configurationListPanelBaseComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+				configurationListPanelBaseComposite.setLayout(new GridLayout());
+				configurationListPanelBaseComposite
+						.setBackground(new Color(Display.getCurrent(), new RGB(125, 125, 255)));
 
-				final Composite rightComposite = new Composite(sashForm, SWT.NONE);
-				rightComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-				rightComposite.setLayout(new GridLayout());
+				final Composite configurationListControlButtonsComposite = new Composite(
+						configurationListPanelBaseComposite, SWT.NONE);
+				configurationListControlButtonsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+				configurationListControlButtonsComposite.setLayout(new GridLayout());
+				configurationListControlButtonsComposite
+						.setBackground(new Color(Display.getCurrent(), new RGB(255, 125, 125)));
+
+				final Text filterText = new Text(configurationListPanelBaseComposite, SWT.SINGLE | SWT.BORDER);
+				filterText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+
+				final ScrolledComposite configurationListScrolledComposite = new ScrolledComposite(
+						configurationListPanelBaseComposite, SWT.BORDER | SWT.V_SCROLL);
+				configurationListScrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+				// configurationListScrolledComposite.setLayout(new
+				// GridLayout());
+				configurationListScrolledComposite.setAlwaysShowScrollBars(true);
+				configurationListScrolledComposite.setExpandVertical(true);
+				configurationListScrolledComposite.setMinHeight(100);
+				configurationListScrolledComposite
+						.setBackground(new Color(Display.getCurrent(), new RGB(125, 255, 125)));
+				final Composite configurationListScrolledContentComposite = new Composite(
+						configurationListScrolledComposite, SWT.NONE);
+				configurationListScrolledContentComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+				configurationListScrolledContentComposite.setLayout(new GridLayout());
+				configurationListScrolledComposite.setContent(configurationListScrolledContentComposite);
+
+				final Tree configurationListTree = new Tree(configurationListScrolledContentComposite, SWT.NONE);
+				configurationListTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+				configurationListTree.setLayout(new GridLayout());
+
+				final TreeItem item = new TreeItem(configurationListTree, SWT.NONE);
+				item.setText("Item 1");
+
+				final Composite configurationDetailPanelBaseComposite = new Composite(sashForm, SWT.BORDER);
+				configurationDetailPanelBaseComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+				configurationDetailPanelBaseComposite.setLayout(new GridLayout());
 
 				return baseComposite;
 			}
@@ -98,12 +152,32 @@ public class LaunchConfigurationsDialog {
 			 */
 			@Override
 			protected void buttonPressed(final int buttonId) {
-				// TODO Auto-generated method stub
 				super.buttonPressed(buttonId);
 			}
+
+			/**
+			 * {@inheritDoc}
+			 *
+			 * @see org.eclipse.jface.dialogs.TrayDialog#handleShellCloseEvent()
+			 */
+			@Override
+			protected void handleShellCloseEvent() {
+				super.handleShellCloseEvent();
+			}
+
+			/**
+			 * {@inheritDoc}
+			 * 
+			 * @see org.eclipse.jface.dialogs.Dialog#isResizable()
+			 */
+			@Override
+			protected boolean isResizable() {
+				return true;
+			}
+
 		};
 		dialog.setBlockOnOpen(false);
-		dialog.setTitle("Launch Configurations");
+
 	}
 
 	/**
@@ -111,8 +185,26 @@ public class LaunchConfigurationsDialog {
 	 */
 	public int open() {
 		final int returnCode = dialog.open();
-		dialog.setMessage("Create a configuration to launch an H2 server.");
+		dialog.setTitle("Create, manage, and launch configurations.");
+		// TODO set message based on current selection
+		// dialog.setMessage("Create a configuration to launch an H2 server.");
 		return returnCode;
+	}
+
+	public static void main(final String[] args) {
+		final Display display = new Display();
+		final Shell shell = new Shell(display);
+
+		final LaunchConfigurationsDialog dialog = new LaunchConfigurationsDialog(shell);
+		dialog.open();
+
+		while (!shell.isDisposed()) {
+			if (!display.readAndDispatch()) {
+				display.sleep();
+			}
+		}
+		dialog.dialog.close();
+		display.dispose();
 	}
 
 }
