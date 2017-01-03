@@ -9,7 +9,6 @@ import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
@@ -91,28 +90,15 @@ public class LaunchConfigurationsDialog {
 				final Text filterText = new Text(configurationListPanelBaseComposite, SWT.SINGLE | SWT.BORDER);
 				filterText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-				final ScrolledComposite configurationListScrolledComposite = new ScrolledComposite(
-						configurationListPanelBaseComposite, SWT.BORDER | SWT.V_SCROLL);
-				configurationListScrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-				// configurationListScrolledComposite.setLayout(new
-				// GridLayout());
-				configurationListScrolledComposite.setAlwaysShowScrollBars(true);
-				configurationListScrolledComposite.setExpandVertical(true);
-				configurationListScrolledComposite.setMinHeight(100);
-				configurationListScrolledComposite
-						.setBackground(new Color(Display.getCurrent(), new RGB(125, 255, 125)));
-				final Composite configurationListScrolledContentComposite = new Composite(
-						configurationListScrolledComposite, SWT.NONE);
-				configurationListScrolledContentComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-				configurationListScrolledContentComposite.setLayout(new GridLayout());
-				configurationListScrolledComposite.setContent(configurationListScrolledContentComposite);
-
-				final Tree configurationListTree = new Tree(configurationListScrolledContentComposite, SWT.NONE);
+				final Tree configurationListTree = new Tree(configurationListPanelBaseComposite, SWT.NONE);
 				configurationListTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 				configurationListTree.setLayout(new GridLayout());
 
-				final TreeItem item = new TreeItem(configurationListTree, SWT.NONE);
-				item.setText("Item 1");
+				// TODO Temporary
+				for (int i = 0; i < 20; ++i) {
+					final TreeItem item = new TreeItem(configurationListTree, SWT.NONE, i);
+					item.setText("Item " + i);
+				}
 
 				final Composite configurationDetailPanelBaseComposite = new Composite(sashForm, SWT.BORDER);
 				configurationDetailPanelBaseComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -167,7 +153,7 @@ public class LaunchConfigurationsDialog {
 
 			/**
 			 * {@inheritDoc}
-			 * 
+			 *
 			 * @see org.eclipse.jface.dialogs.Dialog#isResizable()
 			 */
 			@Override
