@@ -66,5 +66,22 @@
          </dynamic>
       </menuContribution>
    </extension>
+   <extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType
+            delegate="com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.LaunchConfigurationDelegate"
+            id="hydrogen.core.launchConfigurationType1"
+            modes="run"
+            name="name">
+      </launchConfigurationType>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+      <launchConfigurationTypeImage
+            configTypeID="hydrogen.core.launchConfigurationType1"
+            icon="icons/server-launch.png"
+            id="hydrogen.core.launchConfigurationTypeImage1">
+      </launchConfigurationTypeImage>
+   </extension>
 
 </plugin>
