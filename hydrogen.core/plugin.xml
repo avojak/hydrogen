@@ -70,9 +70,10 @@
          point="org.eclipse.debug.core.launchConfigurationTypes">
       <launchConfigurationType
             delegate="com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.LaunchConfigurationDelegate"
+            delegateName="Hydrogen H2 Server Launcher"
             id="hydrogen.core.launchConfigurationType1"
             modes="run"
-            name="name">
+            name="H2 Server">
       </launchConfigurationType>
    </extension>
    <extension
@@ -82,6 +83,23 @@
             icon="icons/server-launch.png"
             id="hydrogen.core.launchConfigurationTypeImage1">
       </launchConfigurationTypeImage>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            class="com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.LaunchConfigurationTabGroup"
+            id="hydrogen.core.launchConfigurationTabGroup1"
+            type="hydrogen.core.launchConfigurationType1">
+      </launchConfigurationTabGroup>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabs">
+      <tab
+            class="com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.LaunchConfigurationTab"
+            group="hydrogen.core.launchConfigurationTabGroup1"
+            id="hydrogen.core.tab1"
+            name="hydrogen.core.tab1">
+      </tab>
    </extension>
 
 </plugin>

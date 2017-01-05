@@ -3,14 +3,18 @@
  */
 package com.thedesertmonk.plugin.hydrogen.core.contributions.menu;
 
-import org.eclipse.debug.ui.IDebugUIConstants;
-import org.eclipse.debug.ui.actions.OpenLaunchDialogAction;
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.commands.NotEnabledException;
+import org.eclipse.core.commands.NotHandledException;
+import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.IHandlerService;
 
 /**
  * @author andrewvojak
@@ -47,8 +51,19 @@ public class LaunchConfigurationsMenuContributionItem extends ContributionItem {
 				// e1.printStackTrace();
 				// }
 
-				final OpenLaunchDialogAction action = new OpenLaunchDialogAction(IDebugUIConstants.LAUNCH_GROUP);
-				action.run(action);
+				final IHandlerService handlerService = PlatformUI.getWorkbench().getService(IHandlerService.class);
+				try {
+					handlerService.executeCommand("org.eclipse.debug.ui.commands.OpenRunConfigurations", null);
+				} catch (ExecutionException | NotDefinedException | NotEnabledException | NotHandledException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				// DebugUITools.openLaunchConfigurationDialog(
+				// PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+				// config,
+				// DebugUITools.getLaunchGroup(savedConfig,
+				// "run").getIdentifier(), null);
 			}
 		});
 	}
