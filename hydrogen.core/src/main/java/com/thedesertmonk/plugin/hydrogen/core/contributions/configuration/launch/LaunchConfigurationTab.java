@@ -8,7 +8,10 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.ui.ILaunchConfigurationDialog;
 import org.eclipse.debug.ui.ILaunchConfigurationTab;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
@@ -18,6 +21,8 @@ import org.eclipse.swt.widgets.Control;
  */
 public class LaunchConfigurationTab implements ILaunchConfigurationTab {
 
+	private Composite baseComposite;
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -25,8 +30,9 @@ public class LaunchConfigurationTab implements ILaunchConfigurationTab {
 	 */
 	@Override
 	public void createControl(final Composite parent) {
-		// TODO Auto-generated method stub
-
+		baseComposite = new Composite(parent, SWT.NONE);
+		baseComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		baseComposite.setLayout(new GridLayout());
 	}
 
 	/**
@@ -36,13 +42,12 @@ public class LaunchConfigurationTab implements ILaunchConfigurationTab {
 	 */
 	@Override
 	public Control getControl() {
-		// TODO Auto-generated method stub
-		return null;
+		return baseComposite;
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#setDefaults(org.eclipse.
 	 *      debug.core.ILaunchConfigurationWorkingCopy)
 	 */
@@ -54,7 +59,7 @@ public class LaunchConfigurationTab implements ILaunchConfigurationTab {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#initializeFrom(org.eclipse.
 	 *      debug.core.ILaunchConfiguration)
 	 */
@@ -66,7 +71,7 @@ public class LaunchConfigurationTab implements ILaunchConfigurationTab {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#dispose()
 	 */
 	@Override
@@ -77,7 +82,7 @@ public class LaunchConfigurationTab implements ILaunchConfigurationTab {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#performApply(org.eclipse.
 	 *      debug.core.ILaunchConfigurationWorkingCopy)
 	 */
@@ -89,7 +94,7 @@ public class LaunchConfigurationTab implements ILaunchConfigurationTab {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#getErrorMessage()
 	 */
 	@Override
@@ -100,7 +105,7 @@ public class LaunchConfigurationTab implements ILaunchConfigurationTab {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#getMessage()
 	 */
 	@Override
@@ -111,7 +116,7 @@ public class LaunchConfigurationTab implements ILaunchConfigurationTab {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#isValid(org.eclipse.debug.
 	 *      core.ILaunchConfiguration)
 	 */
@@ -123,7 +128,7 @@ public class LaunchConfigurationTab implements ILaunchConfigurationTab {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#canSave()
 	 */
 	@Override
@@ -134,7 +139,7 @@ public class LaunchConfigurationTab implements ILaunchConfigurationTab {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#setLaunchConfigurationDialog
 	 *      (org.eclipse.debug.ui.ILaunchConfigurationDialog)
 	 */
@@ -146,10 +151,12 @@ public class LaunchConfigurationTab implements ILaunchConfigurationTab {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#launched(org.eclipse.debug.
 	 *      core.ILaunch)
+	 * @deprecated
 	 */
+	@Deprecated
 	@Override
 	public void launched(final ILaunch launch) {
 		// TODO Auto-generated method stub
@@ -158,18 +165,17 @@ public class LaunchConfigurationTab implements ILaunchConfigurationTab {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#getName()
 	 */
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Tab Name";
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#getImage()
 	 */
 	@Override
@@ -180,7 +186,7 @@ public class LaunchConfigurationTab implements ILaunchConfigurationTab {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#activated(org.eclipse.debug.
 	 *      core.ILaunchConfigurationWorkingCopy)
 	 */
@@ -192,7 +198,7 @@ public class LaunchConfigurationTab implements ILaunchConfigurationTab {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#deactivated(org.eclipse.
 	 *      debug.core.ILaunchConfigurationWorkingCopy)
 	 */

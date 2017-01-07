@@ -93,13 +93,21 @@
       </launchConfigurationTabGroup>
    </extension>
    <extension
-         point="org.eclipse.debug.ui.launchConfigurationTabs">
-      <tab
-            class="com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.LaunchConfigurationTab"
-            group="hydrogen.core.launchConfigurationTabGroup1"
-            id="hydrogen.core.tab1"
-            name="hydrogen.core.tab1">
-      </tab>
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="com.thedesertmonk.plugin.hydrogen.core.contributions.preferencepage.HydrogenPreferencePage"
+            id="com.thedesertmonk.plugin.hydrogen.core.contributions.preferencepage.SamplePreferencePage"
+            name="Hydrogen">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="com.thedesertmonk.plugin.hydrogen.core.contributions.preferencepage.PreferenceInitializer">
+      </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferenceTransfer">
    </extension>
 
 </plugin>

@@ -3,6 +3,9 @@
  */
 package com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
@@ -16,6 +19,15 @@ import org.eclipse.debug.ui.ILaunchConfigurationTabGroup;
  */
 public class LaunchConfigurationTabGroup implements ILaunchConfigurationTabGroup {
 
+	private final List<ILaunchConfigurationTab> tabs;
+
+	/**
+	 *
+	 */
+	public LaunchConfigurationTabGroup() {
+		tabs = new ArrayList<ILaunchConfigurationTab>();
+	}
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -24,24 +36,22 @@ public class LaunchConfigurationTabGroup implements ILaunchConfigurationTabGroup
 	 */
 	@Override
 	public void createTabs(final ILaunchConfigurationDialog dialog, final String mode) {
-		// TODO Auto-generated method stub
-
+		tabs.add(new LaunchConfigurationTab());
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTabGroup#getTabs()
 	 */
 	@Override
 	public ILaunchConfigurationTab[] getTabs() {
-		// TODO Auto-generated method stub
-		return null;
+		return tabs.toArray(new ILaunchConfigurationTab[tabs.size()]);
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTabGroup#dispose()
 	 */
 	@Override
@@ -52,7 +62,7 @@ public class LaunchConfigurationTabGroup implements ILaunchConfigurationTabGroup
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTabGroup#setDefaults(org.eclipse
 	 *      .debug.core.ILaunchConfigurationWorkingCopy)
 	 */
@@ -64,7 +74,7 @@ public class LaunchConfigurationTabGroup implements ILaunchConfigurationTabGroup
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTabGroup#initializeFrom(org.
 	 *      eclipse.debug.core.ILaunchConfiguration)
 	 */
@@ -76,7 +86,7 @@ public class LaunchConfigurationTabGroup implements ILaunchConfigurationTabGroup
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTabGroup#performApply(org.
 	 *      eclipse.debug.core.ILaunchConfigurationWorkingCopy)
 	 */
@@ -88,10 +98,12 @@ public class LaunchConfigurationTabGroup implements ILaunchConfigurationTabGroup
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTabGroup#launched(org.eclipse.
 	 *      debug.core.ILaunch)
+	 * @deprecated
 	 */
+	@Deprecated
 	@Override
 	public void launched(final ILaunch launch) {
 		// TODO Auto-generated method stub
