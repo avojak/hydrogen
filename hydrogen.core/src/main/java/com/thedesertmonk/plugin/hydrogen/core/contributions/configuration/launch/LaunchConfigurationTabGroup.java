@@ -30,9 +30,6 @@ public class LaunchConfigurationTabGroup implements ILaunchConfigurationTabGroup
 
 	/**
 	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.debug.ui.ILaunchConfigurationTabGroup#createTabs(org.eclipse.debug.ui.ILaunchConfigurationDialog,
-	 *      java.lang.String)
 	 */
 	@Override
 	public void createTabs(final ILaunchConfigurationDialog dialog, final String mode) {
@@ -41,8 +38,6 @@ public class LaunchConfigurationTabGroup implements ILaunchConfigurationTabGroup
 
 	/**
 	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.debug.ui.ILaunchConfigurationTabGroup#getTabs()
 	 */
 	@Override
 	public ILaunchConfigurationTab[] getTabs() {
@@ -51,8 +46,6 @@ public class LaunchConfigurationTabGroup implements ILaunchConfigurationTabGroup
 
 	/**
 	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.debug.ui.ILaunchConfigurationTabGroup#dispose()
 	 */
 	@Override
 	public void dispose() {
@@ -62,9 +55,6 @@ public class LaunchConfigurationTabGroup implements ILaunchConfigurationTabGroup
 
 	/**
 	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.debug.ui.ILaunchConfigurationTabGroup#setDefaults(org.eclipse
-	 *      .debug.core.ILaunchConfigurationWorkingCopy)
 	 */
 	@Override
 	public void setDefaults(final ILaunchConfigurationWorkingCopy configuration) {
@@ -74,9 +64,6 @@ public class LaunchConfigurationTabGroup implements ILaunchConfigurationTabGroup
 
 	/**
 	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.debug.ui.ILaunchConfigurationTabGroup#initializeFrom(org.
-	 *      eclipse.debug.core.ILaunchConfiguration)
 	 */
 	@Override
 	public void initializeFrom(final ILaunchConfiguration configuration) {
@@ -86,9 +73,6 @@ public class LaunchConfigurationTabGroup implements ILaunchConfigurationTabGroup
 
 	/**
 	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.debug.ui.ILaunchConfigurationTabGroup#performApply(org.
-	 *      eclipse.debug.core.ILaunchConfigurationWorkingCopy)
 	 */
 	@Override
 	public void performApply(final ILaunchConfigurationWorkingCopy configuration) {
@@ -98,9 +82,6 @@ public class LaunchConfigurationTabGroup implements ILaunchConfigurationTabGroup
 
 	/**
 	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.debug.ui.ILaunchConfigurationTabGroup#launched(org.eclipse.
-	 *      debug.core.ILaunch)
 	 * @deprecated
 	 */
 	@Deprecated

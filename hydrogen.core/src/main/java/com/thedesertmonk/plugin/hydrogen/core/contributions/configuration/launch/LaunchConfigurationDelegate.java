@@ -8,21 +8,19 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchManager;
-import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
+import org.eclipse.jdt.launching.AbstractJavaLaunchConfigurationDelegate;
+import org.eclipse.jdt.launching.IVMInstall;
+import org.eclipse.jdt.launching.IVMRunner;
+import org.eclipse.jdt.launching.VMRunnerConfiguration;
 
 /**
  * @author andrewvojak
- *
+ *         http://www.eclipse.org/articles/Article-Launch-Framework/launch.html
  */
-public class LaunchConfigurationDelegate implements ILaunchConfigurationDelegate {
+public class LaunchConfigurationDelegate extends AbstractJavaLaunchConfigurationDelegate {
 
 	/**
 	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.debug.core.model.ILaunchConfigurationDelegate#launch(org.
-	 *      eclipse.debug.core.ILaunchConfiguration, java.lang.String,
-	 *      org.eclipse.debug.core.ILaunch,
-	 *      org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
 	public void launch(final ILaunchConfiguration configuration, final String mode, final ILaunch launch,
@@ -31,6 +29,21 @@ public class LaunchConfigurationDelegate implements ILaunchConfigurationDelegate
 		if (!mode.equals(ILaunchManager.RUN_MODE)) {
 			return;
 		}
+
+		final IVMInstall vm = verifyVMInstall(configuration);
+		final IVMRunner runner = vm.getVMRunner(mode);
+
+		// Create VM config
+		final VMRunnerConfiguration runConfig = new VMRunnerConfiguration("org.h2.tools.Server",
+				new String[] { "h2*.jar" });
+		runConfig.setWorkingDirectory("/Users/andrewvojak/Downloads/h2/bin");
+
+		// Bootpath
+		final String[] bootpath = getBootpath(configuration);
+		runConfig.setBootClassPath(bootpath);
+
+		// Launch the configuration
+		runner.run(runConfig, launch, monitor);
 	}
 
 }
