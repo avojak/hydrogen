@@ -1,7 +1,7 @@
 /**
  * @author
  */
-package com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch;
+package com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.tab;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,7 @@ import java.util.List;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
+import org.eclipse.debug.ui.CommonTab;
 import org.eclipse.debug.ui.ILaunchConfigurationDialog;
 import org.eclipse.debug.ui.ILaunchConfigurationTab;
 import org.eclipse.debug.ui.ILaunchConfigurationTabGroup;
@@ -33,7 +34,11 @@ public class LaunchConfigurationTabGroup implements ILaunchConfigurationTabGroup
 	 */
 	@Override
 	public void createTabs(final ILaunchConfigurationDialog dialog, final String mode) {
-		tabs.add(new LaunchConfigurationTab());
+		tabs.add(new GeneralLaunchConfigurationTab());
+		tabs.add(new WebLaunchConfigurationTab());
+		tabs.add(new TcpLaunchConfigurationTab());
+		tabs.add(new PgLaunchConfigurationTab());
+		tabs.add(new CommonTab());
 	}
 
 	/**
@@ -82,6 +87,7 @@ public class LaunchConfigurationTabGroup implements ILaunchConfigurationTabGroup
 
 	/**
 	 * {@inheritDoc}
+	 *
 	 * @deprecated
 	 */
 	@Deprecated

@@ -87,7 +87,7 @@
    <extension
          point="org.eclipse.debug.ui.launchConfigurationTabGroups">
       <launchConfigurationTabGroup
-            class="com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.LaunchConfigurationTabGroup"
+            class="com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.tab.LaunchConfigurationTabGroup"
             id="hydrogen.core.launchConfigurationTabGroup1"
             type="hydrogen.core.launchConfigurationType1">
       </launchConfigurationTabGroup>
