@@ -5,17 +5,17 @@ package com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launc
 
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
-import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 import org.eclipse.debug.ui.ILaunchConfigurationDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.Text;
  * @author andrewvojak
  *
  */
-public class GeneralLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
+public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 
 	private Composite baseComposite;
 
@@ -39,55 +39,27 @@ public class GeneralLaunchConfigurationTab extends AbstractLaunchConfigurationTa
 		// General properties
 		// properties location
 		// base directory for H2 databases (all servers)
+		createDirectoryField(baseComposite, "Database base directory");
 		// only existing databases may be opened (all servers)
+		createCheckButton(baseComposite, "Only open existing databases");
 		// tracing - print additional info (all servers)
+		createCheckButton(baseComposite, "Enable tracing");
 		// map database name (all servers)
-
-		final Group webGroup = new Group(baseComposite, SWT.NONE);
-		webGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		webGroup.setLayout(new GridLayout());
-		webGroup.setText("Web Server");
-
-		createCheckButton(webGroup, "Allow other computers to connect");
-		createCheckButton(webGroup, "Use a daemon thread");
-		createText(webGroup, "Port");
-		createCheckButton(webGroup, "Use encrypted (HTTPS) connections");
-
-		final Group tcpGroup = new Group(baseComposite, SWT.NONE);
-		tcpGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		tcpGroup.setLayout(new GridLayout());
-		tcpGroup.setText("TCP Server");
-
-		createCheckButton(tcpGroup, "Allow other computers to connect");
-		createCheckButton(tcpGroup, "Use a daemon thread");
-		createText(tcpGroup, "Port");
-		createCheckButton(tcpGroup, "Use encrypted (HTTPS) connections");
-		// TODO add field to specify password
-		createText(tcpGroup, "Shutdown password");
-		// TODO add field to specify shutdown url?
-		createText(tcpGroup, "Shutdown URL");
-		createCheckButton(tcpGroup, "Force shutdown");
-
-		final Group pgGroup = new Group(baseComposite, SWT.NONE);
-		pgGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		pgGroup.setLayout(new GridLayout());
-		pgGroup.setText("PostgreSQL Server");
-
-		createCheckButton(pgGroup, "Allow other computers to connect");
-		createCheckButton(pgGroup, "Use a daemon thread");
-		createText(pgGroup, "Port");
 	}
 
-	private Text createText(final Composite parent, final String label) {
+	private Text createTextWithButton(final Composite parent, final String label, final String buttonLabel,
+			final SelectionListener listener) {
 		final Composite textComposite = new Composite(parent, SWT.NONE);
 		textComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		final GridLayout gridLayout = new GridLayout(2, false);
+		final GridLayout gridLayout = new GridLayout(3, false);
 		gridLayout.marginHeight = 0;
 		gridLayout.marginWidth = 0;
 		textComposite.setLayout(gridLayout);
+
 		final Label textLabel = new Label(textComposite, SWT.NONE);
 		textLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, true));
 		textLabel.setText(label + ":");
+
 		final Text text = new Text(textComposite, SWT.SINGLE | SWT.BORDER);
 		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		text.addModifyListener(new ModifyListener() {
@@ -97,6 +69,12 @@ public class GeneralLaunchConfigurationTab extends AbstractLaunchConfigurationTa
 				updateLaunchConfigurationDialog();
 			}
 		});
+
+		final Button button = new Button(textComposite, SWT.PUSH);
+		button.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		button.setText(buttonLabel);
+		button.addSelectionListener(listener);
+
 		return text;
 	}
 

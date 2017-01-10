@@ -5,7 +5,6 @@ package com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launc
 
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
-import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -16,7 +15,7 @@ import org.eclipse.swt.widgets.Control;
  * @author andrewvojak
  *
  */
-public class TcpLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
+public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 
 	private Composite baseComposite;
 
@@ -28,6 +27,14 @@ public class TcpLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
 		baseComposite = new Composite(parent, SWT.NONE);
 		baseComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		baseComposite.setLayout(new GridLayout());
+
+		createCheckButton(baseComposite, "Allow other computers to connect");
+		createCheckButton(baseComposite, "Use a daemon thread");
+		createField(baseComposite, "Port");
+		createCheckButton(baseComposite, "Use encrypted (HTTPS) connections");
+		createField(baseComposite, "Shutdown password");
+		createField(baseComposite, "Shutdown URL");
+		createCheckButton(baseComposite, "Force shutdown");
 	}
 
 	/**
