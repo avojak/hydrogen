@@ -3,10 +3,13 @@
  */
 package com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.tab;
 
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
-import org.eclipse.debug.ui.ILaunchConfigurationDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
@@ -16,6 +19,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
+
+import com.thedesertmonk.plugin.hydrogen.core.h2.model.configuration.attributes.LaunchConfigurationAttributes;
 
 /**
  * @author andrewvojak
@@ -121,14 +126,6 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void dispose() {
-		baseComposite.dispose();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public void performApply(final ILaunchConfigurationWorkingCopy configuration) {
 		//@formatter:off
 		configuration.setAttribute(LaunchConfigurationAttributes.BASE_DIRECTORY.getName(), baseDirectoryField.getText());
@@ -163,8 +160,29 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 	 */
 	@Override
 	public boolean isValid(final ILaunchConfiguration launchConfig) {
-		// TODO Auto-generated method stub
-		return false;
+		String baseDirectory = null;
+		try {
+			baseDirectory = launchConfig.getAttribute(LaunchConfigurationAttributes.BASE_DIRECTORY.getName(),
+					(String) null);
+		} catch (final CoreException e) {
+			e.printStackTrace();
+		} finally {
+			// If null, there was either an error reading the attribute, or no
+			// attribute was specified in the config. Either way, this is an
+			// invalid state.
+			if (baseDirectory == null) {
+				return false;
+			}
+		}
+
+		// Verify that the specified base directory is in fact a directory and
+		// that we will have permissions to read and write there.
+		final Path baseDirectoryPath = FileSystems.getDefault().getPath(baseDirectory);
+		final boolean isDirectory = Files.isDirectory(baseDirectoryPath);
+		final boolean isReadable = Files.isReadable(baseDirectoryPath);
+		final boolean isWritable = Files.isWritable(baseDirectoryPath);
+
+		return (isDirectory && isReadable && isWritable);
 	}
 
 	/**
@@ -174,14 +192,6 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 	public boolean canSave() {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setLaunchConfigurationDialog(final ILaunchConfigurationDialog dialog) {
-		// TODO Auto-generated method stub
 	}
 
 	/**

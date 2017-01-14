@@ -1,7 +1,7 @@
 /**
  * @author
  */
-package com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.tab;
+package com.thedesertmonk.plugin.hydrogen.core.h2.model.configuration.attributes;
 
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.ServerOption;
 
