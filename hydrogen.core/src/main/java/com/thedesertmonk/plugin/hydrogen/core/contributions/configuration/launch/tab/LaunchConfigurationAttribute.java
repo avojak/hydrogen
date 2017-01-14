@@ -16,8 +16,11 @@ public class LaunchConfigurationAttribute<T> {
 	private final T defaultValue;
 
 	/**
-	 * @param serverOption
-	 * @param defaultValue
+	 * Constructor.
+	 *
+	 * @param serverOption The corresponding {@link ServerOption}. Cannot be
+	 *            null.
+	 * @param defaultValue The default value. Cannot be null.
 	 */
 	public LaunchConfigurationAttribute(final ServerOption serverOption, final T defaultValue) {
 		if (serverOption == null) {
@@ -49,7 +52,9 @@ public class LaunchConfigurationAttribute<T> {
 	}
 
 	/**
-	 * @return
+	 * Gets the name of this attribute.
+	 * 
+	 * @return The non-null, non-empty name of the attribute.
 	 */
 	public String getName() {
 		return getServerOption().name();

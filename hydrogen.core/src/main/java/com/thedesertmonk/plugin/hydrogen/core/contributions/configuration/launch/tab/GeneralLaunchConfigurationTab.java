@@ -40,8 +40,6 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 		baseComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		baseComposite.setLayout(new GridLayout());
 
-		// General properties
-
 		final Group databaseSettingsGroup = new Group(baseComposite, SWT.NONE);
 		databaseSettingsGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		databaseSettingsGroup.setLayout(new GridLayout());
@@ -201,24 +199,6 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 	public Image getImage() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void activated(final ILaunchConfigurationWorkingCopy workingCopy) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void deactivated(final ILaunchConfigurationWorkingCopy workingCopy) {
-		// TODO Auto-generated method stub
-
 	}
 
 }
