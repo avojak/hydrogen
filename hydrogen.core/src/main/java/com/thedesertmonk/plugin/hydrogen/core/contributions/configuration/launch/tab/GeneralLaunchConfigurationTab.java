@@ -77,10 +77,10 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 	public void setDefaults(final ILaunchConfigurationWorkingCopy configuration) {
 		//@formatter:off
 		configuration.setAttribute(StringLaunchConfigurationAttribute.BASE_DIRECTORY.name(), StringLaunchConfigurationAttribute.BASE_DIRECTORY.getDefaultValue());
-		configuration.setAttribute(BooleanLaunchConfigurationAttribute.IF_EXISTS.name(), BooleanLaunchConfigurationAttribute.IF_EXISTS.getDefaultValue());
-		configuration.setAttribute(BooleanLaunchConfigurationAttribute.START_WEB.name(), BooleanLaunchConfigurationAttribute.START_WEB.getDefaultValue());
-		configuration.setAttribute(BooleanLaunchConfigurationAttribute.START_TCP.name(), BooleanLaunchConfigurationAttribute.START_TCP.getDefaultValue());
-		configuration.setAttribute(BooleanLaunchConfigurationAttribute.START_PG.name(), BooleanLaunchConfigurationAttribute.START_PG.getDefaultValue());
+		configuration.setAttribute(LaunchConfigurationAttributes.IF_EXISTS.getName(), LaunchConfigurationAttributes.IF_EXISTS.getDefaultValue());
+		configuration.setAttribute(LaunchConfigurationAttributes.START_WEB.getName(), LaunchConfigurationAttributes.START_WEB.getDefaultValue());
+		configuration.setAttribute(LaunchConfigurationAttributes.START_TCP.getName(), LaunchConfigurationAttributes.START_TCP.getDefaultValue());
+		configuration.setAttribute(LaunchConfigurationAttributes.START_PG.getName(), LaunchConfigurationAttributes.START_PG.getDefaultValue());
 		//@formatter:on
 	}
 
@@ -92,10 +92,10 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 		try {
 			//@formatter:off
 			configuration.getAttribute(StringLaunchConfigurationAttribute.BASE_DIRECTORY.name(), StringLaunchConfigurationAttribute.BASE_DIRECTORY.getDefaultValue());
-			configuration.getAttribute(BooleanLaunchConfigurationAttribute.IF_EXISTS.name(), BooleanLaunchConfigurationAttribute.IF_EXISTS.getDefaultValue());
-			configuration.getAttribute(BooleanLaunchConfigurationAttribute.START_WEB.name(), BooleanLaunchConfigurationAttribute.START_WEB.getDefaultValue());
-			configuration.getAttribute(BooleanLaunchConfigurationAttribute.START_TCP.name(), BooleanLaunchConfigurationAttribute.START_TCP.getDefaultValue());
-			configuration.getAttribute(BooleanLaunchConfigurationAttribute.START_PG.name(), BooleanLaunchConfigurationAttribute.START_PG.getDefaultValue());
+			configuration.getAttribute(LaunchConfigurationAttributes.IF_EXISTS.getName(), LaunchConfigurationAttributes.IF_EXISTS.getDefaultValue());
+			configuration.getAttribute(LaunchConfigurationAttributes.START_WEB.getName(), LaunchConfigurationAttributes.START_WEB.getDefaultValue());
+			configuration.getAttribute(LaunchConfigurationAttributes.START_TCP.getName(), LaunchConfigurationAttributes.START_TCP.getDefaultValue());
+			configuration.getAttribute(LaunchConfigurationAttributes.START_PG.getName(), LaunchConfigurationAttributes.START_PG.getDefaultValue());
 			//@formatter:on
 		} catch (final CoreException e) {
 			e.printStackTrace();
