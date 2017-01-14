@@ -6,7 +6,7 @@ package com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.thedesertmonk.plugin.hydrogen.core.h2.model.PgServerOptions;
+import com.thedesertmonk.plugin.hydrogen.core.h2.model.ServerOption;
 
 /**
  * @author andrewvojak
@@ -21,31 +21,31 @@ public class PgServerArgumentsBuilder {
 	 */
 	public PgServerArgumentsBuilder() {
 		arguments = new ArrayList<String>();
-		arguments.add(PgServerOptions.PG.getParam());
+		arguments.add(ServerOption.START_PG.getParam());
 	}
 
 	/**
-	 * Sets the {@link PgServerOptions#ALLOW_OTHERS} property.
+	 * Sets the {@link ServerOption#PG_ALLOW_OTHERS} property.
 	 *
 	 * @return The current {@link PgServerArgumentsBuilder} instance.
 	 */
 	public PgServerArgumentsBuilder allowOthers() {
-		arguments.add(PgServerOptions.ALLOW_OTHERS.getParam());
+		arguments.add(ServerOption.PG_ALLOW_OTHERS.getParam());
 		return this;
 	}
 
 	/**
-	 * Sets the {@link PgServerOptions#DAEMON} property.
+	 * Sets the {@link ServerOption#PG_DAEMON} property.
 	 *
 	 * @return The current {@link PgServerArgumentsBuilder} instance.
 	 */
 	public PgServerArgumentsBuilder useDaemonThread() {
-		arguments.add(PgServerOptions.DAEMON.getParam());
+		arguments.add(ServerOption.PG_DAEMON.getParam());
 		return this;
 	}
 
 	/**
-	 * Sets the {@link PgServerOptions#PORT} property.
+	 * Sets the {@link ServerOption#PG_PORT} property.
 	 *
 	 * @param port The port number. Cannot be null or empty.
 	 * @return The current {@link PgServerArgumentsBuilder} instance.
@@ -54,7 +54,7 @@ public class PgServerArgumentsBuilder {
 		if (port == null || port.trim().isEmpty()) {
 			throw new IllegalArgumentException("port cannot be null or empty"); //$NON-NLS-1$
 		}
-		arguments.add(PgServerOptions.PORT.getParam());
+		arguments.add(ServerOption.PG_PORT.getParam());
 		arguments.add(port);
 		return this;
 	}

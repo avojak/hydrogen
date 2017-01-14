@@ -3,6 +3,7 @@
  */
 package com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.tab;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.ui.ILaunchConfigurationDialog;
@@ -10,9 +11,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Text;
 
 /**
  * @author andrewvojak
@@ -21,6 +24,12 @@ import org.eclipse.swt.widgets.Group;
 public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 
 	private Composite baseComposite;
+	private Text baseDirectoryField;
+	private Button existingDatabaseButton;
+	private Button launchWebServerButton;
+	private Button launchTcpServerButton;
+	private Button launchPgServerButton;
+	private Button tracingButton;
 
 	/**
 	 * {@inheritDoc}
@@ -38,19 +47,19 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 		databaseSettingsGroup.setLayout(new GridLayout());
 		databaseSettingsGroup.setText("Database Settings");
 
-		createDirectoryField(databaseSettingsGroup, "Database base directory");
-		createCheckButton(databaseSettingsGroup, "Only open existing databases");
+		baseDirectoryField = createDirectoryField(databaseSettingsGroup, "Database base directory");
+		existingDatabaseButton = createCheckButton(databaseSettingsGroup, "Only open existing databases");
 
 		final Group serversToLaunchGroup = new Group(baseComposite, SWT.NONE);
 		serversToLaunchGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		serversToLaunchGroup.setLayout(new GridLayout());
 		serversToLaunchGroup.setText("Servers to launch");
 
-		createCheckButton(serversToLaunchGroup, "Web");
-		createCheckButton(serversToLaunchGroup, "TCP");
-		createCheckButton(serversToLaunchGroup, "PostgreSQL");
+		launchWebServerButton = createCheckButton(serversToLaunchGroup, "Web");
+		launchTcpServerButton = createCheckButton(serversToLaunchGroup, "TCP");
+		launchPgServerButton = createCheckButton(serversToLaunchGroup, "PostgreSQL");
 
-		createCheckButton(baseComposite, "Enable tracing");
+		tracingButton = createCheckButton(baseComposite, "Enable tracing");
 	}
 
 	/**
@@ -66,8 +75,13 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 	 */
 	@Override
 	public void setDefaults(final ILaunchConfigurationWorkingCopy configuration) {
-		// TODO Auto-generated method stub
-
+		//@formatter:off
+		configuration.setAttribute(StringLaunchConfigurationAttribute.BASE_DIRECTORY.name(), StringLaunchConfigurationAttribute.BASE_DIRECTORY.getDefaultValue());
+		configuration.setAttribute(BooleanLaunchConfigurationAttribute.IF_EXISTS.name(), BooleanLaunchConfigurationAttribute.IF_EXISTS.getDefaultValue());
+		configuration.setAttribute(BooleanLaunchConfigurationAttribute.START_WEB.name(), BooleanLaunchConfigurationAttribute.START_WEB.getDefaultValue());
+		configuration.setAttribute(BooleanLaunchConfigurationAttribute.START_TCP.name(), BooleanLaunchConfigurationAttribute.START_TCP.getDefaultValue());
+		configuration.setAttribute(BooleanLaunchConfigurationAttribute.START_PG.name(), BooleanLaunchConfigurationAttribute.START_PG.getDefaultValue());
+		//@formatter:on
 	}
 
 	/**
@@ -75,8 +89,17 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 	 */
 	@Override
 	public void initializeFrom(final ILaunchConfiguration configuration) {
-		// TODO Auto-generated method stub
-
+		try {
+			//@formatter:off
+			configuration.getAttribute(StringLaunchConfigurationAttribute.BASE_DIRECTORY.name(), StringLaunchConfigurationAttribute.BASE_DIRECTORY.getDefaultValue());
+			configuration.getAttribute(BooleanLaunchConfigurationAttribute.IF_EXISTS.name(), BooleanLaunchConfigurationAttribute.IF_EXISTS.getDefaultValue());
+			configuration.getAttribute(BooleanLaunchConfigurationAttribute.START_WEB.name(), BooleanLaunchConfigurationAttribute.START_WEB.getDefaultValue());
+			configuration.getAttribute(BooleanLaunchConfigurationAttribute.START_TCP.name(), BooleanLaunchConfigurationAttribute.START_TCP.getDefaultValue());
+			configuration.getAttribute(BooleanLaunchConfigurationAttribute.START_PG.name(), BooleanLaunchConfigurationAttribute.START_PG.getDefaultValue());
+			//@formatter:on
+		} catch (final CoreException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -84,8 +107,7 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 	 */
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-
+		baseComposite.dispose();
 	}
 
 	/**
