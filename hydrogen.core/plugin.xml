@@ -49,11 +49,11 @@
                id="hydrogen.core.dynamic3">
          </dynamic>
          <dynamic
-               class="com.thedesertmonk.plugin.hydrogen.core.contributions.menu.TCPServerMenuContributionItem"
+               class="com.thedesertmonk.plugin.hydrogen.core.contributions.menu.TcpServerMenuContributionItem"
                id="hydrogen.core.dynamic1">
          </dynamic>
          <dynamic
-               class="com.thedesertmonk.plugin.hydrogen.core.contributions.menu.PGServerMenuContributionItem"
+               class="com.thedesertmonk.plugin.hydrogen.core.contributions.menu.PgServerMenuContributionItem"
                id="hydrogen.core.dynamic2">
          </dynamic>
          <separator

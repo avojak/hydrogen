@@ -16,7 +16,7 @@ import com.thedesertmonk.plugin.hydrogen.core.HydrogenActivator;
  * @author andrewvojak
  *
  */
-public class TCPServerMenuContributionItem extends ContributionItem {
+public class TcpServerMenuContributionItem extends ContributionItem {
 
 	/**
 	 * {@inheritDoc}

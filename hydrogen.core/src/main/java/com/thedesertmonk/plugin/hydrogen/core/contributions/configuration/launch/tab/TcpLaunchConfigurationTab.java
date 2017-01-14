@@ -10,6 +10,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Group;
 
 /**
  * @author andrewvojak
@@ -28,13 +29,24 @@ public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 		baseComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		baseComposite.setLayout(new GridLayout());
 
-		createCheckButton(baseComposite, "Allow other computers to connect");
-		createCheckButton(baseComposite, "Use a daemon thread");
-		createField(baseComposite, "Port");
-		createCheckButton(baseComposite, "Use encrypted (HTTPS) connections");
-		createField(baseComposite, "Shutdown password");
-		createField(baseComposite, "Shutdown URL");
-		createCheckButton(baseComposite, "Force shutdown");
+		final Group connectionSettingsGroup = new Group(baseComposite, SWT.NONE);
+		connectionSettingsGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		connectionSettingsGroup.setLayout(new GridLayout());
+		connectionSettingsGroup.setText("Connection Settings");
+
+		createCheckButton(connectionSettingsGroup, "Allow other computers to connect");
+		createCheckButton(connectionSettingsGroup, "Use a daemon thread");
+		createField(connectionSettingsGroup, "Port");
+		createCheckButton(connectionSettingsGroup, "Use encrypted (HTTPS) connections");
+
+		final Group shutdownSettingsGroup = new Group(baseComposite, SWT.NONE);
+		shutdownSettingsGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		shutdownSettingsGroup.setLayout(new GridLayout());
+		shutdownSettingsGroup.setText("Shutdown Settings");
+
+		createField(shutdownSettingsGroup, "Shutdown password");
+		createField(shutdownSettingsGroup, "Shutdown URL");
+		createCheckButton(shutdownSettingsGroup, "Force shutdown");
 	}
 
 	/**

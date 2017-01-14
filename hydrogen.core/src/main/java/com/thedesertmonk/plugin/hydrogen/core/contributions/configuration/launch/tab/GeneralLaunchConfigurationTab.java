@@ -7,17 +7,12 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.ui.ILaunchConfigurationDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Group;
 
 /**
  * @author andrewvojak
@@ -37,45 +32,25 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 		baseComposite.setLayout(new GridLayout());
 
 		// General properties
-		// properties location
-		// base directory for H2 databases (all servers)
-		createDirectoryField(baseComposite, "Database base directory");
-		// only existing databases may be opened (all servers)
-		createCheckButton(baseComposite, "Only open existing databases");
-		// tracing - print additional info (all servers)
+
+		final Group databaseSettingsGroup = new Group(baseComposite, SWT.NONE);
+		databaseSettingsGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		databaseSettingsGroup.setLayout(new GridLayout());
+		databaseSettingsGroup.setText("Database Settings");
+
+		createDirectoryField(databaseSettingsGroup, "Database base directory");
+		createCheckButton(databaseSettingsGroup, "Only open existing databases");
+
+		final Group serversToLaunchGroup = new Group(baseComposite, SWT.NONE);
+		serversToLaunchGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		serversToLaunchGroup.setLayout(new GridLayout());
+		serversToLaunchGroup.setText("Servers to launch");
+
+		createCheckButton(serversToLaunchGroup, "Web");
+		createCheckButton(serversToLaunchGroup, "TCP");
+		createCheckButton(serversToLaunchGroup, "PostgreSQL");
+
 		createCheckButton(baseComposite, "Enable tracing");
-		// map database name (all servers)
-	}
-
-	private Text createTextWithButton(final Composite parent, final String label, final String buttonLabel,
-			final SelectionListener listener) {
-		final Composite textComposite = new Composite(parent, SWT.NONE);
-		textComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		final GridLayout gridLayout = new GridLayout(3, false);
-		gridLayout.marginHeight = 0;
-		gridLayout.marginWidth = 0;
-		textComposite.setLayout(gridLayout);
-
-		final Label textLabel = new Label(textComposite, SWT.NONE);
-		textLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, true));
-		textLabel.setText(label + ":");
-
-		final Text text = new Text(textComposite, SWT.SINGLE | SWT.BORDER);
-		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		text.addModifyListener(new ModifyListener() {
-			@SuppressWarnings("synthetic-access")
-			@Override
-			public void modifyText(final ModifyEvent e) {
-				updateLaunchConfigurationDialog();
-			}
-		});
-
-		final Button button = new Button(textComposite, SWT.PUSH);
-		button.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		button.setText(buttonLabel);
-		button.addSelectionListener(listener);
-
-		return text;
 	}
 
 	/**
