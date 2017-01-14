@@ -76,11 +76,12 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 	@Override
 	public void setDefaults(final ILaunchConfigurationWorkingCopy configuration) {
 		//@formatter:off
-		configuration.setAttribute(StringLaunchConfigurationAttribute.BASE_DIRECTORY.name(), StringLaunchConfigurationAttribute.BASE_DIRECTORY.getDefaultValue());
+		configuration.setAttribute(LaunchConfigurationAttributes.BASE_DIRECTORY.getName(), LaunchConfigurationAttributes.BASE_DIRECTORY.getDefaultValue());
 		configuration.setAttribute(LaunchConfigurationAttributes.IF_EXISTS.getName(), LaunchConfigurationAttributes.IF_EXISTS.getDefaultValue());
 		configuration.setAttribute(LaunchConfigurationAttributes.START_WEB.getName(), LaunchConfigurationAttributes.START_WEB.getDefaultValue());
 		configuration.setAttribute(LaunchConfigurationAttributes.START_TCP.getName(), LaunchConfigurationAttributes.START_TCP.getDefaultValue());
 		configuration.setAttribute(LaunchConfigurationAttributes.START_PG.getName(), LaunchConfigurationAttributes.START_PG.getDefaultValue());
+		configuration.setAttribute(LaunchConfigurationAttributes.ENABLE_TRACING.getName(), LaunchConfigurationAttributes.ENABLE_TRACING.getDefaultValue());
 		//@formatter:on
 	}
 
@@ -89,17 +90,33 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 	 */
 	@Override
 	public void initializeFrom(final ILaunchConfiguration configuration) {
+		String baseDirectory = LaunchConfigurationAttributes.BASE_DIRECTORY.getDefaultValue();
+		boolean ifExists = LaunchConfigurationAttributes.IF_EXISTS.getDefaultValue().booleanValue();
+		boolean startWeb = LaunchConfigurationAttributes.START_WEB.getDefaultValue().booleanValue();
+		boolean startTcp = LaunchConfigurationAttributes.START_TCP.getDefaultValue().booleanValue();
+		boolean startPg = LaunchConfigurationAttributes.START_PG.getDefaultValue().booleanValue();
+		boolean enableTracing = LaunchConfigurationAttributes.ENABLE_TRACING.getDefaultValue().booleanValue();
+
 		try {
 			//@formatter:off
-			configuration.getAttribute(StringLaunchConfigurationAttribute.BASE_DIRECTORY.name(), StringLaunchConfigurationAttribute.BASE_DIRECTORY.getDefaultValue());
-			configuration.getAttribute(LaunchConfigurationAttributes.IF_EXISTS.getName(), LaunchConfigurationAttributes.IF_EXISTS.getDefaultValue());
-			configuration.getAttribute(LaunchConfigurationAttributes.START_WEB.getName(), LaunchConfigurationAttributes.START_WEB.getDefaultValue());
-			configuration.getAttribute(LaunchConfigurationAttributes.START_TCP.getName(), LaunchConfigurationAttributes.START_TCP.getDefaultValue());
-			configuration.getAttribute(LaunchConfigurationAttributes.START_PG.getName(), LaunchConfigurationAttributes.START_PG.getDefaultValue());
+			baseDirectory = configuration.getAttribute(LaunchConfigurationAttributes.BASE_DIRECTORY.getName(), LaunchConfigurationAttributes.BASE_DIRECTORY.getDefaultValue());
+			ifExists = configuration.getAttribute(LaunchConfigurationAttributes.IF_EXISTS.getName(), LaunchConfigurationAttributes.IF_EXISTS.getDefaultValue());
+			startWeb = configuration.getAttribute(LaunchConfigurationAttributes.START_WEB.getName(), LaunchConfigurationAttributes.START_WEB.getDefaultValue());
+			startTcp = configuration.getAttribute(LaunchConfigurationAttributes.START_TCP.getName(), LaunchConfigurationAttributes.START_TCP.getDefaultValue());
+			startPg = configuration.getAttribute(LaunchConfigurationAttributes.START_PG.getName(), LaunchConfigurationAttributes.START_PG.getDefaultValue());
+			enableTracing = configuration.getAttribute(LaunchConfigurationAttributes.ENABLE_TRACING.getName(), LaunchConfigurationAttributes.ENABLE_TRACING.getDefaultValue());
 			//@formatter:on
 		} catch (final CoreException e) {
 			e.printStackTrace();
+			return;
 		}
+
+		baseDirectoryField.setText(baseDirectory);
+		existingDatabaseButton.setSelection(ifExists);
+		launchWebServerButton.setSelection(startWeb);
+		launchTcpServerButton.setSelection(startTcp);
+		launchPgServerButton.setSelection(startPg);
+		tracingButton.setSelection(enableTracing);
 	}
 
 	/**
@@ -115,7 +132,14 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 	 */
 	@Override
 	public void performApply(final ILaunchConfigurationWorkingCopy configuration) {
-		// TODO Auto-generated method stub
+		//@formatter:off
+		configuration.setAttribute(LaunchConfigurationAttributes.BASE_DIRECTORY.getName(), baseDirectoryField.getText());
+		configuration.setAttribute(LaunchConfigurationAttributes.IF_EXISTS.getName(), Boolean.valueOf(existingDatabaseButton.getSelection()));
+		configuration.setAttribute(LaunchConfigurationAttributes.START_WEB.getName(), Boolean.valueOf(launchWebServerButton.getSelection()));
+		configuration.setAttribute(LaunchConfigurationAttributes.START_TCP.getName(), Boolean.valueOf(launchTcpServerButton.getSelection()));
+		configuration.setAttribute(LaunchConfigurationAttributes.START_PG.getName(), Boolean.valueOf(launchPgServerButton.getSelection()));
+		configuration.setAttribute(LaunchConfigurationAttributes.ENABLE_TRACING.getName(), Boolean.valueOf(tracingButton.getSelection()));
+		//@formatter:on
 	}
 
 	/**
