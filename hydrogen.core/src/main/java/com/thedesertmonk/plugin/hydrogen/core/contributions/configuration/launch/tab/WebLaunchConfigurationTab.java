@@ -3,14 +3,20 @@
  */
 package com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.tab;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Text;
+
+import com.thedesertmonk.plugin.hydrogen.core.h2.model.configuration.attributes.LaunchConfigurationAttributes;
 
 /**
  * @author andrewvojak
@@ -19,6 +25,11 @@ import org.eclipse.swt.widgets.Group;
 public class WebLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 
 	private Composite baseComposite;
+	private Button allowOthersButton;
+	private Button useDaemonThreadButton;
+	private Text portText;
+	private Button useSslButton;
+	private Button openBrowserButton;
 
 	/**
 	 * {@inheritDoc}
@@ -34,10 +45,12 @@ public class WebLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 		connectionSettingsGroup.setLayout(new GridLayout());
 		connectionSettingsGroup.setText("Connection Settings");
 
-		createCheckButton(connectionSettingsGroup, "Allow other computers to connect");
-		createCheckButton(connectionSettingsGroup, "Use a daemon thread");
-		createField(connectionSettingsGroup, "Port");
-		createCheckButton(connectionSettingsGroup, "Use encrypted (HTTPS) connections");
+		allowOthersButton = createCheckButton(connectionSettingsGroup, "Allow other computers to connect");
+		useDaemonThreadButton = createCheckButton(connectionSettingsGroup, "Use a daemon thread");
+		portText = createField(connectionSettingsGroup, "Port");
+		useSslButton = createCheckButton(connectionSettingsGroup, "Use encrypted (HTTPS) connections");
+
+		openBrowserButton = createCheckButton(baseComposite, "Open browser");
 	}
 
 	/**
@@ -53,8 +66,13 @@ public class WebLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 	 */
 	@Override
 	public void setDefaults(final ILaunchConfigurationWorkingCopy configuration) {
-		// TODO Auto-generated method stub
-
+		//@formatter:off
+		configuration.setAttribute(LaunchConfigurationAttributes.WEB_ALLOW_OTHERS.getName(), LaunchConfigurationAttributes.WEB_ALLOW_OTHERS.getDefaultValue());
+		configuration.setAttribute(LaunchConfigurationAttributes.WEB_DAEMON.getName(), LaunchConfigurationAttributes.WEB_DAEMON.getDefaultValue());
+		configuration.setAttribute(LaunchConfigurationAttributes.WEB_PORT.getName(), LaunchConfigurationAttributes.WEB_PORT.getDefaultValue());
+		configuration.setAttribute(LaunchConfigurationAttributes.WEB_SSL.getName(), LaunchConfigurationAttributes.WEB_SSL.getDefaultValue());
+		configuration.setAttribute(LaunchConfigurationAttributes.WEB_BROWSER.getName(), LaunchConfigurationAttributes.WEB_BROWSER.getDefaultValue());
+		//@formatter:on
 	}
 
 	/**
@@ -62,8 +80,30 @@ public class WebLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 	 */
 	@Override
 	public void initializeFrom(final ILaunchConfiguration configuration) {
-		// TODO Auto-generated method stub
+		boolean allowOthers = LaunchConfigurationAttributes.WEB_ALLOW_OTHERS.getDefaultValue();
+		boolean useDaemonThread = LaunchConfigurationAttributes.WEB_DAEMON.getDefaultValue();
+		String port = LaunchConfigurationAttributes.WEB_PORT.getDefaultValue();
+		boolean useSsl = LaunchConfigurationAttributes.WEB_SSL.getDefaultValue();
+		boolean openBrowser = LaunchConfigurationAttributes.WEB_BROWSER.getDefaultValue();
 
+		try {
+			//@formatter:off
+			allowOthers = configuration.getAttribute(LaunchConfigurationAttributes.WEB_ALLOW_OTHERS.getName(), LaunchConfigurationAttributes.WEB_ALLOW_OTHERS.getDefaultValue());
+			useDaemonThread = configuration.getAttribute(LaunchConfigurationAttributes.WEB_DAEMON.getName(), LaunchConfigurationAttributes.WEB_DAEMON.getDefaultValue());
+			port = configuration.getAttribute(LaunchConfigurationAttributes.WEB_PORT.getName(), LaunchConfigurationAttributes.WEB_PORT.getDefaultValue());
+			useSsl = configuration.getAttribute(LaunchConfigurationAttributes.WEB_SSL.getName(), LaunchConfigurationAttributes.WEB_SSL.getDefaultValue());
+			openBrowser = configuration.getAttribute(LaunchConfigurationAttributes.WEB_BROWSER.getName(), LaunchConfigurationAttributes.WEB_BROWSER.getDefaultValue());
+			//@formatter:on
+		} catch (final CoreException e) {
+			e.printStackTrace();
+			return;
+		}
+
+		allowOthersButton.setSelection(allowOthers);
+		useDaemonThreadButton.setSelection(useDaemonThread);
+		portText.setText(port);
+		useSslButton.setSelection(useSsl);
+		openBrowserButton.setSelection(openBrowser);
 	}
 
 	/**
@@ -71,8 +111,42 @@ public class WebLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 	 */
 	@Override
 	public void performApply(final ILaunchConfigurationWorkingCopy configuration) {
-		// TODO Auto-generated method stub
+		//@formatter:off
+		configuration.setAttribute(LaunchConfigurationAttributes.WEB_ALLOW_OTHERS.getName(), Boolean.valueOf(allowOthersButton.getSelection()));
+		configuration.setAttribute(LaunchConfigurationAttributes.WEB_DAEMON.getName(), Boolean.valueOf(useDaemonThreadButton.getSelection()));
+		configuration.setAttribute(LaunchConfigurationAttributes.WEB_PORT.getName(), portText.getText());
+		configuration.setAttribute(LaunchConfigurationAttributes.WEB_SSL.getName(), Boolean.valueOf(useSslButton.getSelection()));
+		configuration.setAttribute(LaunchConfigurationAttributes.WEB_BROWSER.getName(), Boolean.valueOf(openBrowserButton.getSelection()));
+		//@formatter:on
+	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isValid(final ILaunchConfiguration launchConfig) {
+		final String port = portText.getText();
+		if (port == null || port.trim().isEmpty()) {
+			return false;
+		}
+		try {
+			// TODO refactor this
+			final int portNumber = Integer.valueOf(port);
+			if (portNumber < 0 || portNumber > 0xFFFF) {
+				return false;
+			}
+		} catch (final NumberFormatException e) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean canSave() {
+		return true;
 	}
 
 	/**
@@ -80,7 +154,16 @@ public class WebLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 	 */
 	@Override
 	public String getName() {
-		return "Web";
+		return "Web Server";
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Image getImage() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

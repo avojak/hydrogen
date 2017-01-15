@@ -190,8 +190,7 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 	 */
 	@Override
 	public boolean canSave() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	/**
