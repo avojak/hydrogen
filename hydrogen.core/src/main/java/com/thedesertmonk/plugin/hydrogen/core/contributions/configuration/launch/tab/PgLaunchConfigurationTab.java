@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
 
+import com.thedesertmonk.plugin.hydrogen.core.HydrogenActivator;
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.configuration.attributes.LaunchConfigurationAttributes;
 
 /**
@@ -139,7 +140,7 @@ public class PgLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 	 */
 	@Override
 	public String getName() {
-		return "PostgreSQL Server";
+		return "PostgreSQL";
 	}
 
 	/**
@@ -147,8 +148,7 @@ public class PgLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 	 */
 	@Override
 	public Image getImage() {
-		// TODO Auto-generated method stub
-		return null;
+		return HydrogenActivator.getImageDescriptor("icons/pg.png").createImage();
 	}
 
 }

@@ -11,7 +11,6 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -97,14 +96,6 @@ public abstract class HydrogenLaunchConfigurationTab extends AbstractLaunchConfi
 			}
 		});
 		return text;
-	}
-
-	private void addButtonToComposite(final Composite parent, final String text, final SelectionListener listener) {
-		((GridLayout) parent.getLayout()).numColumns++;
-		final Button button = new Button(parent, SWT.PUSH);
-		button.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, true));
-		button.setText(text);
-		button.addSelectionListener(listener);
 	}
 
 }

@@ -175,7 +175,7 @@ public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 	 */
 	@Override
 	public String getName() {
-		return "TCP Server";
+		return "TCP";
 	}
 
 	/**
