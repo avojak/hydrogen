@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
-import org.h2.tools.Server;
 import org.junit.Test;
 
 /**
@@ -24,22 +23,22 @@ public class SampleHandlerTest {
 
 	@Test
 	public void test() throws SQLException, ClassNotFoundException {
-		System.out.println("> Creating server...");
-		final Server server = Server.createWebServer();
-
-		System.out.println("> Starting server...");
-		server.start();
-
-		try {
-			System.out.println("> " + server.getStatus());
-			Thread.sleep(60000);
-		} catch (final InterruptedException e) {
-			e.printStackTrace();
-		}
-
-		System.out.println("> Stopping server...");
-		server.stop();
-		System.out.println("> Stopped.");
+		// System.out.println("> Creating server...");
+		// final Server server = Server.createWebServer();
+		//
+		// System.out.println("> Starting server...");
+		// server.start();
+		//
+		// try {
+		// System.out.println("> " + server.getStatus());
+		// Thread.sleep(60000);
+		// } catch (final InterruptedException e) {
+		// e.printStackTrace();
+		// }
+		//
+		// System.out.println("> Stopping server...");
+		// server.stop();
+		// System.out.println("> Stopped.");
 	}
 
 	private static boolean wait = false;
