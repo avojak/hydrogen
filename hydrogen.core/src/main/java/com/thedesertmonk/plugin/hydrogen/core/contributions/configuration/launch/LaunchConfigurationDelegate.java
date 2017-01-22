@@ -37,6 +37,7 @@ public class LaunchConfigurationDelegate extends AbstractJavaLaunchConfiguration
 		final VMRunnerConfiguration runConfig = new VMRunnerConfiguration("org.h2.tools.Server",
 				new String[] { "h2-1.4.193.jar" });
 		runConfig.setWorkingDirectory("/Users/andrewvojak/Downloads/h2/bin");
+		// runConfig.setProgramArguments(new String[] {});
 
 		// Bootpath
 		final String[] bootpath = getBootpath(configuration);

@@ -58,7 +58,7 @@ public class HydrogenServerArgumentsBuilder {
 	 * @param pgServerArguments The {@link PgServerArguments}. Cannot be null.
 	 * @return The current instance of {@link HydrogenServerArgumentsBuilder}.
 	 */
-	public HydrogenServerArgumentsBuilder withTcpServer(final PgServerArguments pgServerArguments) {
+	public HydrogenServerArgumentsBuilder withPgServer(final PgServerArguments pgServerArguments) {
 		if (pgServerArguments == null) {
 			throw new IllegalArgumentException("pgServerArguments cannot be null"); //$NON-NLS-1$
 		}

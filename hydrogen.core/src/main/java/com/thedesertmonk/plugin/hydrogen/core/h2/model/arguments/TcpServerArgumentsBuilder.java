@@ -64,7 +64,7 @@ public class TcpServerArgumentsBuilder {
 	 *
 	 * @return The current {@link TcpServerArgumentsBuilder} instance.
 	 */
-	public TcpServerArgumentsBuilder useSSL() {
+	public TcpServerArgumentsBuilder useSsl() {
 		arguments.add(ServerOption.TCP_SSL.getParam());
 		return this;
 	}

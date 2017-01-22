@@ -65,7 +65,7 @@ public class WebServerArgumentsBuilder {
 	 *
 	 * @return The current {@link WebServerArgumentsBuilder} instance.
 	 */
-	public WebServerArgumentsBuilder useSSL() {
+	public WebServerArgumentsBuilder useSsl() {
 		arguments.add(ServerOption.WEB_SSL.getParam());
 		return this;
 	}
