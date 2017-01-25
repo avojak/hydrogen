@@ -16,6 +16,7 @@ import com.thedesertmonk.plugin.hydrogen.core.h2.model.configuration.attributes.
 public class ProgramArguments {
 
 	private final ILaunchConfiguration configuration;
+	private final HydrogenServerArguments arguments;
 
 	/**
 	 * @param configuration
@@ -27,7 +28,6 @@ public class ProgramArguments {
 		this.configuration = configuration;
 
 		final HydrogenServerArgumentsBuilder hydrogenServerArgumentsBuilder = new HydrogenServerArgumentsBuilder();
-
 		try {
 			if (verifyBooleanAttribute(LaunchConfigurationAttributes.START_WEB)) {
 				hydrogenServerArgumentsBuilder.withWebServer(buildWebServerArguments());
@@ -38,23 +38,17 @@ public class ProgramArguments {
 			if (verifyBooleanAttribute(LaunchConfigurationAttributes.START_PG)) {
 				hydrogenServerArgumentsBuilder.withPgServer(buildPgServerArguments());
 			}
-			final boolean enableTracing = verifyBooleanAttribute(LaunchConfigurationAttributes.ENABLE_TRACING);
-			final boolean ifExists = verifyBooleanAttribute(LaunchConfigurationAttributes.IF_EXISTS);
-
-			final boolean tcpSsl = verifyBooleanAttribute(LaunchConfigurationAttributes.TCP_SSL);
-			final boolean tcpAllowOthers = verifyBooleanAttribute(LaunchConfigurationAttributes.TCP_ALLOW_OTHERS);
-			final boolean tcpDaemon = verifyBooleanAttribute(LaunchConfigurationAttributes.TCP_DAEMON);
-			final boolean tcpShutdownForce = verifyBooleanAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_FORCE);
-			final boolean pgAllowOthers = verifyBooleanAttribute(LaunchConfigurationAttributes.PG_ALLOW_OTHERS);
-			final boolean pgDaemon = verifyBooleanAttribute(LaunchConfigurationAttributes.PG_DAEMON);
+			if (verifyBooleanAttribute(LaunchConfigurationAttributes.ENABLE_TRACING)) {
+				hydrogenServerArgumentsBuilder.enableTracing();
+			}
+			if (verifyBooleanAttribute(LaunchConfigurationAttributes.IF_EXISTS)) {
+				hydrogenServerArgumentsBuilder.onlyOpenExistingDatabases();
+			}
 		} catch (final CoreException e) {
 			throw new RuntimeException("Unable to retrieve attributes", e); //$NON-NLS-1$
 		}
 
-		// General settings
-		// Web settings (if needed)
-		// TCP settings (if needed)
-		// PG settings (if needed)
+		arguments = hydrogenServerArgumentsBuilder.build();
 	}
 
 	private boolean verifyBooleanAttribute(final LaunchConfigurationAttribute<Boolean> attribute) throws CoreException {
@@ -91,16 +85,40 @@ public class ProgramArguments {
 		return builder.build();
 	}
 
-	private TcpServerArguments buildTcpServerArguments() {
+	private TcpServerArguments buildTcpServerArguments() throws CoreException {
 		final TcpServerArgumentsBuilder builder = new TcpServerArgumentsBuilder();
-		// TODO
+		if (verifyBooleanAttribute(LaunchConfigurationAttributes.TCP_SSL)) {
+			builder.useSsl();
+		}
+		if (verifyBooleanAttribute(LaunchConfigurationAttributes.TCP_ALLOW_OTHERS)) {
+			builder.allowOthers();
+		}
+		if (verifyBooleanAttribute(LaunchConfigurationAttributes.TCP_DAEMON)) {
+			builder.useDaemonThread();
+		}
+		if (verifyBooleanAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_FORCE)) {
+			builder.forceShutdown();
+		}
+		builder.withPort(verifyStringAttribute(LaunchConfigurationAttributes.TCP_PORT));
+		builder.withShutdownPassword(verifyStringAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_PASSWORD));
+		builder.withShutdownURL(verifyStringAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_URL));
 		return builder.build();
 	}
 
-	private PgServerArguments buildPgServerArguments() {
+	private PgServerArguments buildPgServerArguments() throws CoreException {
 		final PgServerArgumentsBuilder builder = new PgServerArgumentsBuilder();
-		// TODO
+		if (verifyBooleanAttribute(LaunchConfigurationAttributes.PG_ALLOW_OTHERS)) {
+			builder.allowOthers();
+		}
+		if (verifyBooleanAttribute(LaunchConfigurationAttributes.PG_DAEMON)) {
+			builder.useDaemonThread();
+		}
+		builder.withPort(verifyStringAttribute(LaunchConfigurationAttributes.PG_PORT));
 		return builder.build();
+	}
+
+	public HydrogenServerArguments getArguments() {
+		return arguments;
 	}
 
 }

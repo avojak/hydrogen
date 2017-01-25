@@ -75,7 +75,6 @@
 					<version>${tycho.version}</version>
 					<configuration>
 						<useUIHarness>false</useUIHarness>
-						<!-- <argLine>${tycho.test.jvmArgs}</argLine> -->
 						<argLine>${tycho.test.jvmArgs} ${os.jvm.flags}</argLine>
 						<!-- kill test JVM if tests take more than 1 minute (60 seconds) to 
 							finish -->

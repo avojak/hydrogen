@@ -13,6 +13,8 @@ import org.eclipse.jdt.launching.IVMInstall;
 import org.eclipse.jdt.launching.IVMRunner;
 import org.eclipse.jdt.launching.VMRunnerConfiguration;
 
+import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.ProgramArguments;
+
 /**
  * @author andrewvojak
  *         http://www.eclipse.org/articles/Article-Launch-Framework/launch.html
@@ -37,7 +39,9 @@ public class LaunchConfigurationDelegate extends AbstractJavaLaunchConfiguration
 		final VMRunnerConfiguration runConfig = new VMRunnerConfiguration("org.h2.tools.Server",
 				new String[] { "h2-1.4.193.jar" });
 		runConfig.setWorkingDirectory("/Users/andrewvojak/Downloads/h2/bin");
-		// runConfig.setProgramArguments(new String[] {});
+		final ProgramArguments programArguments = new ProgramArguments(configuration);
+		final String[] argArray = programArguments.getArguments().getArguments().toArray(new String[0]);
+		runConfig.setProgramArguments(argArray);
 
 		// Bootpath
 		final String[] bootpath = getBootpath(configuration);
