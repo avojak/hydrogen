@@ -101,7 +101,6 @@ public class ProgramArguments {
 		}
 		builder.withPort(verifyStringAttribute(LaunchConfigurationAttributes.TCP_PORT));
 		builder.withShutdownPassword(verifyStringAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_PASSWORD));
-		builder.withShutdownURL(verifyStringAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_URL));
 		return builder.build();
 	}
 

@@ -59,7 +59,6 @@ public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 
 		// TODO make this a password field
 		shutdownPasswordText = createField(shutdownSettingsGroup, "Shutdown password");
-		shutdownUrlText = createField(shutdownSettingsGroup, "Shutdown URL");
 		forceShutdownButton = createCheckButton(shutdownSettingsGroup, "Force shutdown");
 	}
 
@@ -82,7 +81,6 @@ public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 		configuration.setAttribute(LaunchConfigurationAttributes.TCP_PORT.getName(), LaunchConfigurationAttributes.TCP_PORT.getDefaultValue());
 		configuration.setAttribute(LaunchConfigurationAttributes.TCP_SSL.getName(), LaunchConfigurationAttributes.TCP_SSL.getDefaultValue());
 		configuration.setAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_PASSWORD.getName(), LaunchConfigurationAttributes.TCP_SHUTDOWN_PASSWORD.getDefaultValue());
-		configuration.setAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_URL.getName(), LaunchConfigurationAttributes.TCP_SHUTDOWN_URL.getDefaultValue());
 		configuration.setAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_FORCE.getName(), LaunchConfigurationAttributes.TCP_SHUTDOWN_FORCE.getDefaultValue());
 		//@formatter:on
 	}
@@ -97,7 +95,6 @@ public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 		String port = LaunchConfigurationAttributes.TCP_PORT.getDefaultValue();
 		boolean useSsl = LaunchConfigurationAttributes.TCP_SSL.getDefaultValue();
 		String shutdownPassword = LaunchConfigurationAttributes.TCP_SHUTDOWN_PASSWORD.getDefaultValue();
-		String shutdownUrl = LaunchConfigurationAttributes.TCP_SHUTDOWN_URL.getDefaultValue();
 		boolean forceShutdown = LaunchConfigurationAttributes.TCP_SHUTDOWN_FORCE.getDefaultValue();
 
 		try {
@@ -107,7 +104,6 @@ public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 			port = configuration.getAttribute(LaunchConfigurationAttributes.TCP_PORT.getName(), LaunchConfigurationAttributes.TCP_PORT.getDefaultValue());
 			useSsl = configuration.getAttribute(LaunchConfigurationAttributes.TCP_SSL.getName(), LaunchConfigurationAttributes.TCP_SSL.getDefaultValue());
 			shutdownPassword = configuration.getAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_PASSWORD.getName(), LaunchConfigurationAttributes.TCP_SHUTDOWN_PASSWORD.getDefaultValue());
-			shutdownUrl = configuration.getAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_URL.getName(), LaunchConfigurationAttributes.TCP_SHUTDOWN_URL.getDefaultValue());
 			forceShutdown = configuration.getAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_FORCE.getName(), LaunchConfigurationAttributes.TCP_SHUTDOWN_FORCE.getDefaultValue());
 			//@formatter:on
 		} catch (final CoreException e) {
@@ -120,7 +116,6 @@ public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 		portText.setText(port);
 		useSslButton.setSelection(useSsl);
 		shutdownPasswordText.setText(shutdownPassword);
-		shutdownUrlText.setText(shutdownUrl);
 		forceShutdownButton.setSelection(forceShutdown);
 	}
 
@@ -135,7 +130,6 @@ public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 		configuration.setAttribute(LaunchConfigurationAttributes.TCP_PORT.getName(), portText.getText());
 		configuration.setAttribute(LaunchConfigurationAttributes.TCP_SSL.getName(), Boolean.valueOf(useSslButton.getSelection()));
 		configuration.setAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_PASSWORD.getName(), shutdownPasswordText.getText());
-		configuration.setAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_URL.getName(), shutdownUrlText.getText());
 		configuration.setAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_FORCE.getName(), Boolean.valueOf(forceShutdownButton.getSelection()));
 		//@formatter:on
 	}
