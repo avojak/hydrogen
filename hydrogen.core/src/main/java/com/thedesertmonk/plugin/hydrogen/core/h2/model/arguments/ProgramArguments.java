@@ -116,8 +116,19 @@ public class ProgramArguments {
 		return builder.build();
 	}
 
+	/**
+	 * @return
+	 */
 	public HydrogenServerArguments getArguments() {
 		return arguments;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		return "ProgramArguments [configuration=" + configuration + ", arguments=" + arguments + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 }

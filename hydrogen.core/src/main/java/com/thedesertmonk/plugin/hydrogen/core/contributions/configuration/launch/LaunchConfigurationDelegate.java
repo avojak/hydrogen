@@ -42,6 +42,7 @@ public class LaunchConfigurationDelegate extends AbstractJavaLaunchConfiguration
 		final ProgramArguments programArguments = new ProgramArguments(configuration);
 		final String[] argArray = programArguments.getArguments().getArguments().toArray(new String[0]);
 		runConfig.setProgramArguments(argArray);
+		runConfig.setVMArguments(new String[] { "-Djava.awt.headless=true" });
 
 		// Bootpath
 		final String[] bootpath = getBootpath(configuration);

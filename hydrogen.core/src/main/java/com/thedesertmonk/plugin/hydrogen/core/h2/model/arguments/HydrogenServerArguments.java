@@ -33,4 +33,12 @@ public class HydrogenServerArguments {
 		return new ArrayList<String>(arguments);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		return "HydrogenServerArguments [arguments=" + arguments + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+	}
+
 }
