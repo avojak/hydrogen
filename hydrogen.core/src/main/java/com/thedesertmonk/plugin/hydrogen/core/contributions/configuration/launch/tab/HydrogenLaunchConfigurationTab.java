@@ -98,4 +98,12 @@ public abstract class HydrogenLaunchConfigurationTab extends AbstractLaunchConfi
 		return text;
 	}
 
+	/**
+	 *
+	 */
+	public void onContentChanged() {
+		setDirty(true);
+		updateLaunchConfigurationDialog();
+	}
+
 }

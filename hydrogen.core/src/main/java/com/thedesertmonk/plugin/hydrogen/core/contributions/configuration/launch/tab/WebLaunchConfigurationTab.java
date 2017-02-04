@@ -47,11 +47,16 @@ public class WebLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 		connectionSettingsGroup.setText("Connection Settings");
 
 		allowOthersButton = createCheckButton(connectionSettingsGroup, "Allow other computers to connect");
+		allowOthersButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 		useDaemonThreadButton = createCheckButton(connectionSettingsGroup, "Use a daemon thread");
+		useDaemonThreadButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 		portText = createField(connectionSettingsGroup, "Port");
+		portText.addModifyListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 		useSslButton = createCheckButton(connectionSettingsGroup, "Use encrypted (HTTPS) connections");
+		useSslButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 
 		openBrowserButton = createCheckButton(baseComposite, "Open browser");
+		openBrowserButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 	}
 
 	/**
@@ -119,6 +124,7 @@ public class WebLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 		configuration.setAttribute(LaunchConfigurationAttributes.WEB_SSL.getName(), Boolean.valueOf(useSslButton.getSelection()));
 		configuration.setAttribute(LaunchConfigurationAttributes.WEB_BROWSER.getName(), Boolean.valueOf(openBrowserButton.getSelection()));
 		//@formatter:on
+		setDirty(false);
 	}
 
 	/**

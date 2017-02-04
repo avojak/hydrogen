@@ -51,7 +51,9 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 		databaseSettingsGroup.setText("Database Settings");
 
 		baseDirectoryField = createDirectoryField(databaseSettingsGroup, "Database base directory");
+		baseDirectoryField.addModifyListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 		existingDatabaseButton = createCheckButton(databaseSettingsGroup, "Only open existing databases");
+		existingDatabaseButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 
 		final Group serversToLaunchGroup = new Group(baseComposite, SWT.NONE);
 		serversToLaunchGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
@@ -59,10 +61,14 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 		serversToLaunchGroup.setText("Servers to launch");
 
 		launchWebServerButton = createCheckButton(serversToLaunchGroup, "Web");
+		launchWebServerButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 		launchTcpServerButton = createCheckButton(serversToLaunchGroup, "TCP");
+		launchTcpServerButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 		launchPgServerButton = createCheckButton(serversToLaunchGroup, "PostgreSQL");
+		launchPgServerButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 
 		tracingButton = createCheckButton(baseComposite, "Enable tracing");
+		tracingButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 	}
 
 	/**
@@ -135,6 +141,7 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 		configuration.setAttribute(LaunchConfigurationAttributes.START_PG.getName(), Boolean.valueOf(launchPgServerButton.getSelection()));
 		configuration.setAttribute(LaunchConfigurationAttributes.ENABLE_TRACING.getName(), Boolean.valueOf(tracingButton.getSelection()));
 		//@formatter:on
+		setDirty(false);
 	}
 
 	/**

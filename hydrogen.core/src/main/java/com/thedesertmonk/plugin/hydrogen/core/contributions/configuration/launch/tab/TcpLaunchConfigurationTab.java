@@ -30,7 +30,6 @@ public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 	private Text portText;
 	private Button useSslButton;
 	private Text shutdownPasswordText;
-	private Text shutdownUrlText;
 	private Button forceShutdownButton;
 
 	/**
@@ -48,18 +47,24 @@ public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 		connectionSettingsGroup.setText("Connection Settings");
 
 		allowOthersButton = createCheckButton(connectionSettingsGroup, "Allow other computers to connect");
+		allowOthersButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 		useDaemonThreadButton = createCheckButton(connectionSettingsGroup, "Use a daemon thread");
+		useDaemonThreadButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 		portText = createField(connectionSettingsGroup, "Port");
+		portText.addModifyListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 		useSslButton = createCheckButton(connectionSettingsGroup, "Use encrypted (HTTPS) connections");
+		useSslButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 
 		final Group shutdownSettingsGroup = new Group(baseComposite, SWT.NONE);
 		shutdownSettingsGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		shutdownSettingsGroup.setLayout(new GridLayout());
 		shutdownSettingsGroup.setText("Shutdown Settings");
 
-		// TODO make this a password field
+		// TODO make this a password field?
 		shutdownPasswordText = createField(shutdownSettingsGroup, "Shutdown password");
+		shutdownPasswordText.addModifyListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 		forceShutdownButton = createCheckButton(shutdownSettingsGroup, "Force shutdown");
+		forceShutdownButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 	}
 
 	/**
@@ -132,6 +137,7 @@ public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 		configuration.setAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_PASSWORD.getName(), shutdownPasswordText.getText());
 		configuration.setAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_FORCE.getName(), Boolean.valueOf(forceShutdownButton.getSelection()));
 		//@formatter:on
+		setDirty(false);
 	}
 
 	/**

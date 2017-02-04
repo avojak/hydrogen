@@ -45,8 +45,11 @@ public class PgLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 		connectionSettingsGroup.setText("Connection Settings");
 
 		allowOthersButton = createCheckButton(connectionSettingsGroup, "Allow other computers to connect");
+		allowOthersButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 		useDaemonThreadButton = createCheckButton(connectionSettingsGroup, "Use a daemon thread");
+		useDaemonThreadButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 		portText = createField(connectionSettingsGroup, "Port");
+		portText.addModifyListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 	}
 
 	/**
@@ -104,6 +107,7 @@ public class PgLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 		configuration.setAttribute(LaunchConfigurationAttributes.PG_DAEMON.getName(), Boolean.valueOf(useDaemonThreadButton.getSelection()));
 		configuration.setAttribute(LaunchConfigurationAttributes.PG_PORT.getName(), portText.getText());
 		//@formatter:on
+		setDirty(false);
 	}
 
 	/**
