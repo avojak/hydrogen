@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
 
+import com.thedesertmonk.plugin.hydrogen.core.HydrogenActivator;
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.configuration.attributes.LaunchConfigurationAttributes;
 
 /**
@@ -214,8 +215,7 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 	 */
 	@Override
 	public Image getImage() {
-		// TODO Auto-generated method stub
-		return null;
+		return HydrogenActivator.getImageDescriptor("icons/main_tab.png").createImage();
 	}
 
 }

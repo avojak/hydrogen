@@ -25,6 +25,9 @@ import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.ProgramArgument
  */
 public class LaunchConfigurationDelegate extends AbstractJavaLaunchConfigurationDelegate {
 
+	private static final String MAIN_SERVER_CLASS = "org.h2.tools.Server"; //$NON-NLS-1$
+	private static final String LAUNCH_HEADLESS = "-Djava.awt.headless=true"; //$NON-NLS-1$
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -42,19 +45,16 @@ public class LaunchConfigurationDelegate extends AbstractJavaLaunchConfiguration
 		final File executablePreference = new File(
 				HydrogenActivator.getDefault().getPreferenceStore().getString(PreferenceConstants.P_EXECUTABLE));
 		final String workingDirectory = executablePreference.getParent();
-		final String executable = executablePreference.getName();
-
-		System.out.println("> Working directory: " + workingDirectory);
-		System.out.println("> Executable name: " + executable);
+		final String executableName = executablePreference.getName();
 
 		// Create VM config
-		final VMRunnerConfiguration runConfig = new VMRunnerConfiguration("org.h2.tools.Server",
-				new String[] { executable });
+		final VMRunnerConfiguration runConfig = new VMRunnerConfiguration(MAIN_SERVER_CLASS,
+				new String[] { executableName });
 		runConfig.setWorkingDirectory(workingDirectory);
 		final ProgramArguments programArguments = new ProgramArguments(configuration);
 		final String[] argArray = programArguments.getArguments().getArguments().toArray(new String[0]);
 		runConfig.setProgramArguments(argArray);
-		runConfig.setVMArguments(new String[] { "-Djava.awt.headless=true" });
+		runConfig.setVMArguments(new String[] { LAUNCH_HEADLESS });
 
 		// Bootpath
 		final String[] bootpath = getBootpath(configuration);
