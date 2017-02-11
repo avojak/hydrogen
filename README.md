@@ -10,4 +10,4 @@ TODO
 
 ## License
 
-TODO
+Licensed under the MIT License.
