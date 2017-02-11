@@ -147,24 +147,7 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 
 	/**
 	 * {@inheritDoc}
-	 */
-	@Override
-	public String getErrorMessage() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getMessage() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
+	 * TODO This is bad and needs fixing... 
 	 */
 	@Override
 	public boolean isValid(final ILaunchConfiguration launchConfig) {
@@ -187,11 +170,25 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 		// that we will have permissions to read and write there.
 		final Path baseDirectoryPath = FileSystems.getDefault().getPath(baseDirectory);
 		final boolean isDirectory = Files.isDirectory(baseDirectoryPath);
+		if (!isDirectory) {
+			setErrorMessage("Database base directory must be a directory");
+			return false;
+		}
 		final boolean isReadable = Files.isReadable(baseDirectoryPath);
 		final boolean isWritable = Files.isWritable(baseDirectoryPath);
-		// TODO Set error message
+		if (!isReadable || !isWritable) {
+			setErrorMessage("Verify directory privileges allow read and write access");
+			return false;
+		}
 
-		return (isDirectory && isReadable && isWritable);
+		final boolean isValid = isDirectory && isReadable && isWritable;
+
+		// If valid, clear any error messages
+		if (isValid) {
+			setErrorMessage(null);
+		}
+
+		return isValid;
 	}
 
 	/**

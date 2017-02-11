@@ -47,7 +47,8 @@ public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 		connectionSettingsGroup.setLayout(new GridLayout());
 		connectionSettingsGroup.setText("Connection Settings");
 
-		allowOthersButton = createCheckButton(connectionSettingsGroup, "Allow other computers to connect");
+		allowOthersButton = createCheckButton(connectionSettingsGroup,
+				"Allow other computers to connect (Discouraged)");
 		allowOthersButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 		useDaemonThreadButton = createCheckButton(connectionSettingsGroup, "Use a daemon thread");
 		useDaemonThreadButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
@@ -146,21 +147,35 @@ public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 	 */
 	@Override
 	public boolean isValid(final ILaunchConfiguration launchConfig) {
+		if (allowOthersButton.getSelection()) {
+			setWarningMessage("Allowing other computers to connect to the server is potentially risky.");
+		} else {
+			setWarningMessage(null);
+		}
+
+		boolean isValid = true;
 		final String port = portText.getText();
 		if (port == null || port.trim().isEmpty()) {
-			return false;
+			isValid = false;
 		}
 		try {
 			// TODO refactor this
 			final int portNumber = Integer.valueOf(port);
 			if (portNumber < 0 || portNumber > 0xFFFF) {
-				return false;
+				isValid = false;
 			}
 		} catch (final NumberFormatException e) {
-			return false;
+			isValid = false;
 		}
-		// TODO validate url and password
-		return true;
+
+		if (!isValid) {
+			setErrorMessage("Invalid port number");
+		} else {
+			setErrorMessage(null);
+		}
+
+		// TODO validate password
+		return isValid;
 	}
 
 	/**
