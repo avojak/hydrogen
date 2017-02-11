@@ -188,6 +188,7 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 		final boolean isDirectory = Files.isDirectory(baseDirectoryPath);
 		final boolean isReadable = Files.isReadable(baseDirectoryPath);
 		final boolean isWritable = Files.isWritable(baseDirectoryPath);
+		// TODO Set error message
 
 		return (isDirectory && isReadable && isWritable);
 	}

@@ -5,6 +5,9 @@ package com.thedesertmonk.plugin.hydrogen.core.contributions.preferencepage;
  */
 public class PreferenceConstants {
 
+	/**
+	 * Preference which represents the absolute path to the H2 executable.
+	 */
 	public static final String P_EXECUTABLE = "executablePreference";
 
 	// public static final String P_PATH = "pathPreference";

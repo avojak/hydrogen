@@ -3,6 +3,8 @@
  */
 package com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch;
 
+import java.io.File;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.debug.core.ILaunch;
@@ -13,6 +15,8 @@ import org.eclipse.jdt.launching.IVMInstall;
 import org.eclipse.jdt.launching.IVMRunner;
 import org.eclipse.jdt.launching.VMRunnerConfiguration;
 
+import com.thedesertmonk.plugin.hydrogen.core.HydrogenActivator;
+import com.thedesertmonk.plugin.hydrogen.core.contributions.preferencepage.PreferenceConstants;
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.ProgramArguments;
 
 /**
@@ -35,10 +39,18 @@ public class LaunchConfigurationDelegate extends AbstractJavaLaunchConfiguration
 		final IVMInstall vm = verifyVMInstall(configuration);
 		final IVMRunner runner = vm.getVMRunner(mode);
 
+		final File executablePreference = new File(
+				HydrogenActivator.getDefault().getPreferenceStore().getString(PreferenceConstants.P_EXECUTABLE));
+		final String workingDirectory = executablePreference.getParent();
+		final String executable = executablePreference.getName();
+
+		System.out.println("> Working directory: " + workingDirectory);
+		System.out.println("> Executable name: " + executable);
+
 		// Create VM config
 		final VMRunnerConfiguration runConfig = new VMRunnerConfiguration("org.h2.tools.Server",
-				new String[] { "h2-1.4.193.jar" });
-		runConfig.setWorkingDirectory("/Users/andrewvojak/Downloads/h2/bin");
+				new String[] { executable });
+		runConfig.setWorkingDirectory(workingDirectory);
 		final ProgramArguments programArguments = new ProgramArguments(configuration);
 		final String[] argArray = programArguments.getArguments().getArguments().toArray(new String[0]);
 		runConfig.setProgramArguments(argArray);

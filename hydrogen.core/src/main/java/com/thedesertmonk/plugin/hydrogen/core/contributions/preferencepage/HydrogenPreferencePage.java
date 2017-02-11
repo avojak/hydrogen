@@ -1,5 +1,10 @@
 package com.thedesertmonk.plugin.hydrogen.core.contributions.preferencepage;
 
+import java.io.File;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.FileFieldEditor;
 import org.eclipse.jface.preference.StringButtonFieldEditor;
@@ -21,37 +26,52 @@ import com.thedesertmonk.plugin.hydrogen.core.HydrogenActivator;
 
 public class HydrogenPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
+	private FileFieldEditor executableField;
+
 	/**
-	 *
+	 * Constructor
 	 */
 	public HydrogenPreferencePage() {
 		super(GRID);
 		setPreferenceStore(HydrogenActivator.getDefault().getPreferenceStore());
-		setDescription("A demonstration of a preference page implementation");
+		setDescription("General Hydrogen settings:");
 	}
 
 	/**
-	 * Creates the field editors. Field editors are abstractions of the common
-	 * GUI blocks needed to manipulate various types of preferences. Each field
-	 * editor knows how to save and restore itself.
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void createFieldEditors() {
-		addField(new FileFieldEditor(PreferenceConstants.P_EXECUTABLE, "&Executable location:", true,
-				StringButtonFieldEditor.VALIDATE_ON_FOCUS_LOST, getFieldEditorParent()));
-		// addField(
-		// new DirectoryFieldEditor(PreferenceConstants.P_PATH, "&Directory
-		// preference:", getFieldEditorParent()));
-		// addField(new BooleanFieldEditor(PreferenceConstants.P_BOOLEAN, "&An
-		// example of a boolean preference",
-		// getFieldEditorParent()));
-		//
-		// addField(new RadioGroupFieldEditor(PreferenceConstants.P_CHOICE, "An
-		// example of a multiple-choice preference",
-		// 1, new String[][] { { "&Choice 1", "choice1" }, { "C&hoice 2",
-		// "choice2" } }, getFieldEditorParent()));
-		// addField(new StringFieldEditor(PreferenceConstants.P_STRING, "A &text
-		// preference:", getFieldEditorParent()));
+		executableField = new FileFieldEditor(PreferenceConstants.P_EXECUTABLE, "&Executable location:", true,
+				StringButtonFieldEditor.VALIDATE_ON_KEY_STROKE, getFieldEditorParent());
+		executableField.setFilterPath(new File(System.getProperty("user.home"))); //$NON-NLS-1$
+		executableField.setFileExtensions(new String[] { "*.jar" }); //$NON-NLS-1$
+		executableField.setEmptyStringAllowed(false);
+		addField(executableField);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isValid() {
+		final String executablePreference = executableField.getStringValue();
+
+		if (executablePreference == null || executablePreference.trim().isEmpty()) {
+			executableField.setErrorMessage("Location of the executable must be specified");
+			return false;
+		}
+
+		final Path executablePath = FileSystems.getDefault().getPath(executablePreference);
+		final boolean isDirectory = Files.isDirectory(executablePath);
+		final boolean isExecutable = Files.isExecutable(executablePath);
+
+		final boolean isValid = (!isDirectory && isExecutable);
+		if (!isValid) {
+			executableField.setErrorMessage("Specified location must be an executable file");
+		}
+
+		return isValid;
 	}
 
 	/**
