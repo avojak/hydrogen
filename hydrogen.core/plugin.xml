@@ -72,7 +72,7 @@
    <extension
          point="org.eclipse.debug.ui.launchGroups">
       <launchGroup
-            bannerImage="hydrogen.core.launchGroup1"
+            bannerImage="icons/server-h2-banner.png"
             category="hydrogen.core.launchCategory"
             id="hydrogen.core.launchGroup1"
             image="icons/server-h2.png"
