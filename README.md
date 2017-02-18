@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/avojak/hydrogen.svg?branch=master)](https://travis-ci.org/avojak/hydrogen) [![DUB](https://img.shields.io/dub/l/vibe-d.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://travis-ci.org/avojak/hydrogen.svg?branch=master)](https://travis-ci.org/avojak/hydrogen) [![License](https://img.shields.io/badge/License-EPL%201.0-red.svg)](https://opensource.org/licenses/EPL-1.0)
 
 # Hydrogen
 
@@ -10,4 +10,4 @@ TODO
 
 ## License
 
-Licensed under the [MIT License](https://opensource.org/licenses/MIT).
+Licensed under the [Eclipse Public License 1.0](https://opensource.org/licenses/EPL-1.0).
