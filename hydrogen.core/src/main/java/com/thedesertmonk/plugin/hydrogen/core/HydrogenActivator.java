@@ -17,13 +17,10 @@ public class HydrogenActivator extends AbstractUIPlugin {
 
 	boolean started;
 
-	private boolean isServerRunning;
-
 	/**
 	 * The constructor
 	 */
 	public HydrogenActivator() {
-		isServerRunning = false;
 	}
 
 	/**
@@ -34,7 +31,6 @@ public class HydrogenActivator extends AbstractUIPlugin {
 	 */
 	@Override
 	public void start(final BundleContext context) throws Exception {
-		System.out.println("> START");
 		super.start(context);
 		plugin = this;
 		started = true;
@@ -48,24 +44,9 @@ public class HydrogenActivator extends AbstractUIPlugin {
 	 */
 	@Override
 	public void stop(final BundleContext context) throws Exception {
-		System.out.println("> STOP");
 		plugin = null;
 		started = false;
 		super.stop(context);
-	}
-
-	public void notifyOnLaunchButtonClicked() {
-		System.out.println("HydrogenActivator notified on launch button clicked");
-		isServerRunning = true;
-	}
-
-	public void notifyOnTerminateButtonClicked() {
-		System.out.println("HydrogenActivator notified on terminate button clicked");
-		isServerRunning = false;
-	}
-
-	public boolean isServerRunning() {
-		return isServerRunning;
 	}
 
 	/**
