@@ -1,74 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension
-         point="org.eclipse.ui.commands">
-      <command
-            name="Start"
-            id="command.start">
-      </command>
-   </extension>
 
-   <extension
-         point="org.eclipse.ui.handlers">
-      <handler
-            commandId="command.start"
-            class="com.thedesertmonk.plugin.hydrogen.core.StartHandler">
-      </handler>
-   </extension>
 
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
-         <toolbar
-               id="toolbar.start"
-               label="Start H2 Server">
-            <command
-                  commandId="command.start"
-                  icon="icons/server-launch.png"
-                  id="start.toolbar.item"
-                  style="pulldown"
-                  tooltip="Start H2 Server">
-            </command>
-         </toolbar>
-      </menuContribution>
-      <menuContribution
-            allPopups="false"
-            locationURI="menu:start.toolbar.item">
-         <dynamic
-               class="com.thedesertmonk.plugin.hydrogen.core.contributions.menu.RecentMenuContributionItem"
-               id="hydrogen.core.dynamic1">
-         </dynamic>
-         <separator
-               name="hydrogen.core.separator1"
-               visible="true">
-         </separator>
-         <dynamic
-               class="com.thedesertmonk.plugin.hydrogen.core.contributions.menu.WebServerMenuContributionItem"
-               id="hydrogen.core.dynamic3">
-         </dynamic>
-         <dynamic
-               class="com.thedesertmonk.plugin.hydrogen.core.contributions.menu.TcpServerMenuContributionItem"
-               id="hydrogen.core.dynamic1">
-         </dynamic>
-         <dynamic
-               class="com.thedesertmonk.plugin.hydrogen.core.contributions.menu.PgServerMenuContributionItem"
-               id="hydrogen.core.dynamic2">
-         </dynamic>
-         <separator
-               name="hydrogen.core.separator2"
-               visible="true">
-         </separator>
-         <dynamic
-               class="com.thedesertmonk.plugin.hydrogen.core.contributions.menu.LaunchConfigurationsMenuContributionItem"
-               id="hydrogen.core.dynamic2">
-         </dynamic>
-      </menuContribution>
-   </extension>
    <extension
          point="org.eclipse.debug.core.launchConfigurationTypes">
       <launchConfigurationType
+            category="hydrogen.core.launchCategory"
             delegate="com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.LaunchConfigurationDelegate"
             delegateName="Hydrogen H2 Server Launcher"
             id="hydrogen.core.launchConfigurationType1"
@@ -80,7 +18,7 @@
          point="org.eclipse.debug.ui.launchConfigurationTypeImages">
       <launchConfigurationTypeImage
             configTypeID="hydrogen.core.launchConfigurationType1"
-            icon="icons/server-launch.png"
+            icon="icons/server-h2.png"
             id="hydrogen.core.launchConfigurationTypeImage1">
       </launchConfigurationTypeImage>
    </extension>
@@ -108,6 +46,39 @@
    </extension>
    <extension
          point="org.eclipse.ui.preferenceTransfer">
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            description="Launch H2 Server"
+            id="hydrogen.core.actionSet1"
+            label="H2 Launch"
+            visible="true">
+         <action
+               class="com.thedesertmonk.plugin.hydrogen.core.contributions.toolbar.HydrogenLaunchToolbarAction"
+               icon="icons/server-h2.png"
+               id="hydrogen.core.action1"
+               label="H2 Launch"
+               pulldown="true"
+               style="pulldown"
+               toolbarPath="org.eclipse.debug.ui.launchActionSet/run">
+         </action>
+         <menu
+               id="hydrogen.core.menu3"
+               label="H2 Launch">
+         </menu>
+      </actionSet>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchGroups">
+      <launchGroup
+            bannerImage="hydrogen.core.launchGroup1"
+            category="hydrogen.core.launchCategory"
+            id="hydrogen.core.launchGroup1"
+            image="icons/server-h2.png"
+            label="H2 Launch"
+            mode="run">
+      </launchGroup>
    </extension>
 
 </plugin>
