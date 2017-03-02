@@ -134,33 +134,20 @@ public class WebLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 	@Override
 	public boolean isValid(final ILaunchConfiguration launchConfig) {
 		if (allowOthersButton.getSelection()) {
-			setWarningMessage("Allowing other computers to connect to the server is potentially risky.");
+			showAllowOthersWarning();
 		} else {
-			setWarningMessage(null);
+			clearWarningMessage();
 		}
 
-		boolean isValid = true;
-		final String port = portText.getText();
-		if (port == null || port.trim().isEmpty()) {
-			isValid = false;
-		}
-		try {
-			// TODO refactor this
-			final int portNumber = Integer.valueOf(port);
-			if (portNumber < 0 || portNumber > 0xFFFF) {
-				isValid = false;
-			}
-		} catch (final NumberFormatException e) {
-			isValid = false;
-		}
+		final boolean isPortValid = validatePortNumber(portText.getText());
 
-		if (!isValid) {
-			setErrorMessage("Invalid port number");
+		if (!isPortValid) {
+			showInvalidPortNumberError();
 		} else {
-			setErrorMessage(null);
+			clearErrorMessage();
 		}
 
-		return isValid;
+		return isPortValid;
 	}
 
 	/**

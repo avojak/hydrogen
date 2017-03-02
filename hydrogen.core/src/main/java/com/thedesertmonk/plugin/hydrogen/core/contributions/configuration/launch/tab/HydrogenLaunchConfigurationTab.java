@@ -106,4 +106,51 @@ public abstract class HydrogenLaunchConfigurationTab extends AbstractLaunchConfi
 		updateLaunchConfigurationDialog();
 	}
 
+	/**
+	 * @param port
+	 * @return
+	 */
+	public boolean validatePortNumber(final String port) {
+		if (port == null || port.trim().isEmpty()) {
+			return false;
+		}
+		try {
+			final int portNumber = Integer.valueOf(port);
+			if (portNumber < 0 || portNumber > 0xFFFF) {
+				return false;
+			}
+		} catch (final NumberFormatException e) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 *
+	 */
+	public void showAllowOthersWarning() {
+		setWarningMessage("Allowing other computers to connect to the server is potentially risky.");
+	}
+
+	/**
+	 *
+	 */
+	public void clearWarningMessage() {
+		setWarningMessage(null);
+	}
+
+	/**
+	 *
+	 */
+	public void showInvalidPortNumberError() {
+		setErrorMessage("Invalid port number");
+	}
+
+	/**
+	 *
+	 */
+	public void clearErrorMessage() {
+		setErrorMessage(null);
+	}
+
 }
