@@ -32,7 +32,6 @@ public class LaunchConfigurationAttributes {
 	public static final LaunchConfigurationAttribute<String> WEB_PORT = new LaunchConfigurationAttribute<String>(ServerOption.WEB_PORT, "8082");
 	public static final LaunchConfigurationAttribute<String> TCP_PORT = new LaunchConfigurationAttribute<String>(ServerOption.TCP_PORT, "9092");
 	public static final LaunchConfigurationAttribute<String> PG_PORT = new LaunchConfigurationAttribute<String>(ServerOption.PG_PORT, "5435");
-	public static final LaunchConfigurationAttribute<String> TCP_SHUTDOWN_PASSWORD = new LaunchConfigurationAttribute<String>(ServerOption.TCP_SHUTDOWN_PASSWORD, "default");
 	//@formatter:on
 
 }

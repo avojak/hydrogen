@@ -63,8 +63,6 @@ public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 		shutdownSettingsGroup.setText("Shutdown Settings");
 
 		// TODO make this a password field?
-		shutdownPasswordText = createField(shutdownSettingsGroup, "Shutdown password");
-		shutdownPasswordText.addModifyListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 		forceShutdownButton = createCheckButton(shutdownSettingsGroup, "Force shutdown");
 		forceShutdownButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 	}
@@ -87,7 +85,6 @@ public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 		configuration.setAttribute(LaunchConfigurationAttributes.TCP_DAEMON.getName(), LaunchConfigurationAttributes.TCP_DAEMON.getDefaultValue());
 		configuration.setAttribute(LaunchConfigurationAttributes.TCP_PORT.getName(), LaunchConfigurationAttributes.TCP_PORT.getDefaultValue());
 		configuration.setAttribute(LaunchConfigurationAttributes.TCP_SSL.getName(), LaunchConfigurationAttributes.TCP_SSL.getDefaultValue());
-		configuration.setAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_PASSWORD.getName(), LaunchConfigurationAttributes.TCP_SHUTDOWN_PASSWORD.getDefaultValue());
 		configuration.setAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_FORCE.getName(), LaunchConfigurationAttributes.TCP_SHUTDOWN_FORCE.getDefaultValue());
 		//@formatter:on
 	}
@@ -101,7 +98,6 @@ public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 		boolean useDaemonThread = LaunchConfigurationAttributes.TCP_DAEMON.getDefaultValue();
 		String port = LaunchConfigurationAttributes.TCP_PORT.getDefaultValue();
 		boolean useSsl = LaunchConfigurationAttributes.TCP_SSL.getDefaultValue();
-		String shutdownPassword = LaunchConfigurationAttributes.TCP_SHUTDOWN_PASSWORD.getDefaultValue();
 		boolean forceShutdown = LaunchConfigurationAttributes.TCP_SHUTDOWN_FORCE.getDefaultValue();
 
 		try {
@@ -110,7 +106,6 @@ public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 			useDaemonThread = configuration.getAttribute(LaunchConfigurationAttributes.TCP_DAEMON.getName(), LaunchConfigurationAttributes.TCP_DAEMON.getDefaultValue());
 			port = configuration.getAttribute(LaunchConfigurationAttributes.TCP_PORT.getName(), LaunchConfigurationAttributes.TCP_PORT.getDefaultValue());
 			useSsl = configuration.getAttribute(LaunchConfigurationAttributes.TCP_SSL.getName(), LaunchConfigurationAttributes.TCP_SSL.getDefaultValue());
-			shutdownPassword = configuration.getAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_PASSWORD.getName(), LaunchConfigurationAttributes.TCP_SHUTDOWN_PASSWORD.getDefaultValue());
 			forceShutdown = configuration.getAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_FORCE.getName(), LaunchConfigurationAttributes.TCP_SHUTDOWN_FORCE.getDefaultValue());
 			//@formatter:on
 		} catch (final CoreException e) {
@@ -122,7 +117,6 @@ public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 		useDaemonThreadButton.setSelection(useDaemonThread);
 		portText.setText(port);
 		useSslButton.setSelection(useSsl);
-		shutdownPasswordText.setText(shutdownPassword);
 		forceShutdownButton.setSelection(forceShutdown);
 	}
 
@@ -136,7 +130,6 @@ public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 		configuration.setAttribute(LaunchConfigurationAttributes.TCP_DAEMON.getName(), Boolean.valueOf(useDaemonThreadButton.getSelection()));
 		configuration.setAttribute(LaunchConfigurationAttributes.TCP_PORT.getName(), portText.getText());
 		configuration.setAttribute(LaunchConfigurationAttributes.TCP_SSL.getName(), Boolean.valueOf(useSslButton.getSelection()));
-		configuration.setAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_PASSWORD.getName(), shutdownPasswordText.getText());
 		configuration.setAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_FORCE.getName(), Boolean.valueOf(forceShutdownButton.getSelection()));
 		//@formatter:on
 		setDirty(false);
