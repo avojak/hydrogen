@@ -1,11 +1,9 @@
-/**
- * @author
- */
 package com.thedesertmonk.plugin.hydrogen.core.h2.model;
 
 /**
- * @author andrewvojak
+ * Models available server options.
  *
+ * @author Andrew Vojak
  */
 public enum ServerOption {
 
@@ -125,8 +123,9 @@ public enum ServerOption {
 	PG_PORT("-pgPort", Type.PG); //$NON-NLS-1$
 
 	/**
-	 * @author andrewvojak
-	 *
+	 * Models the server option type.
+	 * 
+	 * @author Andrew Vojak
 	 */
 	public enum Type {
 
@@ -170,7 +169,7 @@ public enum ServerOption {
 
 	/**
 	 * Gets the option {@link Type}.
-	 * 
+	 *
 	 * @return The non-null {@link Type}.
 	 */
 	public Type getType() {

@@ -1,13 +1,13 @@
-/**
- * @author
- */
 package com.thedesertmonk.plugin.hydrogen.core.h2.model.configuration.attributes;
 
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.ServerOption;
 
 /**
- * @author andrewvojak
- * @param <T>
+ * Models a launch configuration attribute, which consists of a
+ * {@link ServerOption} and corresponding value.
+ *
+ * @author Andrew Vojak
+ * @param <T> The type of the value.
  *
  */
 public class LaunchConfigurationAttribute<T> {
@@ -53,7 +53,7 @@ public class LaunchConfigurationAttribute<T> {
 
 	/**
 	 * Gets the name of this attribute.
-	 * 
+	 *
 	 * @return The non-null, non-empty name of the attribute.
 	 */
 	public String getName() {

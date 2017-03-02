@@ -22,6 +22,8 @@ import com.thedesertmonk.plugin.hydrogen.core.HydrogenActivator;
  * This page is used to modify preferences only. They are stored in the
  * preference store that belongs to the main plug-in class. That way,
  * preferences can be accessed directly via the preference store.
+ *
+ * @author Andrew Vojak
  */
 
 public class HydrogenPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
@@ -34,7 +36,7 @@ public class HydrogenPreferencePage extends FieldEditorPreferencePage implements
 	public HydrogenPreferencePage() {
 		super(GRID);
 		setPreferenceStore(HydrogenActivator.getDefault().getPreferenceStore());
-		setDescription("General Hydrogen settings:");
+		setDescription("General Hydrogen settings:"); //$NON-NLS-1$
 	}
 
 	/**
@@ -42,7 +44,7 @@ public class HydrogenPreferencePage extends FieldEditorPreferencePage implements
 	 */
 	@Override
 	public void createFieldEditors() {
-		executableField = new FileFieldEditor(PreferenceConstants.P_EXECUTABLE, "&Executable location:", true,
+		executableField = new FileFieldEditor(PreferenceConstants.P_EXECUTABLE, "&Executable location:", true, //$NON-NLS-1$
 				StringButtonFieldEditor.VALIDATE_ON_KEY_STROKE, getFieldEditorParent());
 		executableField.setFilterPath(new File(System.getProperty("user.home"))); //$NON-NLS-1$
 		executableField.setFileExtensions(new String[] { "*.jar" }); //$NON-NLS-1$
@@ -58,7 +60,7 @@ public class HydrogenPreferencePage extends FieldEditorPreferencePage implements
 		final String executablePreference = executableField.getStringValue();
 
 		if (executablePreference == null || executablePreference.trim().isEmpty()) {
-			executableField.setErrorMessage("Location of the executable must be specified");
+			executableField.setErrorMessage("Location of the executable must be specified"); //$NON-NLS-1$
 			return false;
 		}
 
@@ -68,7 +70,7 @@ public class HydrogenPreferencePage extends FieldEditorPreferencePage implements
 
 		final boolean isValid = (!isDirectory && isExecutable);
 		if (!isValid) {
-			executableField.setErrorMessage("Specified location must be an executable file");
+			executableField.setErrorMessage("Specified location must be an executable file"); //$NON-NLS-1$
 		}
 
 		return isValid;

@@ -1,21 +1,21 @@
-/**
- * @author
- */
 package com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author andrewvojak
+ * Models all server arguments to be provided at runtime.
  *
+ * @author Andrew Vojak
  */
 public class HydrogenServerArguments {
 
 	private final List<String> arguments;
 
 	/**
-	 * @param arguments
+	 * Constructor.
+	 * 
+	 * @param arguments The {@link List} of arguments. Cannot be null.
 	 */
 	public HydrogenServerArguments(final List<String> arguments) {
 		if (arguments == null) {

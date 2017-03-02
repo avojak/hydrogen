@@ -6,19 +6,25 @@ import org.osgi.framework.BundleContext;
 
 /**
  * The activator class controls the plug-in life cycle
+ *
+ * @author Andrew Vojak
  */
 public class HydrogenActivator extends AbstractUIPlugin {
 
-	// The plug-in ID
+	/**
+	 * The plug-in ID
+	 */
 	public static final String PLUGIN_ID = "hydrogen.core"; //$NON-NLS-1$
 
-	// The shared instance
 	private static HydrogenActivator plugin;
 
+	/**
+	 * The started flag
+	 */
 	boolean started;
 
 	/**
-	 * The constructor
+	 * Constructor.
 	 */
 	public HydrogenActivator() {
 	}

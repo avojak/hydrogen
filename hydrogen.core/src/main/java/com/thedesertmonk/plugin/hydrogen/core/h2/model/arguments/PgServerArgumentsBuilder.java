@@ -1,6 +1,3 @@
-/**
- * @author
- */
 package com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments;
 
 import java.util.ArrayList;
@@ -9,8 +6,9 @@ import java.util.List;
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.ServerOption;
 
 /**
- * @author andrewvojak
- *
+ * Builder class to create instances of {@link PgServerArguments}.
+ * 
+ * @author Andrew Vojak
  */
 public class PgServerArgumentsBuilder {
 

@@ -1,6 +1,3 @@
-/**
- * @author
- */
 package com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.tab;
 
 import org.eclipse.core.runtime.CoreException;
@@ -20,8 +17,9 @@ import com.thedesertmonk.plugin.hydrogen.core.HydrogenActivator;
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.configuration.attributes.LaunchConfigurationAttributes;
 
 /**
- * @author andrewvojak
+ * The launch configuration tab for the PostgreSQL server.
  *
+ * @author Andrew Vojak
  */
 public class PgLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 
@@ -42,14 +40,14 @@ public class PgLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 		final Group connectionSettingsGroup = new Group(baseComposite, SWT.NONE);
 		connectionSettingsGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		connectionSettingsGroup.setLayout(new GridLayout());
-		connectionSettingsGroup.setText("Connection Settings");
+		connectionSettingsGroup.setText("Connection Settings"); //$NON-NLS-1$
 
 		allowOthersButton = createCheckButton(connectionSettingsGroup,
-				"Allow other computers to connect (Discouraged)");
+				"Allow other computers to connect (Discouraged)"); //$NON-NLS-1$
 		allowOthersButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
-		useDaemonThreadButton = createCheckButton(connectionSettingsGroup, "Use a daemon thread");
+		useDaemonThreadButton = createCheckButton(connectionSettingsGroup, "Use a daemon thread"); //$NON-NLS-1$
 		useDaemonThreadButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
-		portText = createField(connectionSettingsGroup, "Port");
+		portText = createField(connectionSettingsGroup, "Port"); //$NON-NLS-1$
 		portText.addModifyListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 	}
 
@@ -146,7 +144,7 @@ public class PgLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 	 */
 	@Override
 	public String getName() {
-		return "PostgreSQL";
+		return "PostgreSQL"; //$NON-NLS-1$
 	}
 
 	/**
@@ -154,7 +152,7 @@ public class PgLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 	 */
 	@Override
 	public Image getImage() {
-		return HydrogenActivator.getImageDescriptor("icons/pg.png").createImage();
+		return HydrogenActivator.getImageDescriptor("icons/pg.png").createImage(); //$NON-NLS-1$
 	}
 
 }

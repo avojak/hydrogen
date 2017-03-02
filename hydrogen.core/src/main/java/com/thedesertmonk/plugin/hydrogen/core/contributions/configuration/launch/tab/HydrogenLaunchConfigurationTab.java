@@ -1,6 +1,3 @@
-/**
- * @author
- */
 package com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.tab;
 
 import java.text.MessageFormat;
@@ -20,19 +17,29 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 /**
- * @author andrewvojak
+ * Launch configuration tab with additional methods to create common UI
+ * components.
  *
+ * @author Andrew Vojak
  */
 public abstract class HydrogenLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
 
 	private static final String FIELD_LABEL_FORMAT = "{0}:"; //$NON-NLS-1$
 
 	/**
-	 * @param parent
-	 * @param label
-	 * @return
+	 * Creates a text field.
+	 *
+	 * @param parent The parent {@link Composite}. Cannot be null.
+	 * @param label The label. Cannot be null, may be empty.
+	 * @return The new {@link Text} object.
 	 */
 	public Text createField(final Composite parent, final String label) {
+		if (parent == null) {
+			throw new IllegalArgumentException("parent cannot be null"); //$NON-NLS-1$
+		}
+		if (label == null) {
+			throw new IllegalArgumentException("label cannot be null"); //$NON-NLS-1$
+		}
 		final Composite baseComposite = createFieldComposite(parent);
 		addLabelToComposite(baseComposite, label);
 		final Text text = addTextToComposite(baseComposite);
@@ -40,23 +47,29 @@ public abstract class HydrogenLaunchConfigurationTab extends AbstractLaunchConfi
 	}
 
 	/**
-	 * @param parent
-	 * @param label
-	 * @param buttonLabel
-	 * @param listener
-	 * @return
+	 * Creates a directory text field.
+	 *
+	 * @param parent The parent {@link Composite}. Cannot be null.
+	 * @param label The label. Cannot be null, may be empty.
+	 * @return The new directory {@link Text} object.
 	 */
 	public Text createDirectoryField(final Composite parent, final String label) {
+		if (parent == null) {
+			throw new IllegalArgumentException("parent cannot be null"); //$NON-NLS-1$
+		}
+		if (label == null) {
+			throw new IllegalArgumentException("label cannot be null"); //$NON-NLS-1$
+		}
 		final Composite baseComposite = createFieldComposite(parent);
 		addLabelToComposite(baseComposite, label);
 		final Text text = addTextToComposite(baseComposite);
 		((GridLayout) baseComposite.getLayout()).numColumns++;
-		final Button button = createPushButton(baseComposite, "Browse...", null);
+		final Button button = createPushButton(baseComposite, "Browse...", null); //$NON-NLS-1$
 		button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
 				final DirectoryDialog dialog = new DirectoryDialog(parent.getShell(), SWT.OPEN);
-				dialog.setText("Choose a directory:");
+				dialog.setText("Choose a directory:"); //$NON-NLS-1$
 				final String path = dialog.open();
 				if (path == null) {
 					return;
@@ -99,7 +112,7 @@ public abstract class HydrogenLaunchConfigurationTab extends AbstractLaunchConfi
 	}
 
 	/**
-	 *
+	 * Method to be called when the content of the tab changes.
 	 */
 	public void onContentChanged() {
 		setDirty(true);
@@ -107,8 +120,11 @@ public abstract class HydrogenLaunchConfigurationTab extends AbstractLaunchConfi
 	}
 
 	/**
-	 * @param port
-	 * @return
+	 * Validates the given port number.
+	 *
+	 * @param port The port number. Cannot be null or empty.
+	 * @return {@code true} if the port number is valid, otherwise
+	 *         {@code false}.
 	 */
 	public boolean validatePortNumber(final String port) {
 		if (port == null || port.trim().isEmpty()) {
@@ -126,28 +142,29 @@ public abstract class HydrogenLaunchConfigurationTab extends AbstractLaunchConfi
 	}
 
 	/**
-	 *
+	 * Displays the message warning against allowing other computers to connect
+	 * to the server.
 	 */
 	public void showAllowOthersWarning() {
-		setWarningMessage("Allowing other computers to connect to the server is potentially risky.");
+		setWarningMessage("Allowing other computers to connect to the server is potentially risky."); //$NON-NLS-1$
 	}
 
 	/**
-	 *
+	 * Clears the current warning message.
 	 */
 	public void clearWarningMessage() {
 		setWarningMessage(null);
 	}
 
 	/**
-	 *
+	 * Displays the invalid port number error message.
 	 */
 	public void showInvalidPortNumberError() {
-		setErrorMessage("Invalid port number");
+		setErrorMessage("Invalid port number"); //$NON-NLS-1$
 	}
 
 	/**
-	 *
+	 * Clears the current error message.
 	 */
 	public void clearErrorMessage() {
 		setErrorMessage(null);

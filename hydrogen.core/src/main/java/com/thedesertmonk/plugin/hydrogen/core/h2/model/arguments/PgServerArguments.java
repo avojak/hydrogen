@@ -1,14 +1,12 @@
-/**
- * @author
- */
 package com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author andrewvojak
- *
+ * Models the PostgreSQL server arguments.
+ * 
+ * @author Andrew Vojak
  */
 public class PgServerArguments {
 

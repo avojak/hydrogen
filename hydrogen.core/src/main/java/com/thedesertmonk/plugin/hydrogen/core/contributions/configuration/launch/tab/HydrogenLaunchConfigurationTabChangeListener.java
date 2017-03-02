@@ -1,6 +1,3 @@
-/**
- * @author
- */
 package com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.tab;
 
 import org.eclipse.swt.events.ModifyEvent;
@@ -9,15 +6,20 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 
 /**
- * @author andrewvojak
+ * Implementation of {@link SelectionListener} and {@link ModifyListener} to
+ * update a {@link HydrogenLaunchConfigurationTab} when the content changes.
  *
+ * @author Andrew Vojak
  */
 public class HydrogenLaunchConfigurationTabChangeListener implements SelectionListener, ModifyListener {
 
 	private final HydrogenLaunchConfigurationTab launchConfigurationTab;
 
 	/**
-	 * @param launchConfigurationTab
+	 * Constructor.
+	 * 
+	 * @param launchConfigurationTab The {@link HydrogenLaunchConfigurationTab}.
+	 *            Cannot be null.
 	 */
 	public HydrogenLaunchConfigurationTabChangeListener(final HydrogenLaunchConfigurationTab launchConfigurationTab) {
 		if (launchConfigurationTab == null) {

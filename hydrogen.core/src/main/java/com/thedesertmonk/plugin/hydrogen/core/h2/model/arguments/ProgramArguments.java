@@ -1,6 +1,3 @@
-/**
- * @author
- */
 package com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments;
 
 import org.eclipse.core.runtime.CoreException;
@@ -10,8 +7,10 @@ import com.thedesertmonk.plugin.hydrogen.core.h2.model.configuration.attributes.
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.configuration.attributes.LaunchConfigurationAttributes;
 
 /**
- * @author andrewvojak
+ * Encapsulates the {@link HydrogenServerArguments} as well as any other
+ * arguments required from the configuration.
  *
+ * @author Andrew Vojak
  */
 public class ProgramArguments {
 
@@ -19,7 +18,9 @@ public class ProgramArguments {
 	private final HydrogenServerArguments arguments;
 
 	/**
-	 * @param configuration
+	 * Constructor.
+	 *
+	 * @param configuration The {@link ILaunchConfiguration}. Cannot be null.
 	 */
 	public ProgramArguments(final ILaunchConfiguration configuration) {
 		if (configuration == null) {
@@ -116,7 +117,9 @@ public class ProgramArguments {
 	}
 
 	/**
-	 * @return
+	 * Gets the {@link HydrogenServerArguments}.
+	 * 
+	 * @return The non-null {@link HydrogenServerArguments}.
 	 */
 	public HydrogenServerArguments getArguments() {
 		return arguments;

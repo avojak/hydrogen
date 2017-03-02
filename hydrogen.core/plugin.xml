@@ -7,7 +7,7 @@
          point="org.eclipse.debug.core.launchConfigurationTypes">
       <launchConfigurationType
             category="hydrogen.core.launchCategory"
-            delegate="com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.LaunchConfigurationDelegate"
+            delegate="com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.HydrogenLaunchConfigurationDelegate"
             delegateName="Hydrogen H2 Server Launcher"
             id="hydrogen.core.launchConfigurationType1"
             modes="run"
@@ -25,7 +25,7 @@
    <extension
          point="org.eclipse.debug.ui.launchConfigurationTabGroups">
       <launchConfigurationTabGroup
-            class="com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.tab.LaunchConfigurationTabGroup"
+            class="com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.tab.HydrogenLaunchConfigurationTabGroup"
             id="hydrogen.core.launchConfigurationTabGroup1"
             type="hydrogen.core.launchConfigurationType1">
       </launchConfigurationTabGroup>
@@ -40,9 +40,6 @@
    </extension>
    <extension
          point="org.eclipse.core.runtime.preferences">
-      <initializer
-            class="com.thedesertmonk.plugin.hydrogen.core.contributions.preferencepage.PreferenceInitializer">
-      </initializer>
    </extension>
    <extension
          point="org.eclipse.ui.preferenceTransfer">

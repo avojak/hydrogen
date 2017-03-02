@@ -1,6 +1,3 @@
-/**
- * @author
- */
 package com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.tab;
 
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTabGroup;
@@ -9,10 +6,11 @@ import org.eclipse.debug.ui.ILaunchConfigurationDialog;
 import org.eclipse.debug.ui.ILaunchConfigurationTab;
 
 /**
- * @author andrewvojak
- *
+ * The group for Hydrogen launch configuration tabs.
+ * 
+ * @author Andrew Vojak
  */
-public class LaunchConfigurationTabGroup extends AbstractLaunchConfigurationTabGroup {
+public class HydrogenLaunchConfigurationTabGroup extends AbstractLaunchConfigurationTabGroup {
 
 	/**
 	 * {@inheritDoc}

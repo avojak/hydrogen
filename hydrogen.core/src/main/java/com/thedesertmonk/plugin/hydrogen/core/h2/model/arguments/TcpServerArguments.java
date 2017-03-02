@@ -1,6 +1,3 @@
-/**
- * @author
- */
 package com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments;
 
 import java.util.ArrayList;
@@ -9,7 +6,7 @@ import java.util.List;
 /**
  * Models the set of TCP server arguments.
  *
- * @author andrewvojak
+ * @author Andrew Vojak
  */
 public class TcpServerArguments {
 

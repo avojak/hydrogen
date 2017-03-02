@@ -1,6 +1,3 @@
-/**
- * @author
- */
 package com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.tab;
 
 import org.eclipse.core.runtime.CoreException;
@@ -20,8 +17,9 @@ import com.thedesertmonk.plugin.hydrogen.core.HydrogenActivator;
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.configuration.attributes.LaunchConfigurationAttributes;
 
 /**
- * @author andrewvojak
+ * The launch configuration tab for the web server.
  *
+ * @author Andrew Vojak
  */
 public class WebLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 
@@ -44,19 +42,19 @@ public class WebLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 		final Group connectionSettingsGroup = new Group(baseComposite, SWT.NONE);
 		connectionSettingsGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		connectionSettingsGroup.setLayout(new GridLayout());
-		connectionSettingsGroup.setText("Connection Settings");
+		connectionSettingsGroup.setText("Connection Settings"); //$NON-NLS-1$
 
 		allowOthersButton = createCheckButton(connectionSettingsGroup,
-				"Allow other computers to connect (Discouraged)");
+				"Allow other computers to connect (Discouraged)"); //$NON-NLS-1$
 		allowOthersButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
-		useDaemonThreadButton = createCheckButton(connectionSettingsGroup, "Use a daemon thread");
+		useDaemonThreadButton = createCheckButton(connectionSettingsGroup, "Use a daemon thread"); //$NON-NLS-1$
 		useDaemonThreadButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
-		portText = createField(connectionSettingsGroup, "Port");
+		portText = createField(connectionSettingsGroup, "Port"); //$NON-NLS-1$
 		portText.addModifyListener(new HydrogenLaunchConfigurationTabChangeListener(this));
-		useSslButton = createCheckButton(connectionSettingsGroup, "Use encrypted (HTTPS) connections");
+		useSslButton = createCheckButton(connectionSettingsGroup, "Use encrypted (HTTPS) connections"); //$NON-NLS-1$
 		useSslButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 
-		openBrowserButton = createCheckButton(baseComposite, "Open browser");
+		openBrowserButton = createCheckButton(baseComposite, "Open browser"); //$NON-NLS-1$
 		openBrowserButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 	}
 
@@ -163,7 +161,7 @@ public class WebLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 	 */
 	@Override
 	public String getName() {
-		return "Web";
+		return "Web"; //$NON-NLS-1$
 	}
 
 	/**
@@ -171,7 +169,7 @@ public class WebLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 	 */
 	@Override
 	public Image getImage() {
-		return HydrogenActivator.getImageDescriptor("icons/globe.png").createImage();
+		return HydrogenActivator.getImageDescriptor("icons/globe.png").createImage(); //$NON-NLS-1$
 	}
 
 }

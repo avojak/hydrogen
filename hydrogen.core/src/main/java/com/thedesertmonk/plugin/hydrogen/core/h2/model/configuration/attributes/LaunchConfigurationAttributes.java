@@ -1,14 +1,13 @@
-/**
- * @author
- */
 package com.thedesertmonk.plugin.hydrogen.core.h2.model.configuration.attributes;
 
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.ServerOption;
 
 /**
- * @author andrewvojak
+ * Models all available launch configuration attributes.
  *
+ * @author Andrew Vojak
  */
+@SuppressWarnings("javadoc")
 public class LaunchConfigurationAttributes {
 
 	//@formatter:off
@@ -27,11 +26,11 @@ public class LaunchConfigurationAttributes {
 	public static final LaunchConfigurationAttribute<Boolean> TCP_SHUTDOWN_FORCE = new LaunchConfigurationAttribute<Boolean>(ServerOption.TCP_SHUTDOWN_FORCE, Boolean.TRUE);
 	public static final LaunchConfigurationAttribute<Boolean> PG_ALLOW_OTHERS = new LaunchConfigurationAttribute<Boolean>(ServerOption.PG_ALLOW_OTHERS, Boolean.FALSE);
 	public static final LaunchConfigurationAttribute<Boolean> PG_DAEMON = new LaunchConfigurationAttribute<Boolean>(ServerOption.PG_DAEMON, Boolean.FALSE);
-	public static final LaunchConfigurationAttribute<String> BASE_DIRECTORY = new LaunchConfigurationAttribute<String>(ServerOption.BASE_DIRECTORY, System.getProperty("user.home"));
-	public static final LaunchConfigurationAttribute<String> PROPERTIES = new LaunchConfigurationAttribute<String>(ServerOption.PROPERTIES, "");
-	public static final LaunchConfigurationAttribute<String> WEB_PORT = new LaunchConfigurationAttribute<String>(ServerOption.WEB_PORT, "8082");
-	public static final LaunchConfigurationAttribute<String> TCP_PORT = new LaunchConfigurationAttribute<String>(ServerOption.TCP_PORT, "9092");
-	public static final LaunchConfigurationAttribute<String> PG_PORT = new LaunchConfigurationAttribute<String>(ServerOption.PG_PORT, "5435");
+	public static final LaunchConfigurationAttribute<String> BASE_DIRECTORY = new LaunchConfigurationAttribute<String>(ServerOption.BASE_DIRECTORY, System.getProperty("user.home")); //$NON-NLS-1$
+	public static final LaunchConfigurationAttribute<String> PROPERTIES = new LaunchConfigurationAttribute<String>(ServerOption.PROPERTIES, ""); //$NON-NLS-1$
+	public static final LaunchConfigurationAttribute<String> WEB_PORT = new LaunchConfigurationAttribute<String>(ServerOption.WEB_PORT, "8082"); //$NON-NLS-1$
+	public static final LaunchConfigurationAttribute<String> TCP_PORT = new LaunchConfigurationAttribute<String>(ServerOption.TCP_PORT, "9092"); //$NON-NLS-1$
+	public static final LaunchConfigurationAttribute<String> PG_PORT = new LaunchConfigurationAttribute<String>(ServerOption.PG_PORT, "5435"); //$NON-NLS-1$
 	//@formatter:on
 
 }

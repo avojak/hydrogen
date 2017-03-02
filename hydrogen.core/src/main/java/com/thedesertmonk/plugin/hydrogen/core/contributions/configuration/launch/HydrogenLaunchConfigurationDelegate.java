@@ -1,6 +1,3 @@
-/**
- * @author
- */
 package com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch;
 
 import java.io.File;
@@ -20,10 +17,11 @@ import com.thedesertmonk.plugin.hydrogen.core.contributions.preferencepage.Prefe
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.ProgramArguments;
 
 /**
- * @author andrewvojak
- *         http://www.eclipse.org/articles/Article-Launch-Framework/launch.html
+ * The Hydrogen launch configuration delegate.
+ *
+ * @author Andrew Vojak
  */
-public class LaunchConfigurationDelegate extends AbstractJavaLaunchConfigurationDelegate {
+public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfigurationDelegate {
 
 	private static final String MAIN_SERVER_CLASS = "org.h2.tools.Server"; //$NON-NLS-1$
 	private static final String LAUNCH_HEADLESS = "-Djava.awt.headless=true"; //$NON-NLS-1$
@@ -57,7 +55,7 @@ public class LaunchConfigurationDelegate extends AbstractJavaLaunchConfiguration
 		runConfig.setVMArguments(new String[] { LAUNCH_HEADLESS });
 
 		// Bootpath
-		final String[] bootpath = getBootpath(configuration);
+		// final String[] bootpath = getBootpath(configuration);
 		// runConfig.setBootClassPath(bootpath);
 
 		// Launch the configuration

@@ -1,6 +1,3 @@
-/**
- * @author
- */
 package com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.tab;
 
 import java.nio.file.FileSystems;
@@ -24,8 +21,9 @@ import com.thedesertmonk.plugin.hydrogen.core.HydrogenActivator;
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.configuration.attributes.LaunchConfigurationAttributes;
 
 /**
- * @author andrewvojak
+ * Launch configuration tab for general configuration settings.
  *
+ * @author Andrew Vojak
  */
 public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 
@@ -49,26 +47,26 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 		final Group databaseSettingsGroup = new Group(baseComposite, SWT.NONE);
 		databaseSettingsGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		databaseSettingsGroup.setLayout(new GridLayout());
-		databaseSettingsGroup.setText("Database Settings");
+		databaseSettingsGroup.setText("Database Settings"); //$NON-NLS-1$
 
-		baseDirectoryField = createDirectoryField(databaseSettingsGroup, "Database base directory");
+		baseDirectoryField = createDirectoryField(databaseSettingsGroup, "Database base directory"); //$NON-NLS-1$
 		baseDirectoryField.addModifyListener(new HydrogenLaunchConfigurationTabChangeListener(this));
-		existingDatabaseButton = createCheckButton(databaseSettingsGroup, "Only open existing databases");
+		existingDatabaseButton = createCheckButton(databaseSettingsGroup, "Only open existing databases"); //$NON-NLS-1$
 		existingDatabaseButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 
 		final Group serversToLaunchGroup = new Group(baseComposite, SWT.NONE);
 		serversToLaunchGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		serversToLaunchGroup.setLayout(new GridLayout());
-		serversToLaunchGroup.setText("Servers to launch");
+		serversToLaunchGroup.setText("Servers to launch"); //$NON-NLS-1$
 
-		launchWebServerButton = createCheckButton(serversToLaunchGroup, "Web");
+		launchWebServerButton = createCheckButton(serversToLaunchGroup, "Web"); //$NON-NLS-1$
 		launchWebServerButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
-		launchTcpServerButton = createCheckButton(serversToLaunchGroup, "TCP");
+		launchTcpServerButton = createCheckButton(serversToLaunchGroup, "TCP"); //$NON-NLS-1$
 		launchTcpServerButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
-		launchPgServerButton = createCheckButton(serversToLaunchGroup, "PostgreSQL");
+		launchPgServerButton = createCheckButton(serversToLaunchGroup, "PostgreSQL"); //$NON-NLS-1$
 		launchPgServerButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 
-		tracingButton = createCheckButton(baseComposite, "Enable tracing");
+		tracingButton = createCheckButton(baseComposite, "Enable tracing"); //$NON-NLS-1$
 		tracingButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 	}
 
@@ -146,8 +144,7 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 	}
 
 	/**
-	 * {@inheritDoc}
-	 * TODO This is bad and needs fixing... 
+	 * {@inheritDoc} TODO This is bad and needs fixing...
 	 */
 	@Override
 	public boolean isValid(final ILaunchConfiguration launchConfig) {
@@ -171,13 +168,13 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 		final Path baseDirectoryPath = FileSystems.getDefault().getPath(baseDirectory);
 		final boolean isDirectory = Files.isDirectory(baseDirectoryPath);
 		if (!isDirectory) {
-			setErrorMessage("Database base directory must be a directory");
+			setErrorMessage("Database base directory must be a directory"); //$NON-NLS-1$
 			return false;
 		}
 		final boolean isReadable = Files.isReadable(baseDirectoryPath);
 		final boolean isWritable = Files.isWritable(baseDirectoryPath);
 		if (!isReadable || !isWritable) {
-			setErrorMessage("Verify directory privileges allow read and write access");
+			setErrorMessage("Verify directory privileges allow read and write access"); //$NON-NLS-1$
 			return false;
 		}
 
@@ -204,7 +201,7 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 	 */
 	@Override
 	public String getName() {
-		return "General";
+		return "General"; //$NON-NLS-1$
 	}
 
 	/**
@@ -212,7 +209,7 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 	 */
 	@Override
 	public Image getImage() {
-		return HydrogenActivator.getImageDescriptor("icons/main_tab.png").createImage();
+		return HydrogenActivator.getImageDescriptor("icons/main_tab.png").createImage(); //$NON-NLS-1$
 	}
 
 }
