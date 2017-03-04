@@ -17,7 +17,7 @@ public class HydrogenLaunchConfigurationTabChangeListener implements SelectionLi
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param launchConfigurationTab The {@link HydrogenLaunchConfigurationTab}.
 	 *            Cannot be null.
 	 */
