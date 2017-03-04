@@ -18,7 +18,7 @@
          point="org.eclipse.debug.ui.launchConfigurationTypeImages">
       <launchConfigurationTypeImage
             configTypeID="hydrogen.core.launchConfigurationType1"
-            icon="icons/server-h2.png"
+            icon="icons/server-16.png"
             id="hydrogen.core.launchConfigurationTypeImage1">
       </launchConfigurationTypeImage>
    </extension>
@@ -53,7 +53,7 @@
             visible="true">
          <action
                class="com.thedesertmonk.plugin.hydrogen.core.contributions.toolbar.HydrogenLaunchToolbarAction"
-               icon="icons/server-h2.png"
+               icon="icons/server-16.png"
                id="hydrogen.core.action1"
                label="H2 Launch"
                pulldown="true"
@@ -69,10 +69,10 @@
    <extension
          point="org.eclipse.debug.ui.launchGroups">
       <launchGroup
-            bannerImage="icons/server-h2-banner.png"
+            bannerImage="icons/server-wizard.png"
             category="hydrogen.core.launchCategory"
             id="hydrogen.core.launchGroup1"
-            image="icons/server-h2.png"
+            image="icons/server-16.png"
             label="H2 Launch"
             mode="run">
       </launchGroup>
