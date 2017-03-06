@@ -6,5 +6,5 @@
 hydrogen.core/target/*
 hydrogen.feature/target/*
 hydrogen.test/target/*
-hydrogen.test.dependencies/*
+hydrogen.test.dependencies/target/*
 hydrogen.site/target/*
