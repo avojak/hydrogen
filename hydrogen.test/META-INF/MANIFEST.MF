@@ -5,5 +5,4 @@ Bundle-SymbolicName: hydrogen.test
 Bundle-Version: 1.0.0.qualifier
 Fragment-Host: hydrogen.core;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.eclipse.jdt.junit4.runtime;bundle-version="1.1.0",
- org.junit;bundle-version="4.11"
+Require-Bundle: hydrogen.test.dependencies;bundle-version="1.0.0"

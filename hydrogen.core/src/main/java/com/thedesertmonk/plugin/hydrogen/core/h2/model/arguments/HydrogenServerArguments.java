@@ -14,7 +14,7 @@ public class HydrogenServerArguments {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param arguments The {@link List} of arguments. Cannot be null.
 	 */
 	public HydrogenServerArguments(final List<String> arguments) {
@@ -39,6 +39,38 @@ public class HydrogenServerArguments {
 	@Override
 	public String toString() {
 		return "HydrogenServerArguments [arguments=" + arguments + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + arguments.hashCode();
+		return result;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final HydrogenServerArguments other = (HydrogenServerArguments) obj;
+		if (!arguments.equals(other.arguments)) {
+			return false;
+		}
+		return true;
 	}
 
 }

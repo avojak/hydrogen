@@ -147,4 +147,13 @@ public class HydrogenServerArgumentsBuilder {
 		return new HydrogenServerArguments(arguments);
 	}
 
+	/**
+	 * Gets the {@link List} of arguments.
+	 * 
+	 * @return The non-null {@link List} of argument {@link String} objects.
+	 */
+	public List<String> getArguments() {
+		return new ArrayList<String>(arguments);
+	}
+
 }

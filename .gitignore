@@ -3,9 +3,8 @@
 
 .project
 
-hydrogen.test/.classpath
-
 hydrogen.core/target/*
 hydrogen.feature/target/*
 hydrogen.test/target/*
+hydrogen.test.dependencies/*
 hydrogen.site/target/*

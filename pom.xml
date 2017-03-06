@@ -223,6 +223,7 @@
 	</profiles>
 	<modules>
 		<module>hydrogen.core</module>
+		<module>hydrogen.test.dependencies</module>
 		<module>hydrogen.test</module>
 		<module>hydrogen.feature</module>
 		<module>hydrogen.site</module>

@@ -1,4 +1,4 @@
-package com.thedesertmonk.plugin.hydrogen.core;
+package com.thedesertmonk.plugin.hydrogen.test;
 
 import org.junit.Test;
 
