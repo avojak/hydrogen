@@ -19,6 +19,7 @@
 		<os.jvm.flags />
 		<tycho.test.jvmArgs>-Xmx512m</tycho.test.jvmArgs>
 		<jarsigner.version>1.4</jarsigner.version>
+		<jacoco.version>0.7.8</jacoco.version>
 	</properties>
 	<repositories>
 		<repository>
@@ -58,13 +59,11 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- Code coverage -->
 			<plugin>
 				<groupId>org.eluder.coveralls</groupId>
 				<artifactId>coveralls-maven-plugin</artifactId>
 				<version>4.3.0</version>
-				<configuration>
-					<repoToken>nrTNE9kgHT8ouhF1SoCZCONP2fCJCDpEE</repoToken>
-				</configuration>
 			</plugin>
 		</plugins>
 		<pluginManagement>
