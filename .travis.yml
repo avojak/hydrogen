@@ -2,6 +2,4 @@ language: java
 jdk:
   - oraclejdk8
 sudo: false
-script: mvn -e -X clean verify
-after_success:
-  - mvn clean verify coveralls:report
+script: mvn -e -X clean verify -Pjacoco coveralls:report
