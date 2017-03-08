@@ -2,4 +2,4 @@ language: java
 jdk:
   - oraclejdk8
 sudo: false
-script: mvn -e -X clean verify -Pjacoco coveralls:report
+script: mvn clean verify -Pjacoco coveralls:report
