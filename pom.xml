@@ -46,19 +46,6 @@
 					<ignoreTychoRepositories>true</ignoreTychoRepositories>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-source-plugin</artifactId>
-				<version>${tycho.version}</version>
-				<executions>
-					<execution>
-						<id>attach-source</id>
-						<goals>
-							<goal>plugin-source</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -76,7 +63,7 @@
 					<version>${tycho.version}</version>
 					<configuration>
 						<useUIHarness>false</useUIHarness>
-						<argLine>${tycho.test.jvmArgs} ${os.jvm.flags}</argLine>
+						<argLine>${tycho.test.jvmArgs} ${os.jvm.flags} ${jacoco.agent.argLine}</argLine>
 						<!-- kill test JVM if tests take more than 1 minute (60 seconds) to 
 							finish -->
 						<forkedProcessTimeoutInSeconds>60</forkedProcessTimeoutInSeconds>
@@ -106,20 +93,6 @@
 			</activation>
 			<build>
 				<plugins>
-					<plugin>
-						<groupId>org.eclipse.tycho.extras</groupId>
-						<artifactId>tycho-source-feature-plugin</artifactId>
-						<version>${tycho.extras.version}</version>
-						<executions>
-							<execution>
-								<id>source-feature</id>
-								<phase>package</phase>
-								<goals>
-									<goal>source-feature</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
 					<plugin>
 						<groupId>org.eclipse.tycho</groupId>
 						<artifactId>tycho-p2-plugin</artifactId>
@@ -233,11 +206,11 @@
 						<artifactId>jacoco-maven-plugin</artifactId>
 						<version>${jacoco.version}</version>
 						<configuration>
-							<excludes>
-							</excludes>
+							<propertyName>jacoco.agent.argLine</propertyName> 
 						</configuration>
 						<executions>
 							<execution>
+								<id>default-prepare-agent</id> 
 								<goals>
 									<goal>prepare-agent</goal>
 								</goals>
