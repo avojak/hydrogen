@@ -7,7 +7,7 @@ import com.thedesertmonk.plugin.hydrogen.core.h2.model.ServerOption;
 
 /**
  * Builder class to create instances of {@link PgServerArguments}.
- * 
+ *
  * @author Andrew Vojak
  */
 public class PgServerArgumentsBuilder {
@@ -64,6 +64,15 @@ public class PgServerArgumentsBuilder {
 	 */
 	public PgServerArguments build() {
 		return new PgServerArguments(arguments);
+	}
+
+	/**
+	 * Gets the {@link List} of arguments.
+	 *
+	 * @return The non-null {@link List} of argument {@link String} objects.
+	 */
+	public List<String> getArguments() {
+		return new ArrayList<String>(arguments);
 	}
 
 }

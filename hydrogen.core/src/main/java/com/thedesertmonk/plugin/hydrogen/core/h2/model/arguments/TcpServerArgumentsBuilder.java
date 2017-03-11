@@ -7,7 +7,7 @@ import com.thedesertmonk.plugin.hydrogen.core.h2.model.ServerOption;
 
 /**
  * Builder class to create instances of {@link TcpServerArguments}.
- * 
+ *
  * @author Andrew Vojak
  */
 public class TcpServerArgumentsBuilder {
@@ -73,7 +73,7 @@ public class TcpServerArgumentsBuilder {
 	 * @param url The shutdown URL. Cannot be null or empty.
 	 * @return The current {@link TcpServerArgumentsBuilder} instance.
 	 */
-	public TcpServerArgumentsBuilder withShutdownURL(final String url) {
+	public TcpServerArgumentsBuilder withShutdownUrl(final String url) {
 		if (url == null || url.trim().isEmpty()) {
 			throw new IllegalArgumentException("url cannot be null or empty"); //$NON-NLS-1$
 		}
@@ -114,6 +114,15 @@ public class TcpServerArgumentsBuilder {
 	 */
 	public TcpServerArguments build() {
 		return new TcpServerArguments(arguments);
+	}
+
+	/**
+	 * Gets the {@link List} of arguments.
+	 *
+	 * @return The non-null {@link List} of argument {@link String} objects.
+	 */
+	public List<String> getArguments() {
+		return new ArrayList<String>(arguments);
 	}
 
 }

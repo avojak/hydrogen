@@ -1,12 +1,12 @@
 package com.thedesertmonk.plugin.hydrogen.test.h2.model.arguments;
 
 import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
@@ -21,7 +21,7 @@ import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.HydrogenServerA
 @SuppressWarnings("nls")
 public class HydrogenServerArgumentsTest {
 
-	private final List<String> argumentStrings = Collections.singletonList("arg");
+	private final List<String> argumentStrings = singletonList("arg");
 
 	/**
 	 * Tests that the constructor throws an exception when the given
