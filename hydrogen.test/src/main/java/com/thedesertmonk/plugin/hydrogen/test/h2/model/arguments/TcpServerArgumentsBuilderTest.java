@@ -1,10 +1,10 @@
 package com.thedesertmonk.plugin.hydrogen.test.h2.model.arguments;
 
+import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
@@ -50,7 +50,7 @@ public class TcpServerArgumentsBuilderTest {
 	 */
 	@Test
 	public void testAllowOthers() {
-		final List<String> expectedArguments = Arrays.asList(ServerOption.START_TCP.getParam(),
+		final List<String> expectedArguments = asList(ServerOption.START_TCP.getParam(),
 				ServerOption.TCP_ALLOW_OTHERS.getParam());
 
 		assertEquals(expectedArguments, builder.allowOthers().getArguments());
@@ -61,7 +61,7 @@ public class TcpServerArgumentsBuilderTest {
 	 */
 	@Test
 	public void testUseDaemonThread() {
-		final List<String> expectedArguments = Arrays.asList(ServerOption.START_TCP.getParam(),
+		final List<String> expectedArguments = asList(ServerOption.START_TCP.getParam(),
 				ServerOption.TCP_DAEMON.getParam());
 
 		assertEquals(expectedArguments, builder.useDaemonThread().getArguments());
@@ -90,7 +90,7 @@ public class TcpServerArgumentsBuilderTest {
 	 */
 	@Test
 	public void testWithPort() {
-		final List<String> expectedArguments = Arrays.asList(ServerOption.START_TCP.getParam(),
+		final List<String> expectedArguments = asList(ServerOption.START_TCP.getParam(),
 				ServerOption.TCP_PORT.getParam(), PORT);
 
 		assertEquals(expectedArguments, builder.withPort(PORT).getArguments());
@@ -101,7 +101,7 @@ public class TcpServerArgumentsBuilderTest {
 	 */
 	@Test
 	public void testUseSsl() {
-		final List<String> expectedArguments = Arrays.asList(ServerOption.START_TCP.getParam(),
+		final List<String> expectedArguments = asList(ServerOption.START_TCP.getParam(),
 				ServerOption.TCP_SSL.getParam());
 
 		assertEquals(expectedArguments, builder.useSsl().getArguments());
@@ -130,7 +130,7 @@ public class TcpServerArgumentsBuilderTest {
 	 */
 	@Test
 	public void testWithShutdownUrl() {
-		final List<String> expectedArguments = Arrays.asList(ServerOption.START_TCP.getParam(),
+		final List<String> expectedArguments = asList(ServerOption.START_TCP.getParam(),
 				ServerOption.TCP_SHUTDOWN_URL.getParam(), URL);
 
 		assertEquals(expectedArguments, builder.withShutdownUrl(URL).getArguments());
@@ -159,7 +159,7 @@ public class TcpServerArgumentsBuilderTest {
 	 */
 	@Test
 	public void testWithShutdownPassword() {
-		final List<String> expectedArguments = Arrays.asList(ServerOption.START_TCP.getParam(),
+		final List<String> expectedArguments = asList(ServerOption.START_TCP.getParam(),
 				ServerOption.TCP_SHUTDOWN_PASSWORD.getParam(), PASSWORD);
 
 		assertEquals(expectedArguments, builder.withShutdownPassword(PASSWORD).getArguments());
@@ -170,7 +170,7 @@ public class TcpServerArgumentsBuilderTest {
 	 */
 	@Test
 	public void testForceShutdown() {
-		final List<String> expectedArguments = Arrays.asList(ServerOption.START_TCP.getParam(),
+		final List<String> expectedArguments = asList(ServerOption.START_TCP.getParam(),
 				ServerOption.TCP_SHUTDOWN_FORCE.getParam());
 
 		assertEquals(expectedArguments, builder.forceShutdown().getArguments());

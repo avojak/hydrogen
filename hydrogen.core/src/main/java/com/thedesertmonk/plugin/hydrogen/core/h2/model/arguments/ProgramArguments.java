@@ -52,6 +52,15 @@ public class ProgramArguments {
 		arguments = hydrogenServerArgumentsBuilder.build();
 	}
 
+	// TODO could make these generic?
+	/**
+	 * <pre>
+	 * For example:
+	 *
+	 * private <T> T verifyAttribute(final LaunchConfigurationAttribute<T> attribute)
+	 * </pre>
+	 */
+
 	private boolean verifyBooleanAttribute(final LaunchConfigurationAttribute<Boolean> attribute) throws CoreException {
 		verifyAttribute(attribute);
 		return (Boolean) configuration.getAttributes().get(attribute.getName());
@@ -118,7 +127,7 @@ public class ProgramArguments {
 
 	/**
 	 * Gets the {@link HydrogenServerArguments}.
-	 * 
+	 *
 	 * @return The non-null {@link HydrogenServerArguments}.
 	 */
 	public HydrogenServerArguments getArguments() {

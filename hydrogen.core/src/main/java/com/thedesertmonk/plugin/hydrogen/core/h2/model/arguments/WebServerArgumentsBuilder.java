@@ -86,4 +86,13 @@ public class WebServerArgumentsBuilder {
 		return new WebServerArguments(arguments);
 	}
 
+	/**
+	 * Gets the {@link List} of arguments.
+	 *
+	 * @return The non-null {@link List} of argument {@link String} objects.
+	 */
+	public List<String> getArguments() {
+		return new ArrayList<String>(arguments);
+	}
+
 }

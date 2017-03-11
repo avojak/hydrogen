@@ -1,10 +1,10 @@
 package com.thedesertmonk.plugin.hydrogen.test.h2.model.arguments;
 
+import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
@@ -48,7 +48,7 @@ public class PgServerArgumentsBuilderTest {
 	 */
 	@Test
 	public void testAllowOthers() {
-		final List<String> expectedArguments = Arrays.asList(ServerOption.START_PG.getParam(),
+		final List<String> expectedArguments = asList(ServerOption.START_PG.getParam(),
 				ServerOption.PG_ALLOW_OTHERS.getParam());
 
 		assertEquals(expectedArguments, builder.allowOthers().getArguments());
@@ -59,7 +59,7 @@ public class PgServerArgumentsBuilderTest {
 	 */
 	@Test
 	public void testUseDaemonThread() {
-		final List<String> expectedArguments = Arrays.asList(ServerOption.START_PG.getParam(),
+		final List<String> expectedArguments = asList(ServerOption.START_PG.getParam(),
 				ServerOption.PG_DAEMON.getParam());
 
 		assertEquals(expectedArguments, builder.useDaemonThread().getArguments());
@@ -88,8 +88,8 @@ public class PgServerArgumentsBuilderTest {
 	 */
 	@Test
 	public void testWithPort() {
-		final List<String> expectedArguments = Arrays.asList(ServerOption.START_PG.getParam(),
-				ServerOption.PG_PORT.getParam(), PORT);
+		final List<String> expectedArguments = asList(ServerOption.START_PG.getParam(), ServerOption.PG_PORT.getParam(),
+				PORT);
 
 		assertEquals(expectedArguments, builder.withPort(PORT).getArguments());
 	}
