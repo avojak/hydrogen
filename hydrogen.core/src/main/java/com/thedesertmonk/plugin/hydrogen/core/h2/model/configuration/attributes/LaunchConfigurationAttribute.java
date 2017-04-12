@@ -60,4 +60,48 @@ public class LaunchConfigurationAttribute<T> {
 		return getServerOption().name();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		return "LaunchConfigurationAttribute [serverOption=" + serverOption + ", defaultValue=" + defaultValue + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + defaultValue.hashCode();
+		result = prime * result + serverOption.hashCode();
+		return result;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final LaunchConfigurationAttribute<?> other = (LaunchConfigurationAttribute<?>) obj;
+		if (!defaultValue.equals(other.defaultValue)) {
+			return false;
+		}
+		if (serverOption != other.serverOption) {
+			return false;
+		}
+		return true;
+	}
+
 }

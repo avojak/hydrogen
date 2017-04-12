@@ -14,35 +14,60 @@ import com.thedesertmonk.plugin.hydrogen.core.h2.model.configuration.attributes.
  */
 public class ProgramArguments {
 
+	private final WebServerArgumentsBuilder webServerArgumentsBuilder;
+	private final TcpServerArgumentsBuilder tcpServerArgumentsBuilder;
+	private final PgServerArgumentsBuilder pgServerArgumentsBuilder;
 	private final ILaunchConfiguration configuration;
 	private final HydrogenServerArguments arguments;
 
 	/**
 	 * Constructor.
 	 *
+	 * @param hydrogenServerArgumentsBuilder
+	 * @param webServerArgumentsBuilder
+	 * @param tcpServerArgumentsBuilder
+	 * @param pgServerArgumentsBuilder
+	 *
 	 * @param configuration The {@link ILaunchConfiguration}. Cannot be null.
 	 */
-	public ProgramArguments(final ILaunchConfiguration configuration) {
+	public ProgramArguments(final HydrogenServerArgumentsBuilder hydrogenServerArgumentsBuilder,
+			final WebServerArgumentsBuilder webServerArgumentsBuilder,
+			final TcpServerArgumentsBuilder tcpServerArgumentsBuilder,
+			final PgServerArgumentsBuilder pgServerArgumentsBuilder, final ILaunchConfiguration configuration) {
+		if (hydrogenServerArgumentsBuilder == null) {
+			throw new IllegalArgumentException("hydrogenServerArgumentsBuilder cannot be null"); //$NON-NLS-1$
+		}
+		if (webServerArgumentsBuilder == null) {
+			throw new IllegalArgumentException("webServerArgumentsBuilder cannot be null"); //$NON-NLS-1$
+		}
+		if (tcpServerArgumentsBuilder == null) {
+			throw new IllegalArgumentException("tcpServerArgumentsBuilder cannot be null"); //$NON-NLS-1$
+		}
+		if (pgServerArgumentsBuilder == null) {
+			throw new IllegalArgumentException("pgServerArgumentsBuilder cannot be null"); //$NON-NLS-1$
+		}
 		if (configuration == null) {
 			throw new IllegalArgumentException("configuration cannot be null"); //$NON-NLS-1$
 		}
+		this.webServerArgumentsBuilder = webServerArgumentsBuilder;
+		this.tcpServerArgumentsBuilder = tcpServerArgumentsBuilder;
+		this.pgServerArgumentsBuilder = pgServerArgumentsBuilder;
 		this.configuration = configuration;
 
-		final HydrogenServerArgumentsBuilder hydrogenServerArgumentsBuilder = new HydrogenServerArgumentsBuilder();
 		try {
-			if (verifyBooleanAttribute(LaunchConfigurationAttributes.START_WEB)) {
+			if (getBooleanAttribute(LaunchConfigurationAttributes.START_WEB)) {
 				hydrogenServerArgumentsBuilder.withWebServer(buildWebServerArguments());
 			}
-			if (verifyBooleanAttribute(LaunchConfigurationAttributes.START_TCP)) {
+			if (getBooleanAttribute(LaunchConfigurationAttributes.START_TCP)) {
 				hydrogenServerArgumentsBuilder.withTcpServer(buildTcpServerArguments());
 			}
-			if (verifyBooleanAttribute(LaunchConfigurationAttributes.START_PG)) {
+			if (getBooleanAttribute(LaunchConfigurationAttributes.START_PG)) {
 				hydrogenServerArgumentsBuilder.withPgServer(buildPgServerArguments());
 			}
-			if (verifyBooleanAttribute(LaunchConfigurationAttributes.ENABLE_TRACING)) {
+			if (getBooleanAttribute(LaunchConfigurationAttributes.ENABLE_TRACING)) {
 				hydrogenServerArgumentsBuilder.enableTracing();
 			}
-			if (verifyBooleanAttribute(LaunchConfigurationAttributes.IF_EXISTS)) {
+			if (getBooleanAttribute(LaunchConfigurationAttributes.IF_EXISTS)) {
 				hydrogenServerArgumentsBuilder.onlyOpenExistingDatabases();
 			}
 		} catch (final CoreException e) {
@@ -52,23 +77,14 @@ public class ProgramArguments {
 		arguments = hydrogenServerArgumentsBuilder.build();
 	}
 
-	// TODO could make these generic?
-	/**
-	 * <pre>
-	 * For example:
-	 *
-	 * private <T> T verifyAttribute(final LaunchConfigurationAttribute<T> attribute)
-	 * </pre>
-	 */
-
-	private boolean verifyBooleanAttribute(final LaunchConfigurationAttribute<Boolean> attribute) throws CoreException {
+	private boolean getBooleanAttribute(final LaunchConfigurationAttribute<Boolean> attribute) throws CoreException {
 		verifyAttribute(attribute);
-		return (Boolean) configuration.getAttributes().get(attribute.getName());
+		return configuration.getAttribute(attribute.getName(), attribute.getDefaultValue().booleanValue());
 	}
 
-	private String verifyStringAttribute(final LaunchConfigurationAttribute<String> attribute) throws CoreException {
+	private String getStringAttribute(final LaunchConfigurationAttribute<String> attribute) throws CoreException {
 		verifyAttribute(attribute);
-		return (String) configuration.getAttributes().get(attribute.getName());
+		return configuration.getAttribute(attribute.getName(), attribute.getDefaultValue());
 	}
 
 	private void verifyAttribute(final LaunchConfigurationAttribute<?> attribute) throws CoreException {
@@ -78,51 +94,48 @@ public class ProgramArguments {
 	}
 
 	private WebServerArguments buildWebServerArguments() throws CoreException {
-		final WebServerArgumentsBuilder builder = new WebServerArgumentsBuilder();
-		if (verifyBooleanAttribute(LaunchConfigurationAttributes.WEB_ALLOW_OTHERS)) {
-			builder.allowOthers();
+		if (getBooleanAttribute(LaunchConfigurationAttributes.WEB_ALLOW_OTHERS)) {
+			webServerArgumentsBuilder.allowOthers();
 		}
-		if (verifyBooleanAttribute(LaunchConfigurationAttributes.WEB_DAEMON)) {
-			builder.useDaemonThread();
+		if (getBooleanAttribute(LaunchConfigurationAttributes.WEB_DAEMON)) {
+			webServerArgumentsBuilder.useDaemonThread();
 		}
-		if (verifyBooleanAttribute(LaunchConfigurationAttributes.WEB_SSL)) {
-			builder.useSsl();
+		if (getBooleanAttribute(LaunchConfigurationAttributes.WEB_SSL)) {
+			webServerArgumentsBuilder.useSsl();
 		}
-		if (verifyBooleanAttribute(LaunchConfigurationAttributes.WEB_BROWSER)) {
-			builder.openBrowser();
+		if (getBooleanAttribute(LaunchConfigurationAttributes.WEB_BROWSER)) {
+			webServerArgumentsBuilder.openBrowser();
 		}
-		builder.withPort(verifyStringAttribute(LaunchConfigurationAttributes.WEB_PORT));
-		return builder.build();
+		webServerArgumentsBuilder.withPort(getStringAttribute(LaunchConfigurationAttributes.WEB_PORT));
+		return webServerArgumentsBuilder.build();
 	}
 
 	private TcpServerArguments buildTcpServerArguments() throws CoreException {
-		final TcpServerArgumentsBuilder builder = new TcpServerArgumentsBuilder();
-		if (verifyBooleanAttribute(LaunchConfigurationAttributes.TCP_SSL)) {
-			builder.useSsl();
+		if (getBooleanAttribute(LaunchConfigurationAttributes.TCP_SSL)) {
+			tcpServerArgumentsBuilder.useSsl();
 		}
-		if (verifyBooleanAttribute(LaunchConfigurationAttributes.TCP_ALLOW_OTHERS)) {
-			builder.allowOthers();
+		if (getBooleanAttribute(LaunchConfigurationAttributes.TCP_ALLOW_OTHERS)) {
+			tcpServerArgumentsBuilder.allowOthers();
 		}
-		if (verifyBooleanAttribute(LaunchConfigurationAttributes.TCP_DAEMON)) {
-			builder.useDaemonThread();
+		if (getBooleanAttribute(LaunchConfigurationAttributes.TCP_DAEMON)) {
+			tcpServerArgumentsBuilder.useDaemonThread();
 		}
-		if (verifyBooleanAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_FORCE)) {
-			builder.forceShutdown();
+		if (getBooleanAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_FORCE)) {
+			tcpServerArgumentsBuilder.forceShutdown();
 		}
-		builder.withPort(verifyStringAttribute(LaunchConfigurationAttributes.TCP_PORT));
-		return builder.build();
+		tcpServerArgumentsBuilder.withPort(getStringAttribute(LaunchConfigurationAttributes.TCP_PORT));
+		return tcpServerArgumentsBuilder.build();
 	}
 
 	private PgServerArguments buildPgServerArguments() throws CoreException {
-		final PgServerArgumentsBuilder builder = new PgServerArgumentsBuilder();
-		if (verifyBooleanAttribute(LaunchConfigurationAttributes.PG_ALLOW_OTHERS)) {
-			builder.allowOthers();
+		if (getBooleanAttribute(LaunchConfigurationAttributes.PG_ALLOW_OTHERS)) {
+			pgServerArgumentsBuilder.allowOthers();
 		}
-		if (verifyBooleanAttribute(LaunchConfigurationAttributes.PG_DAEMON)) {
-			builder.useDaemonThread();
+		if (getBooleanAttribute(LaunchConfigurationAttributes.PG_DAEMON)) {
+			pgServerArgumentsBuilder.useDaemonThread();
 		}
-		builder.withPort(verifyStringAttribute(LaunchConfigurationAttributes.PG_PORT));
-		return builder.build();
+		pgServerArgumentsBuilder.withPort(getStringAttribute(LaunchConfigurationAttributes.PG_PORT));
+		return pgServerArgumentsBuilder.build();
 	}
 
 	/**
@@ -139,7 +152,39 @@ public class ProgramArguments {
 	 */
 	@Override
 	public String toString() {
-		return "ProgramArguments [configuration=" + configuration + ", arguments=" + arguments + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		return "ProgramArguments [arguments=" + arguments + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + arguments.hashCode();
+		return result;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final ProgramArguments other = (ProgramArguments) obj;
+		if (!arguments.equals(other.arguments)) {
+			return false;
+		}
+		return true;
 	}
 
 }

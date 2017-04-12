@@ -15,6 +15,7 @@ import org.eclipse.jdt.launching.VMRunnerConfiguration;
 import com.thedesertmonk.plugin.hydrogen.core.HydrogenActivator;
 import com.thedesertmonk.plugin.hydrogen.core.contributions.preferencepage.PreferenceConstants;
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.ProgramArguments;
+import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.ProgramArgumentsFactory;
 
 /**
  * The Hydrogen launch configuration delegate.
@@ -25,6 +26,15 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 
 	private static final String MAIN_SERVER_CLASS = "org.h2.tools.Server"; //$NON-NLS-1$
 	private static final String LAUNCH_HEADLESS = "-Djava.awt.headless=true"; //$NON-NLS-1$
+
+	private final ProgramArgumentsFactory programArgumentsFactory;
+
+	/**
+	 * Constructor.
+	 */
+	public HydrogenLaunchConfigurationDelegate() {
+		programArgumentsFactory = new ProgramArgumentsFactory();
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -49,7 +59,7 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 		final VMRunnerConfiguration runConfig = new VMRunnerConfiguration(MAIN_SERVER_CLASS,
 				new String[] { executableName });
 		runConfig.setWorkingDirectory(workingDirectory);
-		final ProgramArguments programArguments = new ProgramArguments(configuration);
+		final ProgramArguments programArguments = programArgumentsFactory.create(configuration);
 		final String[] argArray = programArguments.getArguments().getArguments().toArray(new String[0]);
 		runConfig.setProgramArguments(argArray);
 		runConfig.setVMArguments(new String[] { LAUNCH_HEADLESS });
