@@ -28,8 +28,12 @@
 							<excludes>
 								<!-- Exclude factory classes -->
 								<exclude>**/*Factory.*</exclude>
-								<!-- Exclude UI classes which can't be easily tested -->
+								<!-- Exclude UI classes which cannot be easily tested -->
 								<exclude>**/HydrogenPreferencePage.*</exclude>
+								<!-- Exclude wrapper classes for system calls which cannot be mocked -->
+								<exclude>**/FileValidator.*</exclude>
+								<!-- Exclude preference string constants -->
+								<exclude>**/PreferenceConstants.*</exclude>
 							</excludes>
 						</configuration>
 						<executions>
