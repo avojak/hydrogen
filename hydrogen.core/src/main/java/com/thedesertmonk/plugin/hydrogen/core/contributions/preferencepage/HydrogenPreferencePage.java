@@ -1,9 +1,6 @@
 package com.thedesertmonk.plugin.hydrogen.core.contributions.preferencepage;
 
 import java.io.File;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.FileFieldEditor;
@@ -28,15 +25,15 @@ import com.thedesertmonk.plugin.hydrogen.core.HydrogenActivator;
 
 public class HydrogenPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
+	private final HydrogenPreferencePageValidator validator;
 	private FileFieldEditor executableField;
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public HydrogenPreferencePage() {
 		super(GRID);
-		setPreferenceStore(HydrogenActivator.getDefault().getPreferenceStore());
-		setDescription("General Hydrogen settings:"); //$NON-NLS-1$
+		validator = new HydrogenPreferencePageValidatorFactory().create();
 	}
 
 	/**
@@ -57,23 +54,17 @@ public class HydrogenPreferencePage extends FieldEditorPreferencePage implements
 	 */
 	@Override
 	public boolean isValid() {
-		final String executablePreference = executableField.getStringValue();
-
-		if (executablePreference == null || executablePreference.trim().isEmpty()) {
+		if (!validator.isValuePresent(executableField)) {
 			executableField.setErrorMessage("Location of the executable must be specified"); //$NON-NLS-1$
 			return false;
 		}
 
-		final Path executablePath = FileSystems.getDefault().getPath(executablePreference);
-		final boolean isDirectory = Files.isDirectory(executablePath);
-		final boolean isExecutable = Files.isExecutable(executablePath);
-
-		final boolean isValid = (!isDirectory && isExecutable);
-		if (!isValid) {
+		if (!validator.validateExecutableFile(executableField)) {
 			executableField.setErrorMessage("Specified location must be an executable file"); //$NON-NLS-1$
+			return false;
 		}
 
-		return isValid;
+		return true;
 	}
 
 	/**
@@ -81,6 +72,8 @@ public class HydrogenPreferencePage extends FieldEditorPreferencePage implements
 	 */
 	@Override
 	public void init(final IWorkbench workbench) {
+		setPreferenceStore(HydrogenActivator.getDefault().getPreferenceStore());
+		setDescription("General Hydrogen settings:"); //$NON-NLS-1$
 	}
 
 }

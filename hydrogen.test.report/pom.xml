@@ -24,6 +24,14 @@
 						<groupId>org.jacoco</groupId>
 						<artifactId>jacoco-maven-plugin</artifactId>
 						<version>${jacoco.version}</version>
+						<configuration>
+							<excludes>
+								<!-- Exclude factory classes -->
+								<exclude>**/*Factory.*</exclude>
+								<!-- Exclude UI classes which can't be easily tested -->
+								<exclude>**/HydrogenPreferencePage.*</exclude>
+							</excludes>
+						</configuration>
 						<executions>
 							<execution>
 								<phase>verify</phase>
