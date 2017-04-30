@@ -18,6 +18,9 @@ public class FileValidator {
 	 *         {@code false}.
 	 */
 	public boolean isDirectory(final Path path) {
+		if (path == null) {
+			throw new IllegalArgumentException("path cannot be null"); //$NON-NLS-1$
+		}
 		return Files.isDirectory(path);
 	}
 
@@ -30,6 +33,9 @@ public class FileValidator {
 	 *         otherwise {@code false}.
 	 */
 	public boolean isExecutable(final Path path) {
+		if (path == null) {
+			throw new IllegalArgumentException("path cannot be null"); //$NON-NLS-1$
+		}
 		return Files.isExecutable(path);
 	}
 
