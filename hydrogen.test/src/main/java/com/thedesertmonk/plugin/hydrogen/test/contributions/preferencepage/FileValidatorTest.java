@@ -112,7 +112,7 @@ public class FileValidatorTest {
 		final Path path = Files.createTempFile(PREFIX, null, OWNER_EXECUTE_ATTRIBUTE);
 		path.toFile().deleteOnExit();
 
-		assertFalse(validator.isExecutable(path));
+		assertTrue(validator.isExecutable(path));
 	}
 
 }
