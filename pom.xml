@@ -63,7 +63,8 @@
 					<version>${tycho.version}</version>
 					<configuration>
 						<useUIHarness>false</useUIHarness>
-						<argLine>${tycho.test.jvmArgs} ${os.jvm.flags} ${jacoco.agent.argLine}</argLine>
+						<argLine>${tycho.test.jvmArgs} ${os.jvm.flags}
+							${jacoco.agent.argLine}</argLine>
 						<!-- kill test JVM if tests take more than 1 minute (60 seconds) to 
 							finish -->
 						<forkedProcessTimeoutInSeconds>60</forkedProcessTimeoutInSeconds>
@@ -206,11 +207,11 @@
 						<artifactId>jacoco-maven-plugin</artifactId>
 						<version>${jacoco.version}</version>
 						<configuration>
-							<propertyName>jacoco.agent.argLine</propertyName> 
+							<propertyName>jacoco.agent.argLine</propertyName>
 						</configuration>
 						<executions>
 							<execution>
-								<id>default-prepare-agent</id> 
+								<id>default-prepare-agent</id>
 								<goals>
 									<goal>prepare-agent</goal>
 								</goals>
