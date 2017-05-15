@@ -241,4 +241,16 @@
 		<module>hydrogen.feature</module>
 		<module>hydrogen.site</module>
 	</modules>
+	<distributionManagement>
+		<snapshotRepository>
+			<name>TheDesertMonk Snapshot</name>
+			<id>thedesertmonk-snapshot</id>
+			<url>http://repo.thedesertmonk.com/artifactory/maven-snapshot/</url>
+		</snapshotRepository>
+		<repository>
+			<name>TheDesertMonk Release</name>
+			<id>thedesertmonk-release</id>
+			<url>http://repo.thedesertmonk.com/artifactory/maven-release/</url>
+		</repository>
+	</distributionManagement>
 </project>
