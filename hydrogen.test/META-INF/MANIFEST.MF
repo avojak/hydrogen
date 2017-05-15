@@ -5,4 +5,7 @@ Bundle-SymbolicName: hydrogen.test
 Bundle-Version: 1.0.0.qualifier
 Fragment-Host: hydrogen.core;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: hydrogen.test.dependencies;bundle-version="1.0.0"
+Bundle-ClassPath: lib/guava-19.0.jar,
+ lib/mockito-all-1.9.5.jar,
+ lib/swt-unit-1.0-SNAPSHOT.jar,
+ .

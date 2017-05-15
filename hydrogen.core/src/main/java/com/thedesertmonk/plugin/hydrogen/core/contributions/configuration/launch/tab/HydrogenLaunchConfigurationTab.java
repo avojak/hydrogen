@@ -122,23 +122,12 @@ public abstract class HydrogenLaunchConfigurationTab extends AbstractLaunchConfi
 	/**
 	 * Validates the given port number.
 	 *
-	 * @param port The port number. Cannot be null or empty.
+	 * @param port The port number String.
 	 * @return {@code true} if the port number is valid, otherwise
 	 *         {@code false}.
 	 */
 	public boolean validatePortNumber(final String port) {
-		if (port == null || port.trim().isEmpty()) {
-			return false;
-		}
-		try {
-			final int portNumber = Integer.valueOf(port);
-			if (portNumber < 0 || portNumber > 0xFFFF) {
-				return false;
-			}
-		} catch (final NumberFormatException e) {
-			return false;
-		}
-		return true;
+		return PortValidator.isValid(port);
 	}
 
 	/**

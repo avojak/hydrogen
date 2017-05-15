@@ -20,6 +20,7 @@
 		<tycho.test.jvmArgs>-Xmx512m</tycho.test.jvmArgs>
 		<jarsigner.version>1.4</jarsigner.version>
 		<jacoco.version>0.7.8</jacoco.version>
+		<jacoco.agent.argLine />
 	</properties>
 	<repositories>
 		<repository>
@@ -63,10 +64,8 @@
 					<version>${tycho.version}</version>
 					<configuration>
 						<useUIHarness>false</useUIHarness>
-						<argLine>${tycho.test.jvmArgs} ${os.jvm.flags}
-							${jacoco.agent.argLine}</argLine>
-						<!-- kill test JVM if tests take more than 1 minute (60 seconds) to 
-							finish -->
+						<argLine>${tycho.test.jvmArgs} ${os.jvm.flags} ${jacoco.agent.argLine}</argLine>
+						<!-- kill test JVM if tests take more than 1 minute (60 seconds) to finish -->
 						<forkedProcessTimeoutInSeconds>60</forkedProcessTimeoutInSeconds>
 					</configuration>
 				</plugin>
@@ -238,7 +237,6 @@
 	</profiles>
 	<modules>
 		<module>hydrogen.core</module>
-		<module>hydrogen.test.dependencies</module>
 		<module>hydrogen.test</module>
 		<module>hydrogen.test.report</module>
 		<module>hydrogen.feature</module>
