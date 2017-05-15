@@ -9,4 +9,16 @@
 	<artifactId>hydrogen.site</artifactId>
 	<packaging>eclipse-repository</packaging>
 	<name>hydrogen :: update site</name>
+	<distributionManagement>
+		<snapshotRepository>
+			<name>TheDesertMonk Snapshot</name>
+			<id>thedesertmonk-snapshot</id>
+			<url>http://repo.thedesertmonk.com/artifactory/maven-snapshot/</url>
+		</snapshotRepository>
+		<repository>
+			<name>TheDesertMonk Release</name>
+			<id>thedesertmonk-release</id>
+			<url>http://repo.thedesertmonk.com/artifactory/maven-release/</url>
+		</repository>
+	</distributionManagement>
 </project>

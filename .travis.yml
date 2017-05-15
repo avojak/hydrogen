@@ -7,3 +7,6 @@ before_script:
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3 # give xvfb some time to start
 script: mvn clean verify -Pjacoco coveralls:report
+after_success: 
+- wget https://raw.githubusercontent.com/avojak/settings.xml/master/settings.xml -O /tmp/settings.xml
+- mvn deploy --settings /tmp/settings.xml
