@@ -20,7 +20,6 @@
 		<tycho.test.jvmArgs>-Xmx512m</tycho.test.jvmArgs>
 		<jarsigner.version>1.4</jarsigner.version>
 		<jacoco.version>0.7.8</jacoco.version>
-		<jacoco.agent.argLine />
 	</properties>
 	<repositories>
 		<repository>
