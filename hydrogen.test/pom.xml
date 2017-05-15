@@ -11,4 +11,7 @@
 	<packaging>eclipse-test-plugin</packaging>
 	<name>hydrogen :: test</name>
 	<description>hydrogen Test Plugin</description>
+	<properties>
+		<maven.deploy.skip>true</maven.deploy.skip>
+	</properties>
 </project>

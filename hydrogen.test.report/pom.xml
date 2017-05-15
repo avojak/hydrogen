@@ -12,11 +12,14 @@
 	<packaging>pom</packaging>
 	<name>hydrogen :: test report</name>
 	<description>hydrogen Test Report Plugin</description>
+	<properties>
+		<maven.deploy.skip>true</maven.deploy.skip>
+	</properties>
 	<profiles>
 		<profile>
 			<id>jacoco</id>
 			<activation>
-				<activeByDefault>false</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 			</activation>
 			<build>
 				<plugins>
@@ -30,6 +33,12 @@
 								<exclude>**/*Factory.*</exclude>
 								<!-- Exclude UI classes which cannot be easily tested -->
 								<exclude>**/HydrogenPreferencePage.*</exclude>
+								<exclude>**/GeneralLaunchConfigurationTab.*</exclude>
+								<exclude>**/HydrogenLaunchConfigurationTab.*</exclude>
+								<exclude>**/PgLaunchConfigurationTab.*</exclude>
+								<exclude>**/TcpLaunchConfigurationTab.*</exclude>
+								<exclude>**/WebLaunchConfigurationTab.*</exclude>
+								<exclude>**/HydrogenLaunchConfigurationTabGroup.*</exclude>
 								<!-- Exclude wrapper classes for system calls which cannot be mocked -->
 								<exclude>**/FileValidator.*</exclude>
 								<!-- Exclude preference string constants -->
@@ -50,17 +59,17 @@
 		</profile>
 	</profiles>
 	<dependencies>
-        <dependency>
-            <groupId>com.thedesertmonk.plugin</groupId>
-            <artifactId>hydrogen.core</artifactId>
-            <version>${project.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.thedesertmonk.plugin</groupId>
-            <artifactId>hydrogen.test</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+		<dependency>
+			<groupId>com.thedesertmonk.plugin</groupId>
+			<artifactId>hydrogen.core</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.thedesertmonk.plugin</groupId>
+			<artifactId>hydrogen.test</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 </project>

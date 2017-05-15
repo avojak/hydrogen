@@ -11,4 +11,7 @@
 	<packaging>eclipse-plugin</packaging>
 	<name>hydrogen :: core</name>
 	<description>hydrogen Core Plugin</description>
+	<properties>
+		<maven.deploy.skip>true</maven.deploy.skip>
+	</properties>
 </project>
