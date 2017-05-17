@@ -7,5 +7,5 @@ Fragment-Host: hydrogen.core;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: lib/guava-19.0.jar,
  lib/mockito-all-1.9.5.jar,
- lib/swt-unit-1.0-SNAPSHOT.jar,
+ lib/swt-unit-1.0.jar,
  .
