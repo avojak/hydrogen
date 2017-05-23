@@ -51,7 +51,7 @@ public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 		useDaemonThreadButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 		portText = createField(connectionSettingsGroup, "Port"); //$NON-NLS-1$
 		portText.addModifyListener(new HydrogenLaunchConfigurationTabChangeListener(this));
-		useSslButton = createCheckButton(connectionSettingsGroup, "Use encrypted (HTTPS) connections"); //$NON-NLS-1$
+		useSslButton = createCheckButton(connectionSettingsGroup, "Use encrypted (SSL) connections"); //$NON-NLS-1$
 		useSslButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 
 		final Group shutdownSettingsGroup = new Group(baseComposite, SWT.NONE);

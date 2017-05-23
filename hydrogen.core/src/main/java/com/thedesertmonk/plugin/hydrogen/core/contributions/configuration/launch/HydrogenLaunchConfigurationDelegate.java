@@ -52,6 +52,7 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 
 		final File executablePreference = new File(
 				HydrogenActivator.getDefault().getPreferenceStore().getString(PreferenceConstants.P_EXECUTABLE));
+		validateExecutablePermissions(executablePreference);
 		final String workingDirectory = executablePreference.getParent();
 		final String executableName = executablePreference.getName();
 
@@ -70,6 +71,15 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 
 		// Launch the configuration
 		runner.run(runConfig, launch, monitor);
+	}
+
+	private void validateExecutablePermissions(final File executable) throws CoreException {
+		if (!executable.isFile()) {
+			abort("Specified executable is not a file", null, 0); //$NON-NLS-1$
+		}
+		if (!executable.canExecute()) {
+			abort("Specified executable cannot be executed", null, 0); //$NON-NLS-1$
+		}
 	}
 
 }
