@@ -63,3 +63,15 @@ I use [SemVer](http://semver.org/) for versioning. For the versions available, s
 ## License
 
 This project is licensed under the Eclipse Public License v1.0 - see the [LICENSE.md](LICENSE.md) file for details.
+
+## Error Messages
+
+This is a collection of error messages that you may encounter, and what they mean.
+
+* `Connection is broken: "javax.net.ssl.SSLException: Unrecognized SSL message, plaintext connection?: 10.0.0.9:9092" [90067-193] 90067/90067`
+
+    You will encounter this error message when attempting to connect via the browser console with a JDBC URL that specifies the protocol as SSL, but the TCP server is setup to not use SSL. To fix, either enable SSL on the TCP server, or change the JDBC URL in the browser console to use TCP as the protocol. (See [Issue #2](https://github.com/avojak/hydrogen/issues/2))
+
+* `Connection is broken: "unexpected status 352518912" [90067-193] 90067/90067`
+
+    You will encounter this error message when attempting to connect via the browser console with a JDBC URL that specifies the protocol as TCP, but the TCP server is setup to user SSL. To fix, either disable SSL on the TCP server, or change the JDBC URL in the browser console to use SSL as the protocol. (See [Issue #2](https://github.com/avojak/hydrogen/issues/2))
