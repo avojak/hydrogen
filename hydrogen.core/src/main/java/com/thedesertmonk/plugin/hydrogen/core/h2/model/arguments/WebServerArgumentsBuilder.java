@@ -1,8 +1,5 @@
 package com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.ServerOption;
 
 /**
@@ -12,14 +9,44 @@ import com.thedesertmonk.plugin.hydrogen.core.h2.model.ServerOption;
  */
 public class WebServerArgumentsBuilder {
 
-	private final List<String> arguments;
+	private String allowOthers;
+	private String useDaemonThread;
+	private String port;
+	private String useSsl;
+	private String openBrowser;
 
 	/**
-	 * Constructor.
+	 * Constructs a new {@link WebServerArgumentsBuilder}.
 	 */
 	public WebServerArgumentsBuilder() {
-		arguments = new ArrayList<String>();
-		arguments.add(ServerOption.START_WEB.getParam());
+	}
+
+	/**
+	 * Constructs a new {@link WebServerArgumentsBuilder} from existing
+	 * {@link WebServerArguments}.
+	 *
+	 * @param oldArguments The existing {@link WebServerArguments}. Cannot be
+	 *            null.
+	 */
+	public WebServerArgumentsBuilder(final WebServerArguments oldArguments) {
+		if (oldArguments == null) {
+			throw new IllegalArgumentException("oldArguments cannot be null"); //$NON-NLS-1$
+		}
+		if (oldArguments.getAllowOthers().isPresent()) {
+			this.allowOthers = oldArguments.getAllowOthers().get();
+		}
+		if (oldArguments.getUseDaemonThread().isPresent()) {
+			this.useDaemonThread = oldArguments.getUseDaemonThread().get();
+		}
+		if (oldArguments.getPort().isPresent()) {
+			this.port = oldArguments.getPort().get();
+		}
+		if (oldArguments.getUseSsl().isPresent()) {
+			this.useSsl = oldArguments.getUseSsl().get();
+		}
+		if (oldArguments.getOpenBrowser().isPresent()) {
+			this.openBrowser = oldArguments.getOpenBrowser().get();
+		}
 	}
 
 	/**
@@ -28,7 +55,7 @@ public class WebServerArgumentsBuilder {
 	 * @return The current {@link WebServerArgumentsBuilder} instance.
 	 */
 	public WebServerArgumentsBuilder allowOthers() {
-		arguments.add(ServerOption.WEB_ALLOW_OTHERS.getParam());
+		allowOthers = ServerOption.WEB_ALLOW_OTHERS.getParam();
 		return this;
 	}
 
@@ -38,22 +65,21 @@ public class WebServerArgumentsBuilder {
 	 * @return The current {@link WebServerArgumentsBuilder} instance.
 	 */
 	public WebServerArgumentsBuilder useDaemonThread() {
-		arguments.add(ServerOption.WEB_DAEMON.getParam());
+		useDaemonThread = ServerOption.WEB_DAEMON.getParam();
 		return this;
 	}
 
 	/**
 	 * Sets the {@link ServerOption#WEB_PORT} property.
 	 *
-	 * @param port The port number. Cannot be null or empty.
+	 * @param portNumber The port number. Cannot be null or empty.
 	 * @return The current {@link WebServerArgumentsBuilder} instance.
 	 */
-	public WebServerArgumentsBuilder withPort(final String port) {
-		if (port == null || port.trim().isEmpty()) {
-			throw new IllegalArgumentException("port cannot be null or empty"); //$NON-NLS-1$
+	public WebServerArgumentsBuilder withPort(final String portNumber) {
+		if (portNumber == null || portNumber.trim().isEmpty()) {
+			throw new IllegalArgumentException("portNumber cannot be null or empty"); //$NON-NLS-1$
 		}
-		arguments.add(ServerOption.WEB_PORT.getParam());
-		arguments.add(port);
+		this.port = portNumber;
 		return this;
 	}
 
@@ -63,7 +89,7 @@ public class WebServerArgumentsBuilder {
 	 * @return The current {@link WebServerArgumentsBuilder} instance.
 	 */
 	public WebServerArgumentsBuilder useSsl() {
-		arguments.add(ServerOption.WEB_SSL.getParam());
+		useSsl = ServerOption.WEB_SSL.getParam();
 		return this;
 	}
 
@@ -73,7 +99,7 @@ public class WebServerArgumentsBuilder {
 	 * @return The current {@link WebServerArgumentsBuilder} instance.
 	 */
 	public WebServerArgumentsBuilder openBrowser() {
-		arguments.add(ServerOption.WEB_BROWSER.getParam());
+		openBrowser = ServerOption.WEB_BROWSER.getParam();
 		return this;
 	}
 
@@ -83,16 +109,57 @@ public class WebServerArgumentsBuilder {
 	 * @return A new, non-null instance of {@link WebServerArguments}.
 	 */
 	public WebServerArguments build() {
-		return new WebServerArguments(arguments);
+		final String startWeb = ServerOption.START_WEB.getParam();
+		return new WebServerArguments(startWeb, allowOthers, useDaemonThread, port, useSsl, openBrowser);
 	}
 
 	/**
-	 * Gets the {@link List} of arguments.
+	 * Gets the {@link ServerOption#WEB_ALLOW_OTHERS} property if present.
 	 *
-	 * @return The non-null {@link List} of argument {@link String} objects.
+	 * @return The {@link ServerOption#WEB_ALLOW_OTHERS} property if present,
+	 *         otherwise {@code null}.
 	 */
-	public List<String> getArguments() {
-		return new ArrayList<String>(arguments);
+	public String getAllowOthers() {
+		return allowOthers;
+	}
+
+	/**
+	 * Gets the {@link ServerOption#WEB_DAEMON} property if present.
+	 *
+	 * @return The {@link ServerOption#WEB_DAEMON} property if present,
+	 *         otherwise {@code null}.
+	 */
+	public String getUseDaemonThread() {
+		return useDaemonThread;
+	}
+
+	/**
+	 * Gets the port number if present.
+	 *
+	 * @return The port number if present, otherwise {@code null}.
+	 */
+	public String getPort() {
+		return port;
+	}
+
+	/**
+	 * Gets the {@link ServerOption#WEB_SSL} property if present.
+	 *
+	 * @return The {@link ServerOption#WEB_SSL} property if present, otherwise
+	 *         {@code null}.
+	 */
+	public String getUseSsl() {
+		return useSsl;
+	}
+
+	/**
+	 * Gets the {@link ServerOption#WEB_BROWSER} property if present.
+	 *
+	 * @return The {@link ServerOption#WEB_BROWSER} property if present,
+	 *         otherwise {@code null}.
+	 */
+	public String getOpenBrowser() {
+		return openBrowser;
 	}
 
 }

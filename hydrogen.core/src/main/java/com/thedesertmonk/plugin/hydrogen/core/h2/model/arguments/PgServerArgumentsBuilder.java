@@ -1,8 +1,5 @@
 package com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.ServerOption;
 
 /**
@@ -12,14 +9,36 @@ import com.thedesertmonk.plugin.hydrogen.core.h2.model.ServerOption;
  */
 public class PgServerArgumentsBuilder {
 
-	private final List<String> arguments;
+	private String allowOthers;
+	private String useDaemonThread;
+	private String port;
 
 	/**
-	 * Constructor.
+	 * Constructs a new {@link PgServerArgumentsBuilder}.
 	 */
 	public PgServerArgumentsBuilder() {
-		arguments = new ArrayList<String>();
-		arguments.add(ServerOption.START_PG.getParam());
+	}
+
+	/**
+	 * Constructs a new {@link PgServerArgumentsBuilder} from existing
+	 * {@link PgServerArguments}.
+	 *
+	 * @param oldArguments The existing {@link PgServerArguments}. Cannot be
+	 *            null.
+	 */
+	public PgServerArgumentsBuilder(final PgServerArguments oldArguments) {
+		if (oldArguments == null) {
+			throw new IllegalArgumentException("oldArguments cannot be null"); //$NON-NLS-1$
+		}
+		if (oldArguments.getAllowOthers().isPresent()) {
+			this.allowOthers = oldArguments.getAllowOthers().get();
+		}
+		if (oldArguments.getUseDaemonThread().isPresent()) {
+			this.useDaemonThread = oldArguments.getUseDaemonThread().get();
+		}
+		if (oldArguments.getPort().isPresent()) {
+			this.port = oldArguments.getPort().get();
+		}
 	}
 
 	/**
@@ -28,7 +47,7 @@ public class PgServerArgumentsBuilder {
 	 * @return The current {@link PgServerArgumentsBuilder} instance.
 	 */
 	public PgServerArgumentsBuilder allowOthers() {
-		arguments.add(ServerOption.PG_ALLOW_OTHERS.getParam());
+		allowOthers = ServerOption.PG_ALLOW_OTHERS.getParam();
 		return this;
 	}
 
@@ -38,22 +57,21 @@ public class PgServerArgumentsBuilder {
 	 * @return The current {@link PgServerArgumentsBuilder} instance.
 	 */
 	public PgServerArgumentsBuilder useDaemonThread() {
-		arguments.add(ServerOption.PG_DAEMON.getParam());
+		useDaemonThread = ServerOption.PG_DAEMON.getParam();
 		return this;
 	}
 
 	/**
 	 * Sets the {@link ServerOption#PG_PORT} property.
 	 *
-	 * @param port The port number. Cannot be null or empty.
+	 * @param portNumber The port number. Cannot be null or empty.
 	 * @return The current {@link PgServerArgumentsBuilder} instance.
 	 */
-	public PgServerArgumentsBuilder withPort(final String port) {
-		if (port == null || port.trim().isEmpty()) {
-			throw new IllegalArgumentException("port cannot be null or empty"); //$NON-NLS-1$
+	public PgServerArgumentsBuilder withPort(final String portNumber) {
+		if (portNumber == null || portNumber.trim().isEmpty()) {
+			throw new IllegalArgumentException("portNumber cannot be null or empty"); //$NON-NLS-1$
 		}
-		arguments.add(ServerOption.PG_PORT.getParam());
-		arguments.add(port);
+		this.port = portNumber;
 		return this;
 	}
 
@@ -63,16 +81,37 @@ public class PgServerArgumentsBuilder {
 	 * @return A new, non-null instance of {@link PgServerArguments}.
 	 */
 	public PgServerArguments build() {
-		return new PgServerArguments(arguments);
+		final String startPg = ServerOption.START_PG.getParam();
+		return new PgServerArguments(startPg, allowOthers, useDaemonThread, port);
 	}
 
 	/**
-	 * Gets the {@link List} of arguments.
+	 * Gets the {@link ServerOption#PG_ALLOW_OTHERS} property if present.
 	 *
-	 * @return The non-null {@link List} of argument {@link String} objects.
+	 * @return The {@link ServerOption#PG_ALLOW_OTHERS} property if present,
+	 *         otherwise {@code null}.
 	 */
-	public List<String> getArguments() {
-		return new ArrayList<String>(arguments);
+	public String getAllowOthers() {
+		return allowOthers;
+	}
+
+	/**
+	 * Gets the {@link ServerOption#PG_DAEMON} property if present.
+	 *
+	 * @return The {@link ServerOption#PG_DAEMON} property if present, otherwise
+	 *         {@code null}.
+	 */
+	public String getUseDaemonThread() {
+		return useDaemonThread;
+	}
+
+	/**
+	 * Gets the port number if present.
+	 *
+	 * @return The port number if present, otherwise {@code null}.
+	 */
+	public String getPort() {
+		return port;
 	}
 
 }

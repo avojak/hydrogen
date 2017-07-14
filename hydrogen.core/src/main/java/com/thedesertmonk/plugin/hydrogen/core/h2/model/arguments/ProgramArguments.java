@@ -1,5 +1,7 @@
 package com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments;
 
+import java.util.Optional;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 
@@ -7,7 +9,7 @@ import com.thedesertmonk.plugin.hydrogen.core.h2.model.configuration.attributes.
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.configuration.attributes.LaunchConfigurationAttributes;
 
 /**
- * Encapsulates the {@link HydrogenServerArguments} as well as any other
+ * Encapsulates the {@link HydrogenRuntimeArguments} as well as any other
  * arguments required from the configuration.
  *
  * @author Andrew Vojak
@@ -17,25 +19,34 @@ public class ProgramArguments {
 	private final WebServerArgumentsBuilder webServerArgumentsBuilder;
 	private final TcpServerArgumentsBuilder tcpServerArgumentsBuilder;
 	private final PgServerArgumentsBuilder pgServerArgumentsBuilder;
+
+	private final Optional<WebServerArguments> webServerArguments;
+	private final Optional<TcpServerArguments> tcpServerArguments;
+	private final Optional<PgServerArguments> pgServerArguments;
+
 	private final ILaunchConfiguration configuration;
-	private final HydrogenServerArguments arguments;
+
+	private final HydrogenRuntimeArguments arguments;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param hydrogenServerArgumentsBuilder
-	 * @param webServerArgumentsBuilder
-	 * @param tcpServerArgumentsBuilder
-	 * @param pgServerArgumentsBuilder
-	 *
+	 * @param hydrogenRuntimeArgumentsBuilder The
+	 *            {@link HydrogenRuntimeArgumentsBuilder}. Cannot be null.
+	 * @param webServerArgumentsBuilder The {@link WebServerArgumentsBuilder}.
+	 *            Cannot be null.
+	 * @param tcpServerArgumentsBuilder The {@link TcpServerArgumentsBuilder}.
+	 *            Cannot be null.
+	 * @param pgServerArgumentsBuilder The {@link PgServerArgumentsBuilder}.
+	 *            Cannot be null.
 	 * @param configuration The {@link ILaunchConfiguration}. Cannot be null.
 	 */
-	public ProgramArguments(final HydrogenServerArgumentsBuilder hydrogenServerArgumentsBuilder,
+	public ProgramArguments(final HydrogenRuntimeArgumentsBuilder hydrogenRuntimeArgumentsBuilder,
 			final WebServerArgumentsBuilder webServerArgumentsBuilder,
 			final TcpServerArgumentsBuilder tcpServerArgumentsBuilder,
 			final PgServerArgumentsBuilder pgServerArgumentsBuilder, final ILaunchConfiguration configuration) {
-		if (hydrogenServerArgumentsBuilder == null) {
-			throw new IllegalArgumentException("hydrogenServerArgumentsBuilder cannot be null"); //$NON-NLS-1$
+		if (hydrogenRuntimeArgumentsBuilder == null) {
+			throw new IllegalArgumentException("hydrogenRuntimeArgumentsBuilder cannot be null"); //$NON-NLS-1$
 		}
 		if (webServerArgumentsBuilder == null) {
 			throw new IllegalArgumentException("webServerArgumentsBuilder cannot be null"); //$NON-NLS-1$
@@ -56,25 +67,71 @@ public class ProgramArguments {
 
 		try {
 			if (getBooleanAttribute(LaunchConfigurationAttributes.START_WEB)) {
-				hydrogenServerArgumentsBuilder.withWebServer(buildWebServerArguments());
+				webServerArguments = Optional.of(buildWebServerArguments());
+				hydrogenRuntimeArgumentsBuilder.withWebServer(webServerArguments.get());
+			} else {
+				webServerArguments = Optional.empty();
 			}
 			if (getBooleanAttribute(LaunchConfigurationAttributes.START_TCP)) {
-				hydrogenServerArgumentsBuilder.withTcpServer(buildTcpServerArguments());
+				tcpServerArguments = Optional.of(buildTcpServerArguments());
+				hydrogenRuntimeArgumentsBuilder.withTcpServer(tcpServerArguments.get());
+			} else {
+				tcpServerArguments = Optional.empty();
 			}
 			if (getBooleanAttribute(LaunchConfigurationAttributes.START_PG)) {
-				hydrogenServerArgumentsBuilder.withPgServer(buildPgServerArguments());
+				pgServerArguments = Optional.of(buildPgServerArguments());
+				hydrogenRuntimeArgumentsBuilder.withPgServer(pgServerArguments.get());
+			} else {
+				pgServerArguments = Optional.empty();
 			}
 			if (getBooleanAttribute(LaunchConfigurationAttributes.ENABLE_TRACING)) {
-				hydrogenServerArgumentsBuilder.enableTracing();
+				hydrogenRuntimeArgumentsBuilder.enableTracing();
 			}
 			if (getBooleanAttribute(LaunchConfigurationAttributes.IF_EXISTS)) {
-				hydrogenServerArgumentsBuilder.onlyOpenExistingDatabases();
+				hydrogenRuntimeArgumentsBuilder.onlyOpenExistingDatabases();
 			}
 		} catch (final CoreException e) {
 			throw new RuntimeException("Unable to retrieve attributes", e); //$NON-NLS-1$
 		}
 
-		arguments = hydrogenServerArgumentsBuilder.build();
+		arguments = hydrogenRuntimeArgumentsBuilder.build();
+	}
+
+	/**
+	 * Constructor.
+	 *
+	 * @param hydrogenRuntimeArgumentsBuilder The
+	 *            {@link HydrogenRuntimeArgumentsBuilder}. Cannot be null.
+	 * @param webServerArguments The existing {@link WebServerArguments}. May be
+	 *            null.
+	 * @param tcpServerArguments The existing {@link TcpServerArguments}. May be
+	 *            null.
+	 * @param pgServerArguments The existing {@link PgServerArguments}. May be
+	 *            null.
+	 */
+	public ProgramArguments(final HydrogenRuntimeArgumentsBuilder hydrogenRuntimeArgumentsBuilder,
+			final WebServerArguments webServerArguments, final TcpServerArguments tcpServerArguments,
+			final PgServerArguments pgServerArguments) {
+		if (hydrogenRuntimeArgumentsBuilder == null) {
+			throw new IllegalArgumentException("hydrogenRuntimeArgumentsBuilder cannot be null"); //$NON-NLS-1$
+		}
+		this.webServerArgumentsBuilder = null;
+		this.tcpServerArgumentsBuilder = null;
+		this.pgServerArgumentsBuilder = null;
+		this.configuration = null;
+		this.webServerArguments = Optional.ofNullable(webServerArguments);
+		this.tcpServerArguments = Optional.ofNullable(tcpServerArguments);
+		this.pgServerArguments = Optional.ofNullable(pgServerArguments);
+		if (this.webServerArguments.isPresent()) {
+			hydrogenRuntimeArgumentsBuilder.withWebServer(webServerArguments);
+		}
+		if (this.tcpServerArguments.isPresent()) {
+			hydrogenRuntimeArgumentsBuilder.withTcpServer(tcpServerArguments);
+		}
+		if (this.pgServerArguments.isPresent()) {
+			hydrogenRuntimeArgumentsBuilder.withPgServer(pgServerArguments);
+		}
+		arguments = hydrogenRuntimeArgumentsBuilder.build();
 	}
 
 	private boolean getBooleanAttribute(final LaunchConfigurationAttribute<Boolean> attribute) throws CoreException {
@@ -139,12 +196,39 @@ public class ProgramArguments {
 	}
 
 	/**
-	 * Gets the {@link HydrogenServerArguments}.
+	 * Gets the {@link HydrogenRuntimeArguments}.
 	 *
-	 * @return The non-null {@link HydrogenServerArguments}.
+	 * @return The non-null {@link HydrogenRuntimeArguments}.
 	 */
-	public HydrogenServerArguments getArguments() {
+	public HydrogenRuntimeArguments getArguments() {
 		return arguments;
+	}
+
+	/**
+	 * Gets the {@link WebServerArguments}.
+	 *
+	 * @return The {@link Optional} {@link WebServerArguments}.
+	 */
+	public Optional<WebServerArguments> getWebServerArguments() {
+		return webServerArguments;
+	}
+
+	/**
+	 * Gets the {@link TcpServerArguments}.
+	 *
+	 * @return The {@link Optional} {@link TcpServerArguments}.
+	 */
+	public Optional<TcpServerArguments> getTcpServerArguments() {
+		return tcpServerArguments;
+	}
+
+	/**
+	 * Gets the {@link PgServerArguments}.
+	 *
+	 * @return The {@link Optional} {@link PgServerArguments}.
+	 */
+	public Optional<PgServerArguments> getPgServerArguments() {
+		return pgServerArguments;
 	}
 
 	/**

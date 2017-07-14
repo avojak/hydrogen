@@ -1,7 +1,7 @@
 package com.thedesertmonk.plugin.hydrogen.test.h2.model.arguments;
 
-import static java.util.Collections.emptyList;
-import static java.util.Collections.singletonList;
+import static java.util.Arrays.asList;
+import static java.util.Optional.of;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.thedesertmonk.plugin.hydrogen.core.h2.model.ServerOption;
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.PgServerArguments;
 
 /**
@@ -21,24 +22,18 @@ import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.PgServerArgumen
 @SuppressWarnings("nls")
 public class PgServerArgumentsTest {
 
-	private final List<String> arguments = singletonList("arg");
+	private final String startPg = "startPg";
+	private final String allowOthers = "allowOthers";
+	private final String useDaemonThread = "useDaemonThread";
+	private final String port = "port";
 
 	/**
-	 * Tests that the constructor throws an exception when the given
-	 * {@link List} is {@code null}.
+	 * Tests that the constructor throws an exception when the given startPg
+	 * argument is {@code null}.
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testConstructor_NullArguments() {
-		new PgServerArguments((List<String>) null);
-	}
-
-	/**
-	 * Tests that the constructor throws an exception when the given
-	 * {@link List} is empty.
-	 */
-	@Test(expected = IllegalArgumentException.class)
-	public void testConstructor_EmptyArguments() {
-		new PgServerArguments(emptyList());
+	public void testConstructor_NullStartPg() {
+		new PgServerArguments((String) null, allowOthers, useDaemonThread, port);
 	}
 
 	/**
@@ -46,7 +41,21 @@ public class PgServerArgumentsTest {
 	 */
 	@Test
 	public void testGetArguments() {
-		assertEquals(arguments, new PgServerArguments(arguments).getArguments());
+		final PgServerArguments arguments = new PgServerArguments(startPg, allowOthers, useDaemonThread, port);
+		final List<String> expectedList = asList(startPg, allowOthers, useDaemonThread, ServerOption.PG_PORT.getParam(),
+				port);
+		assertEquals(expectedList, arguments.getArguments());
+	}
+
+	/**
+	 * Tests the getter methods.
+	 */
+	@Test
+	public void testGetters() {
+		final PgServerArguments arguments = new PgServerArguments(startPg, allowOthers, useDaemonThread, port);
+		assertEquals(of(allowOthers), arguments.getAllowOthers());
+		assertEquals(of(useDaemonThread), arguments.getUseDaemonThread());
+		assertEquals(of(port), arguments.getPort());
 	}
 
 	/**
@@ -54,8 +63,12 @@ public class PgServerArgumentsTest {
 	 */
 	@Test
 	public void testToString() {
-		assertEquals("PgServerArguments [arguments=" + arguments.toString() + "]",
-				new PgServerArguments(arguments).toString());
+		final List<String> expectedList = asList(startPg, allowOthers, useDaemonThread, ServerOption.PG_PORT.getParam(),
+				port);
+		assertEquals(
+				"PgServerArguments [arguments=" + expectedList + ", startPg=" + startPg + ", allowOthers=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						+ of(allowOthers) + ", useDaemonThread=" + of(useDaemonThread) + ", port=" + of(port) + "]",
+				new PgServerArguments(startPg, allowOthers, useDaemonThread, port).toString());
 	}
 
 	/**
@@ -63,11 +76,17 @@ public class PgServerArgumentsTest {
 	 */
 	@Test
 	public void testHashCode() {
-		final PgServerArguments arguments1 = new PgServerArguments(arguments);
-		final PgServerArguments arguments2 = new PgServerArguments(singletonList("arg2"));
+		final PgServerArguments arguments1 = new PgServerArguments(startPg, allowOthers, useDaemonThread, port);
+		final PgServerArguments arguments2 = new PgServerArguments("other", allowOthers, useDaemonThread, port);
+		final PgServerArguments arguments3 = new PgServerArguments(startPg, "other", useDaemonThread, port);
+		final PgServerArguments arguments4 = new PgServerArguments(startPg, allowOthers, "other", port);
+		final PgServerArguments arguments5 = new PgServerArguments(startPg, allowOthers, useDaemonThread, "other");
 
 		assertEquals(arguments1.hashCode(), arguments1.hashCode());
 		assertNotEquals(arguments1.hashCode(), arguments2.hashCode());
+		assertNotEquals(arguments1.hashCode(), arguments3.hashCode());
+		assertNotEquals(arguments1.hashCode(), arguments4.hashCode());
+		assertNotEquals(arguments1.hashCode(), arguments5.hashCode());
 	}
 
 	/**
@@ -75,14 +94,20 @@ public class PgServerArgumentsTest {
 	 */
 	@Test
 	public void testEquals() {
-		final PgServerArguments arguments1 = new PgServerArguments(arguments);
-		final PgServerArguments arguments2 = new PgServerArguments(arguments);
-		final PgServerArguments arguments3 = new PgServerArguments(singletonList("arg2"));
+		final PgServerArguments arguments1 = new PgServerArguments(startPg, allowOthers, useDaemonThread, port);
+		final PgServerArguments arguments2 = new PgServerArguments(startPg, allowOthers, useDaemonThread, port);
+		final PgServerArguments arguments3 = new PgServerArguments("other", allowOthers, useDaemonThread, port);
+		final PgServerArguments arguments4 = new PgServerArguments(startPg, "other", useDaemonThread, port);
+		final PgServerArguments arguments5 = new PgServerArguments(startPg, allowOthers, "other", port);
+		final PgServerArguments arguments6 = new PgServerArguments(startPg, allowOthers, useDaemonThread, "other");
 
 		assertTrue(arguments1.equals(arguments1));
 		assertFalse(arguments1.equals(null));
 		assertFalse(arguments1.equals("String"));
 		assertFalse(arguments1.equals(arguments3));
+		assertFalse(arguments1.equals(arguments4));
+		assertFalse(arguments1.equals(arguments5));
+		assertFalse(arguments1.equals(arguments6));
 		assertTrue(arguments1.equals(arguments2));
 	}
 

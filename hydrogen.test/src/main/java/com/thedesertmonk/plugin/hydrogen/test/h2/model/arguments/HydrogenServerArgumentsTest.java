@@ -11,10 +11,10 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.HydrogenServerArguments;
+import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.HydrogenRuntimeArguments;
 
 /**
- * Test class for {@link HydrogenServerArguments}.
+ * Test class for {@link HydrogenRuntimeArguments}.
  *
  * @author Andrew Vojak
  */
@@ -29,46 +29,46 @@ public class HydrogenServerArgumentsTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor_NullArguments() {
-		new HydrogenServerArguments((List<String>) null);
+		new HydrogenRuntimeArguments((List<String>) null);
 	}
 
 	/**
-	 * Tests {@link HydrogenServerArguments#getArguments()}.
+	 * Tests {@link HydrogenRuntimeArguments#getArguments()}.
 	 */
 	@Test
 	public void testGetArguments() {
-		assertEquals(argumentStrings, new HydrogenServerArguments(argumentStrings).getArguments());
+		assertEquals(argumentStrings, new HydrogenRuntimeArguments(argumentStrings).getArguments());
 	}
 
 	/**
-	 * Tests {@link HydrogenServerArguments#toString()}.
+	 * Tests {@link HydrogenRuntimeArguments#toString()}.
 	 */
 	@Test
 	public void testToString() {
 		assertEquals("HydrogenServerArguments [arguments=" + argumentStrings.toString() + "]",
-				new HydrogenServerArguments(argumentStrings).toString());
+				new HydrogenRuntimeArguments(argumentStrings).toString());
 	}
 
 	/**
-	 * Tests {@link HydrogenServerArguments#hashCode()}.
+	 * Tests {@link HydrogenRuntimeArguments#hashCode()}.
 	 */
 	@Test
 	public void testHashCode() {
-		final HydrogenServerArguments arguments1 = new HydrogenServerArguments(argumentStrings);
-		final HydrogenServerArguments arguments2 = new HydrogenServerArguments(emptyList());
+		final HydrogenRuntimeArguments arguments1 = new HydrogenRuntimeArguments(argumentStrings);
+		final HydrogenRuntimeArguments arguments2 = new HydrogenRuntimeArguments(emptyList());
 
 		assertEquals(arguments1.hashCode(), arguments1.hashCode());
 		assertNotEquals(arguments1.hashCode(), arguments2.hashCode());
 	}
 
 	/**
-	 * Tests {@link HydrogenServerArguments#equals(Object)}.
+	 * Tests {@link HydrogenRuntimeArguments#equals(Object)}.
 	 */
 	@Test
 	public void testEquals() {
-		final HydrogenServerArguments arguments1 = new HydrogenServerArguments(argumentStrings);
-		final HydrogenServerArguments arguments2 = new HydrogenServerArguments(argumentStrings);
-		final HydrogenServerArguments arguments3 = new HydrogenServerArguments(emptyList());
+		final HydrogenRuntimeArguments arguments1 = new HydrogenRuntimeArguments(argumentStrings);
+		final HydrogenRuntimeArguments arguments2 = new HydrogenRuntimeArguments(argumentStrings);
+		final HydrogenRuntimeArguments arguments3 = new HydrogenRuntimeArguments(emptyList());
 
 		assertTrue(arguments1.equals(arguments1));
 		assertFalse(arguments1.equals(null));

@@ -1,13 +1,8 @@
 package com.thedesertmonk.plugin.hydrogen.test.h2.model.arguments;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Before;
 import org.junit.Test;
 
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.ServerOption;
@@ -25,22 +20,39 @@ public class WebServerArgumentsBuilderTest {
 	private static final String EMPTY_STRING = " ";
 	private static final String PORT = "8082";
 
-	private WebServerArgumentsBuilder builder;
+	private final String startWeb = "startWeb";
+	private final String allowOthers = "allowOthers";
+	private final String useDaemonThread = "useDaemonThread";
+	private final String port = "port";
+	private final String useSsl = "useSsl";
+	private final String openBrowser = "openBrowser";
 
 	/**
-	 * Setup test objects.
+	 * Tests the no-args constructor.
 	 */
-	@Before
-	public void setup() {
-		builder = new WebServerArgumentsBuilder();
+	@Test
+	public void testNoArgsConstructor() {
+		final WebServerArgumentsBuilder builder = new WebServerArgumentsBuilder();
+		assertNull(builder.getAllowOthers());
+		assertNull(builder.getUseDaemonThread());
+		assertNull(builder.getPort());
+		assertNull(builder.getUseSsl());
+		assertNull(builder.getOpenBrowser());
 	}
 
 	/**
-	 * Tests the constructor.
+	 * Tests the deep copy constructor.
 	 */
 	@Test
-	public void testConstructor() {
-		assertEquals(singletonList(ServerOption.START_WEB.getParam()), builder.getArguments());
+	public void testDeepCopyConstructor() {
+		final WebServerArguments arguments = new WebServerArguments(startWeb, allowOthers, useDaemonThread, port,
+				useSsl, openBrowser);
+		final WebServerArgumentsBuilder builder = new WebServerArgumentsBuilder(arguments);
+		assertEquals(allowOthers, builder.getAllowOthers());
+		assertEquals(useDaemonThread, builder.getUseDaemonThread());
+		assertEquals(port, builder.getPort());
+		assertEquals(useSsl, builder.getUseSsl());
+		assertEquals(openBrowser, builder.getOpenBrowser());
 	}
 
 	/**
@@ -48,10 +60,8 @@ public class WebServerArgumentsBuilderTest {
 	 */
 	@Test
 	public void testAllowOthers() {
-		final List<String> expectedArguments = asList(ServerOption.START_WEB.getParam(),
-				ServerOption.WEB_ALLOW_OTHERS.getParam());
-
-		assertEquals(expectedArguments, builder.allowOthers().getArguments());
+		final WebServerArgumentsBuilder builder = new WebServerArgumentsBuilder().allowOthers();
+		assertEquals(ServerOption.WEB_ALLOW_OTHERS.getParam(), builder.getAllowOthers());
 	}
 
 	/**
@@ -59,10 +69,8 @@ public class WebServerArgumentsBuilderTest {
 	 */
 	@Test
 	public void testUseDaemonThread() {
-		final List<String> expectedArguments = asList(ServerOption.START_WEB.getParam(),
-				ServerOption.WEB_DAEMON.getParam());
-
-		assertEquals(expectedArguments, builder.useDaemonThread().getArguments());
+		final WebServerArgumentsBuilder builder = new WebServerArgumentsBuilder().useDaemonThread();
+		assertEquals(ServerOption.WEB_DAEMON.getParam(), builder.getUseDaemonThread());
 	}
 
 	/**
@@ -71,7 +79,7 @@ public class WebServerArgumentsBuilderTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testWithPort_NullPort() {
-		builder.withPort((String) null);
+		new WebServerArgumentsBuilder().withPort((String) null);
 	}
 
 	/**
@@ -80,7 +88,7 @@ public class WebServerArgumentsBuilderTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testWithPort_EmptyPort() {
-		builder.withPort(EMPTY_STRING);
+		new WebServerArgumentsBuilder().withPort(EMPTY_STRING);
 	}
 
 	/**
@@ -88,10 +96,8 @@ public class WebServerArgumentsBuilderTest {
 	 */
 	@Test
 	public void testWithPort() {
-		final List<String> expectedArguments = asList(ServerOption.START_WEB.getParam(),
-				ServerOption.WEB_PORT.getParam(), PORT);
-
-		assertEquals(expectedArguments, builder.withPort(PORT).getArguments());
+		final WebServerArgumentsBuilder builder = new WebServerArgumentsBuilder().withPort(PORT);
+		assertEquals(PORT, builder.getPort());
 	}
 
 	/**
@@ -99,10 +105,8 @@ public class WebServerArgumentsBuilderTest {
 	 */
 	@Test
 	public void testUseSsl() {
-		final List<String> expectedArguments = asList(ServerOption.START_WEB.getParam(),
-				ServerOption.WEB_SSL.getParam());
-
-		assertEquals(expectedArguments, builder.useSsl().getArguments());
+		final WebServerArgumentsBuilder builder = new WebServerArgumentsBuilder().useSsl();
+		assertEquals(ServerOption.WEB_SSL.getParam(), builder.getUseSsl());
 	}
 
 	/**
@@ -110,10 +114,8 @@ public class WebServerArgumentsBuilderTest {
 	 */
 	@Test
 	public void testOpenBrowser() {
-		final List<String> expectedArguments = asList(ServerOption.START_WEB.getParam(),
-				ServerOption.WEB_BROWSER.getParam());
-
-		assertEquals(expectedArguments, builder.openBrowser().getArguments());
+		final WebServerArgumentsBuilder builder = new WebServerArgumentsBuilder().openBrowser();
+		assertEquals(ServerOption.WEB_BROWSER.getParam(), builder.getOpenBrowser());
 	}
 
 	/**
@@ -122,22 +124,16 @@ public class WebServerArgumentsBuilderTest {
 	@Test
 	public void testBuild() {
 		//@formatter:off
-		builder.allowOthers()
-			   .useDaemonThread()
-			   .withPort(PORT)
-			   .useSsl()
-			   .openBrowser();
+		final WebServerArgumentsBuilder builder = new WebServerArgumentsBuilder()
+				.allowOthers()
+				.useDaemonThread()
+				.withPort(PORT)
+				.useSsl()
+				.openBrowser();
 		//@formatter:on
-
-		final List<String> expectedArguments = new ArrayList<String>();
-		expectedArguments.add(ServerOption.START_WEB.getParam());
-		expectedArguments.add(ServerOption.WEB_ALLOW_OTHERS.getParam());
-		expectedArguments.add(ServerOption.WEB_DAEMON.getParam());
-		expectedArguments.add(ServerOption.WEB_PORT.getParam());
-		expectedArguments.add(PORT);
-		expectedArguments.add(ServerOption.WEB_SSL.getParam());
-		expectedArguments.add(ServerOption.WEB_BROWSER.getParam());
-		final WebServerArguments expectedServerArguments = new WebServerArguments(expectedArguments);
+		final WebServerArguments expectedServerArguments = new WebServerArguments(ServerOption.START_WEB.getParam(),
+				ServerOption.WEB_ALLOW_OTHERS.getParam(), ServerOption.WEB_DAEMON.getParam(), PORT,
+				ServerOption.WEB_SSL.getParam(), ServerOption.WEB_BROWSER.getParam());
 		assertEquals(expectedServerArguments, builder.build());
 	}
 

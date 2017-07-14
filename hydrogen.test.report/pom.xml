@@ -31,6 +31,8 @@
 							<excludes>
 								<!-- Exclude factory classes -->
 								<exclude>**/*Factory.*</exclude>
+								<!-- Exclude adaptor classes -->
+								<exclude>**/*Adapter.*</exclude>
 								<!-- Exclude UI classes which cannot be easily tested -->
 								<exclude>**/HydrogenPreferencePage.*</exclude>
 								<exclude>**/GeneralLaunchConfigurationTab.*</exclude>

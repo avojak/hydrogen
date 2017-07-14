@@ -1,11 +1,11 @@
-package com.thedesertmonk.plugin.hydrogen.test.contributions.configuration.launch.tab;
+package com.thedesertmonk.plugin.hydrogen.test.contributions.configuration.launch;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.tab.PortValidator;
+import com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.PortValidator;
 
 /**
  * Test class for {@link PortValidator}.

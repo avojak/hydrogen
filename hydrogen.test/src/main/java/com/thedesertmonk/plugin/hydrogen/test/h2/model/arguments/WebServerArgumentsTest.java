@@ -1,7 +1,7 @@
 package com.thedesertmonk.plugin.hydrogen.test.h2.model.arguments;
 
-import static java.util.Collections.emptyList;
-import static java.util.Collections.singletonList;
+import static java.util.Arrays.asList;
+import static java.util.Optional.of;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.thedesertmonk.plugin.hydrogen.core.h2.model.ServerOption;
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.WebServerArguments;
 
 /**
@@ -21,24 +22,20 @@ import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.WebServerArgume
 @SuppressWarnings("nls")
 public class WebServerArgumentsTest {
 
-	private final List<String> arguments = singletonList("arg");
+	private final String startWeb = "startWeb";
+	private final String allowOthers = "allowOthers";
+	private final String useDaemonThread = "useDaemonThread";
+	private final String port = "port";
+	private final String useSsl = "useSsl";
+	private final String openBrowser = "openBrowser";
 
 	/**
-	 * Tests that the constructor throws an exception when the given
-	 * {@link List} of arguments is {@code null}.
+	 * Tests that the constructor throws an exception when the given startWeb
+	 * {@link String} is {@code null}.
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testConstructor_NullArguments() {
-		new WebServerArguments((List<String>) null);
-	}
-
-	/**
-	 * Tests that the constructor throws an exception when the given
-	 * {@link List} of arguments is empty.
-	 */
-	@Test(expected = IllegalArgumentException.class)
-	public void testConstructor_EmptyArguments() {
-		new WebServerArguments(emptyList());
+	public void testConstructor_NullStartWeb() {
+		new WebServerArguments((String) null, allowOthers, useDaemonThread, port, useSsl, openBrowser);
 	}
 
 	/**
@@ -46,7 +43,25 @@ public class WebServerArgumentsTest {
 	 */
 	@Test
 	public void testGetArguments() {
-		assertEquals(arguments, new WebServerArguments(arguments).getArguments());
+		final WebServerArguments arguments = new WebServerArguments(startWeb, allowOthers, useDaemonThread, port,
+				useSsl, openBrowser);
+		final List<String> expectedList = asList(startWeb, allowOthers, useDaemonThread,
+				ServerOption.WEB_PORT.getParam(), port, useSsl, openBrowser);
+		assertEquals(expectedList, arguments.getArguments());
+	}
+
+	/**
+	 * Tests the getter methods.
+	 */
+	@Test
+	public void testGetters() {
+		final WebServerArguments arguments = new WebServerArguments(startWeb, allowOthers, useDaemonThread, port,
+				useSsl, openBrowser);
+		assertEquals(of(allowOthers), arguments.getAllowOthers());
+		assertEquals(of(useDaemonThread), arguments.getUseDaemonThread());
+		assertEquals(of(port), arguments.getPort());
+		assertEquals(of(useSsl), arguments.getUseSsl());
+		assertEquals(of(openBrowser), arguments.getOpenBrowser());
 	}
 
 	/**
@@ -54,8 +69,13 @@ public class WebServerArgumentsTest {
 	 */
 	@Test
 	public void testToString() {
-		assertEquals("WebServerArguments [arguments=" + arguments.toString() + "]",
-				new WebServerArguments(arguments).toString());
+		final List<String> expectedList = asList(startWeb, allowOthers, useDaemonThread,
+				ServerOption.WEB_PORT.getParam(), port, useSsl, openBrowser);
+		assertEquals(
+				"WebServerArguments [arguments=" + expectedList + ", startWeb=" + startWeb + ", allowOthers="
+						+ of(allowOthers) + ", useDaemonThread=" + of(useDaemonThread) + ", port=" + of(port)
+						+ ", useSsl=" + of(useSsl) + ", openBrowser=" + of(openBrowser) + "]",
+				new WebServerArguments(startWeb, allowOthers, useDaemonThread, port, useSsl, openBrowser).toString());
 	}
 
 	/**
@@ -63,11 +83,28 @@ public class WebServerArgumentsTest {
 	 */
 	@Test
 	public void testHashCode() {
-		final WebServerArguments arguments1 = new WebServerArguments(arguments);
-		final WebServerArguments arguments2 = new WebServerArguments(singletonList("arg2"));
+		final WebServerArguments arguments1 = new WebServerArguments(startWeb, allowOthers, useDaemonThread, port,
+				useSsl, openBrowser);
+		final WebServerArguments arguments2 = new WebServerArguments("other", allowOthers, useDaemonThread, port,
+				useSsl, openBrowser);
+		final WebServerArguments arguments3 = new WebServerArguments(startWeb, "other", useDaemonThread, port, useSsl,
+				openBrowser);
+		final WebServerArguments arguments4 = new WebServerArguments(startWeb, allowOthers, "other", port, useSsl,
+				openBrowser);
+		final WebServerArguments arguments5 = new WebServerArguments(startWeb, allowOthers, useDaemonThread, "other",
+				useSsl, openBrowser);
+		final WebServerArguments arguments6 = new WebServerArguments(startWeb, allowOthers, useDaemonThread, port,
+				"other", openBrowser);
+		final WebServerArguments arguments7 = new WebServerArguments(startWeb, allowOthers, useDaemonThread, port,
+				useSsl, "other");
 
 		assertEquals(arguments1.hashCode(), arguments1.hashCode());
 		assertNotEquals(arguments1.hashCode(), arguments2.hashCode());
+		assertNotEquals(arguments1.hashCode(), arguments3.hashCode());
+		assertNotEquals(arguments1.hashCode(), arguments4.hashCode());
+		assertNotEquals(arguments1.hashCode(), arguments5.hashCode());
+		assertNotEquals(arguments1.hashCode(), arguments6.hashCode());
+		assertNotEquals(arguments1.hashCode(), arguments7.hashCode());
 	}
 
 	/**
@@ -75,14 +112,32 @@ public class WebServerArgumentsTest {
 	 */
 	@Test
 	public void testEquals() {
-		final WebServerArguments arguments1 = new WebServerArguments(arguments);
-		final WebServerArguments arguments2 = new WebServerArguments(arguments);
-		final WebServerArguments arguments3 = new WebServerArguments(singletonList("arg2"));
+		final WebServerArguments arguments1 = new WebServerArguments(startWeb, allowOthers, useDaemonThread, port,
+				useSsl, openBrowser);
+		final WebServerArguments arguments2 = new WebServerArguments(startWeb, allowOthers, useDaemonThread, port,
+				useSsl, openBrowser);
+		final WebServerArguments arguments3 = new WebServerArguments("other", allowOthers, useDaemonThread, port,
+				useSsl, openBrowser);
+		final WebServerArguments arguments4 = new WebServerArguments(startWeb, "other", useDaemonThread, port, useSsl,
+				openBrowser);
+		final WebServerArguments arguments5 = new WebServerArguments(startWeb, allowOthers, "other", port, useSsl,
+				openBrowser);
+		final WebServerArguments arguments6 = new WebServerArguments(startWeb, allowOthers, useDaemonThread, "other",
+				useSsl, openBrowser);
+		final WebServerArguments arguments7 = new WebServerArguments(startWeb, allowOthers, useDaemonThread, port,
+				"other", openBrowser);
+		final WebServerArguments arguments8 = new WebServerArguments(startWeb, allowOthers, useDaemonThread, port,
+				useSsl, "other");
 
 		assertTrue(arguments1.equals(arguments1));
 		assertFalse(arguments1.equals(null));
 		assertFalse(arguments1.equals("String"));
 		assertFalse(arguments1.equals(arguments3));
+		assertFalse(arguments1.equals(arguments4));
+		assertFalse(arguments1.equals(arguments5));
+		assertFalse(arguments1.equals(arguments6));
+		assertFalse(arguments1.equals(arguments7));
+		assertFalse(arguments1.equals(arguments8));
 		assertTrue(arguments1.equals(arguments2));
 	}
 

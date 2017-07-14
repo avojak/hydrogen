@@ -18,8 +18,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.HydrogenServerArguments;
-import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.HydrogenServerArgumentsBuilder;
+import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.HydrogenRuntimeArguments;
+import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.HydrogenRuntimeArgumentsBuilder;
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.PgServerArguments;
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.PgServerArgumentsBuilder;
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.ProgramArguments;
@@ -39,7 +39,7 @@ import com.thedesertmonk.plugin.hydrogen.core.h2.model.configuration.attributes.
 public class ProgramArgumentsTest {
 
 	@Mock
-	private HydrogenServerArgumentsBuilder hydrogenServerArgumentsBuilder;
+	private HydrogenRuntimeArgumentsBuilder hydrogenRuntimeArgumentsBuilder;
 	@Mock
 	private WebServerArgumentsBuilder webServerArgumentsBuilder;
 	@Mock
@@ -55,7 +55,7 @@ public class ProgramArgumentsTest {
 	@Mock
 	private ILaunchConfiguration configuration;
 	@Mock
-	private HydrogenServerArguments arguments;
+	private HydrogenRuntimeArguments arguments;
 
 	/**
 	 * Setup mocks.
@@ -110,16 +110,16 @@ public class ProgramArgumentsTest {
 		when(webServerArgumentsBuilder.build()).thenReturn(webServerArguments);
 		when(tcpServerArgumentsBuilder.build()).thenReturn(tcpServerArguments);
 		when(pgServerArgumentsBuilder.build()).thenReturn(pgServerArguments);
-		when(hydrogenServerArgumentsBuilder.build()).thenReturn(arguments);
+		when(hydrogenRuntimeArgumentsBuilder.build()).thenReturn(arguments);
 	}
 
 	/**
 	 * Tests that the constructor throws an exception when the given
-	 * {@link HydrogenServerArgumentsBuilder} is {@code null}.
+	 * {@link HydrogenRuntimeArgumentsBuilder} is {@code null}.
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor_NullHydrogenServerArgumentsBuilder() {
-		new ProgramArguments((HydrogenServerArgumentsBuilder) null, webServerArgumentsBuilder,
+		new ProgramArguments((HydrogenRuntimeArgumentsBuilder) null, webServerArgumentsBuilder,
 				tcpServerArgumentsBuilder, pgServerArgumentsBuilder, configuration);
 	}
 
@@ -129,7 +129,7 @@ public class ProgramArgumentsTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor_NullWebServerArgumentsBuilder() {
-		new ProgramArguments(hydrogenServerArgumentsBuilder, (WebServerArgumentsBuilder) null,
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, (WebServerArgumentsBuilder) null,
 				tcpServerArgumentsBuilder, pgServerArgumentsBuilder, configuration);
 	}
 
@@ -139,7 +139,7 @@ public class ProgramArgumentsTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor_NullTcpServerArgumentsBuilder() {
-		new ProgramArguments(hydrogenServerArgumentsBuilder, webServerArgumentsBuilder,
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder,
 				(TcpServerArgumentsBuilder) null, pgServerArgumentsBuilder, configuration);
 	}
 
@@ -149,7 +149,7 @@ public class ProgramArgumentsTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor_NullPgServerArgumentsBuilder() {
-		new ProgramArguments(hydrogenServerArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
 				(PgServerArgumentsBuilder) null, configuration);
 	}
 
@@ -159,7 +159,7 @@ public class ProgramArgumentsTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor_NullConfiguration() {
-		new ProgramArguments(hydrogenServerArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
 				pgServerArgumentsBuilder, (ILaunchConfiguration) null);
 	}
 
@@ -172,7 +172,7 @@ public class ProgramArgumentsTest {
 	public void testUnableToRetrieveAttributes() {
 		try {
 			when(configuration.hasAttribute(anyString())).thenThrow(CoreException.class);
-			new ProgramArguments(hydrogenServerArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
+			new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
 					pgServerArgumentsBuilder, configuration);
 		} catch (final CoreException e) {
 			fail("CoreException not expected");
@@ -192,7 +192,7 @@ public class ProgramArgumentsTest {
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_START_WEB() throws CoreException {
 		when(configuration.hasAttribute(LaunchConfigurationAttributes.START_WEB.getName())).thenReturn(false);
-		new ProgramArguments(hydrogenServerArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
 				pgServerArgumentsBuilder, configuration);
 	}
 
@@ -205,7 +205,7 @@ public class ProgramArgumentsTest {
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_START_TCP() throws CoreException {
 		when(configuration.hasAttribute(LaunchConfigurationAttributes.START_TCP.getName())).thenReturn(false);
-		new ProgramArguments(hydrogenServerArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
 				pgServerArgumentsBuilder, configuration);
 	}
 
@@ -218,7 +218,7 @@ public class ProgramArgumentsTest {
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_START_PG() throws CoreException {
 		when(configuration.hasAttribute(LaunchConfigurationAttributes.START_PG.getName())).thenReturn(false);
-		new ProgramArguments(hydrogenServerArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
 				pgServerArgumentsBuilder, configuration);
 	}
 
@@ -232,7 +232,7 @@ public class ProgramArgumentsTest {
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_ENABLE_TRACING() throws CoreException {
 		when(configuration.hasAttribute(LaunchConfigurationAttributes.ENABLE_TRACING.getName())).thenReturn(false);
-		new ProgramArguments(hydrogenServerArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
 				pgServerArgumentsBuilder, configuration);
 	}
 
@@ -245,7 +245,7 @@ public class ProgramArgumentsTest {
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_IF_EXISTS() throws CoreException {
 		when(configuration.hasAttribute(LaunchConfigurationAttributes.IF_EXISTS.getName())).thenReturn(false);
-		new ProgramArguments(hydrogenServerArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
 				pgServerArgumentsBuilder, configuration);
 	}
 
@@ -259,7 +259,7 @@ public class ProgramArgumentsTest {
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_WEB_ALLOW_OTHERS() throws CoreException {
 		when(configuration.hasAttribute(LaunchConfigurationAttributes.WEB_ALLOW_OTHERS.getName())).thenReturn(false);
-		new ProgramArguments(hydrogenServerArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
 				pgServerArgumentsBuilder, configuration);
 	}
 
@@ -272,7 +272,7 @@ public class ProgramArgumentsTest {
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_WEB_DAEMON() throws CoreException {
 		when(configuration.hasAttribute(LaunchConfigurationAttributes.WEB_DAEMON.getName())).thenReturn(false);
-		new ProgramArguments(hydrogenServerArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
 				pgServerArgumentsBuilder, configuration);
 	}
 
@@ -285,7 +285,7 @@ public class ProgramArgumentsTest {
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_WEB_SSL() throws CoreException {
 		when(configuration.hasAttribute(LaunchConfigurationAttributes.WEB_SSL.getName())).thenReturn(false);
-		new ProgramArguments(hydrogenServerArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
 				pgServerArgumentsBuilder, configuration);
 	}
 
@@ -298,7 +298,7 @@ public class ProgramArgumentsTest {
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_WEB_BROWSER() throws CoreException {
 		when(configuration.hasAttribute(LaunchConfigurationAttributes.WEB_BROWSER.getName())).thenReturn(false);
-		new ProgramArguments(hydrogenServerArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
 				pgServerArgumentsBuilder, configuration);
 	}
 
@@ -311,7 +311,7 @@ public class ProgramArgumentsTest {
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_WEB_PORT() throws CoreException {
 		when(configuration.hasAttribute(LaunchConfigurationAttributes.WEB_PORT.getName())).thenReturn(false);
-		new ProgramArguments(hydrogenServerArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
 				pgServerArgumentsBuilder, configuration);
 	}
 
@@ -324,7 +324,7 @@ public class ProgramArgumentsTest {
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_TCP_SSL() throws CoreException {
 		when(configuration.hasAttribute(LaunchConfigurationAttributes.TCP_SSL.getName())).thenReturn(false);
-		new ProgramArguments(hydrogenServerArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
 				pgServerArgumentsBuilder, configuration);
 	}
 
@@ -338,7 +338,7 @@ public class ProgramArgumentsTest {
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_TCP_ALLOW_OTHERS() throws CoreException {
 		when(configuration.hasAttribute(LaunchConfigurationAttributes.TCP_ALLOW_OTHERS.getName())).thenReturn(false);
-		new ProgramArguments(hydrogenServerArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
 				pgServerArgumentsBuilder, configuration);
 	}
 
@@ -351,7 +351,7 @@ public class ProgramArgumentsTest {
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_TCP_DAEMON() throws CoreException {
 		when(configuration.hasAttribute(LaunchConfigurationAttributes.TCP_DAEMON.getName())).thenReturn(false);
-		new ProgramArguments(hydrogenServerArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
 				pgServerArgumentsBuilder, configuration);
 	}
 
@@ -365,7 +365,7 @@ public class ProgramArgumentsTest {
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_TCP_SHUTDOWN_FORCE() throws CoreException {
 		when(configuration.hasAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_FORCE.getName())).thenReturn(false);
-		new ProgramArguments(hydrogenServerArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
 				pgServerArgumentsBuilder, configuration);
 	}
 
@@ -378,7 +378,7 @@ public class ProgramArgumentsTest {
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_TCP_PORT() throws CoreException {
 		when(configuration.hasAttribute(LaunchConfigurationAttributes.TCP_PORT.getName())).thenReturn(false);
-		new ProgramArguments(hydrogenServerArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
 				pgServerArgumentsBuilder, configuration);
 	}
 
@@ -392,7 +392,7 @@ public class ProgramArgumentsTest {
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_PG_ALLOW_OTHERS() throws CoreException {
 		when(configuration.hasAttribute(LaunchConfigurationAttributes.PG_ALLOW_OTHERS.getName())).thenReturn(false);
-		new ProgramArguments(hydrogenServerArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
 				pgServerArgumentsBuilder, configuration);
 	}
 
@@ -405,7 +405,7 @@ public class ProgramArgumentsTest {
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_PG_DAEMON() throws CoreException {
 		when(configuration.hasAttribute(LaunchConfigurationAttributes.PG_DAEMON.getName())).thenReturn(false);
-		new ProgramArguments(hydrogenServerArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
 				pgServerArgumentsBuilder, configuration);
 	}
 
@@ -418,7 +418,7 @@ public class ProgramArgumentsTest {
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_PG_PORT() throws CoreException {
 		when(configuration.hasAttribute(LaunchConfigurationAttributes.PG_PORT.getName())).thenReturn(false);
-		new ProgramArguments(hydrogenServerArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
 				pgServerArgumentsBuilder, configuration);
 	}
 
@@ -427,12 +427,12 @@ public class ProgramArgumentsTest {
 	 */
 	@Test
 	public void testConstructor() {
-		new ProgramArguments(hydrogenServerArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
 				pgServerArgumentsBuilder, configuration);
 
-		verify(hydrogenServerArgumentsBuilder).withWebServer(webServerArguments);
-		verify(hydrogenServerArgumentsBuilder).withTcpServer(tcpServerArguments);
-		verify(hydrogenServerArgumentsBuilder).withPgServer(pgServerArguments);
+		verify(hydrogenRuntimeArgumentsBuilder).withWebServer(webServerArguments);
+		verify(hydrogenRuntimeArgumentsBuilder).withTcpServer(tcpServerArguments);
+		verify(hydrogenRuntimeArgumentsBuilder).withPgServer(pgServerArguments);
 
 		verify(webServerArgumentsBuilder).allowOthers();
 		verify(webServerArgumentsBuilder).useDaemonThread();
@@ -459,8 +459,8 @@ public class ProgramArgumentsTest {
 	 */
 	@Test
 	public void testGetArguments() {
-		when(hydrogenServerArgumentsBuilder.build()).thenReturn(arguments);
-		assertEquals(arguments, new ProgramArguments(hydrogenServerArgumentsBuilder, webServerArgumentsBuilder,
+		when(hydrogenRuntimeArgumentsBuilder.build()).thenReturn(arguments);
+		assertEquals(arguments, new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder,
 				tcpServerArgumentsBuilder, pgServerArgumentsBuilder, configuration).getArguments());
 	}
 
@@ -470,7 +470,7 @@ public class ProgramArgumentsTest {
 	@Test
 	public void testToString() {
 		assertEquals("ProgramArguments [arguments=" + arguments.toString() + "]",
-				new ProgramArguments(hydrogenServerArgumentsBuilder, webServerArgumentsBuilder,
+				new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder,
 						tcpServerArgumentsBuilder, pgServerArgumentsBuilder, configuration).toString());
 	}
 
@@ -481,12 +481,12 @@ public class ProgramArgumentsTest {
 	 */
 	@Test
 	public void testHashCode() throws CoreException {
-		when(hydrogenServerArgumentsBuilder.build()).thenReturn(arguments,
-				new HydrogenServerArguments(Collections.emptyList()));
+		when(hydrogenRuntimeArgumentsBuilder.build()).thenReturn(arguments,
+				new HydrogenRuntimeArguments(Collections.emptyList()));
 
-		final ProgramArguments programArguments1 = new ProgramArguments(hydrogenServerArgumentsBuilder,
+		final ProgramArguments programArguments1 = new ProgramArguments(hydrogenRuntimeArgumentsBuilder,
 				webServerArgumentsBuilder, tcpServerArgumentsBuilder, pgServerArgumentsBuilder, configuration);
-		final ProgramArguments programArguments2 = new ProgramArguments(hydrogenServerArgumentsBuilder,
+		final ProgramArguments programArguments2 = new ProgramArguments(hydrogenRuntimeArgumentsBuilder,
 				webServerArgumentsBuilder, tcpServerArgumentsBuilder, pgServerArgumentsBuilder, configuration);
 
 		assertTrue(programArguments1.hashCode() == programArguments1.hashCode());
@@ -498,14 +498,14 @@ public class ProgramArgumentsTest {
 	 */
 	@Test
 	public void testEquals() {
-		when(hydrogenServerArgumentsBuilder.build()).thenReturn(arguments, arguments,
-				new HydrogenServerArguments(Collections.emptyList()));
+		when(hydrogenRuntimeArgumentsBuilder.build()).thenReturn(arguments, arguments,
+				new HydrogenRuntimeArguments(Collections.emptyList()));
 
-		final ProgramArguments programArguments1 = new ProgramArguments(hydrogenServerArgumentsBuilder,
+		final ProgramArguments programArguments1 = new ProgramArguments(hydrogenRuntimeArgumentsBuilder,
 				webServerArgumentsBuilder, tcpServerArgumentsBuilder, pgServerArgumentsBuilder, configuration);
-		final ProgramArguments programArguments2 = new ProgramArguments(hydrogenServerArgumentsBuilder,
+		final ProgramArguments programArguments2 = new ProgramArguments(hydrogenRuntimeArgumentsBuilder,
 				webServerArgumentsBuilder, tcpServerArgumentsBuilder, pgServerArgumentsBuilder, configuration);
-		final ProgramArguments programArguments3 = new ProgramArguments(hydrogenServerArgumentsBuilder,
+		final ProgramArguments programArguments3 = new ProgramArguments(hydrogenRuntimeArgumentsBuilder,
 				webServerArgumentsBuilder, tcpServerArgumentsBuilder, pgServerArgumentsBuilder, configuration);
 
 		assertTrue(programArguments1.equals(programArguments1));

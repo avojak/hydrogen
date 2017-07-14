@@ -1,8 +1,5 @@
 package com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.ServerOption;
 
 /**
@@ -12,14 +9,52 @@ import com.thedesertmonk.plugin.hydrogen.core.h2.model.ServerOption;
  */
 public class TcpServerArgumentsBuilder {
 
-	private final List<String> arguments;
+	private String allowOthers;
+	private String useDaemonThread;
+	private String port;
+	private String useSsl;
+	private String shutdownUrl;
+	private String shutdownPassword;
+	private String forceShutdown;
 
 	/**
-	 * Constructor.
+	 * Constructs a new {@link TcpServerArgumentsBuilder}.
 	 */
 	public TcpServerArgumentsBuilder() {
-		arguments = new ArrayList<String>();
-		arguments.add(ServerOption.START_TCP.getParam());
+	}
+
+	/**
+	 * Constructs a new {@link TcpServerArgumentsBuilder} from existing
+	 * {@link TcpServerArguments}.
+	 *
+	 * @param oldArguments The existing {@link TcpServerArguments}. Cannot be
+	 *            null.
+	 */
+	public TcpServerArgumentsBuilder(final TcpServerArguments oldArguments) {
+		if (oldArguments == null) {
+			throw new IllegalArgumentException("oldArguments cannot be null"); //$NON-NLS-1$
+		}
+		if (oldArguments.getAllowOthers().isPresent()) {
+			this.allowOthers = oldArguments.getAllowOthers().get();
+		}
+		if (oldArguments.getUseDaemonThread().isPresent()) {
+			this.useDaemonThread = oldArguments.getUseDaemonThread().get();
+		}
+		if (oldArguments.getPort().isPresent()) {
+			this.port = oldArguments.getPort().get();
+		}
+		if (oldArguments.getUseSsl().isPresent()) {
+			this.useSsl = oldArguments.getUseSsl().get();
+		}
+		if (oldArguments.getShutdownUrl().isPresent()) {
+			this.shutdownUrl = oldArguments.getShutdownUrl().get();
+		}
+		if (oldArguments.getShutdownPassword().isPresent()) {
+			this.shutdownPassword = oldArguments.getShutdownPassword().get();
+		}
+		if (oldArguments.getForceShutdown().isPresent()) {
+			this.forceShutdown = oldArguments.getForceShutdown().get();
+		}
 	}
 
 	/**
@@ -28,7 +63,7 @@ public class TcpServerArgumentsBuilder {
 	 * @return The current {@link TcpServerArgumentsBuilder} instance.
 	 */
 	public TcpServerArgumentsBuilder allowOthers() {
-		arguments.add(ServerOption.TCP_ALLOW_OTHERS.getParam());
+		allowOthers = ServerOption.TCP_ALLOW_OTHERS.getParam();
 		return this;
 	}
 
@@ -38,22 +73,21 @@ public class TcpServerArgumentsBuilder {
 	 * @return The current {@link TcpServerArgumentsBuilder} instance.
 	 */
 	public TcpServerArgumentsBuilder useDaemonThread() {
-		arguments.add(ServerOption.TCP_DAEMON.getParam());
+		useDaemonThread = ServerOption.TCP_DAEMON.getParam();
 		return this;
 	}
 
 	/**
 	 * Sets the {@link ServerOption#TCP_PORT} property.
 	 *
-	 * @param port The port number. Cannot be null or empty.
+	 * @param portNumber The port number. Cannot be null or empty.
 	 * @return The current {@link TcpServerArgumentsBuilder} instance.
 	 */
-	public TcpServerArgumentsBuilder withPort(final String port) {
-		if (port == null || port.trim().isEmpty()) {
-			throw new IllegalArgumentException("port cannot be null or empty"); //$NON-NLS-1$
+	public TcpServerArgumentsBuilder withPort(final String portNumber) {
+		if (portNumber == null || portNumber.trim().isEmpty()) {
+			throw new IllegalArgumentException("portNumber cannot be null or empty"); //$NON-NLS-1$
 		}
-		arguments.add(ServerOption.TCP_PORT.getParam());
-		arguments.add(port);
+		this.port = portNumber;
 		return this;
 	}
 
@@ -63,7 +97,7 @@ public class TcpServerArgumentsBuilder {
 	 * @return The current {@link TcpServerArgumentsBuilder} instance.
 	 */
 	public TcpServerArgumentsBuilder useSsl() {
-		arguments.add(ServerOption.TCP_SSL.getParam());
+		useSsl = ServerOption.TCP_SSL.getParam();
 		return this;
 	}
 
@@ -77,8 +111,7 @@ public class TcpServerArgumentsBuilder {
 		if (url == null || url.trim().isEmpty()) {
 			throw new IllegalArgumentException("url cannot be null or empty"); //$NON-NLS-1$
 		}
-		arguments.add(ServerOption.TCP_SHUTDOWN_URL.getParam());
-		arguments.add(url);
+		this.shutdownUrl = url;
 		return this;
 	}
 
@@ -92,8 +125,7 @@ public class TcpServerArgumentsBuilder {
 		if (password == null || password.trim().isEmpty()) {
 			throw new IllegalArgumentException("password cannot be null or empty"); //$NON-NLS-1$
 		}
-		arguments.add(ServerOption.TCP_SHUTDOWN_PASSWORD.getParam());
-		arguments.add(password);
+		this.shutdownPassword = password;
 		return this;
 	}
 
@@ -103,7 +135,7 @@ public class TcpServerArgumentsBuilder {
 	 * @return The current {@link TcpServerArgumentsBuilder} instance.
 	 */
 	public TcpServerArgumentsBuilder forceShutdown() {
-		arguments.add(ServerOption.TCP_SHUTDOWN_FORCE.getParam());
+		forceShutdown = ServerOption.TCP_SHUTDOWN_FORCE.getParam();
 		return this;
 	}
 
@@ -113,16 +145,78 @@ public class TcpServerArgumentsBuilder {
 	 * @return A new, non-null instance of {@link TcpServerArguments}.
 	 */
 	public TcpServerArguments build() {
-		return new TcpServerArguments(arguments);
+		final String startTcp = ServerOption.START_TCP.getParam();
+		return new TcpServerArguments(startTcp, allowOthers, useDaemonThread, port, useSsl, shutdownUrl,
+				shutdownPassword, forceShutdown);
 	}
 
 	/**
-	 * Gets the {@link List} of arguments.
+	 * Gets the {@link ServerOption#TCP_ALLOW_OTHERS} property if present.
 	 *
-	 * @return The non-null {@link List} of argument {@link String} objects.
+	 * @return The {@link ServerOption#TCP_ALLOW_OTHERS} property if present,
+	 *         otherwise {@code null}.
 	 */
-	public List<String> getArguments() {
-		return new ArrayList<String>(arguments);
+	public String getAllowOthers() {
+		return allowOthers;
+	}
+
+	/**
+	 * Gets the {@link ServerOption#TCP_DAEMON} property if present.
+	 *
+	 * @return The {@link ServerOption#TCP_DAEMON} property if present,
+	 *         otherwise {@code null}.
+	 */
+	public String getUseDaemonThread() {
+		return useDaemonThread;
+	}
+
+	/**
+	 * Gets the port number if present.
+	 *
+	 * @return The port number if present, otherwise {@code null}.
+	 */
+	public String getPort() {
+		return port;
+	}
+
+	/**
+	 * Gets the {@link ServerOption#TCP_SSL} property if present.
+	 *
+	 * @return The {@link ServerOption#TCP_SSL} property if present, otherwise
+	 *         {@code null}.
+	 */
+	public String getUseSsl() {
+		return useSsl;
+	}
+
+	/**
+	 * Gets the {@link ServerOption#TCP_SHUTDOWN_URL} property if present.
+	 *
+	 * @return The {@link ServerOption#TCP_SHUTDOWN_URL} property if present,
+	 *         otherwise {@code null}.
+	 */
+	public String getShutdownUrl() {
+		return shutdownUrl;
+	}
+
+	/**
+	 * Gets the {@link ServerOption#TCP_SHUTDOWN_PASSWORD} property if present.
+	 *
+	 * @return The {@link ServerOption#TCP_SHUTDOWN_PASSWORD} property if
+	 *         present, otherwise {@code null}.
+	 */
+	public String getShutdownPassword() {
+		return shutdownPassword;
+	}
+
+	/**
+	 * Gets the {@link ServerOption#TCP_SHUTDOWN_FORCE} property if present.
+	 *
+	 * @return The {@link ServerOption#TCP_SHUTDOWN_FORCE} property if present,
+	 *         otherwise {@code null}.
+	 */
+	public String getForceShutdown() {
+		return forceShutdown;
 	}
 
 }

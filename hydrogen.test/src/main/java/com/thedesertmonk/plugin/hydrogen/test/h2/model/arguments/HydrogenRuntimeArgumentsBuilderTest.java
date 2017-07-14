@@ -17,20 +17,20 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.ServerOption;
-import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.HydrogenServerArguments;
-import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.HydrogenServerArgumentsBuilder;
+import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.HydrogenRuntimeArguments;
+import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.HydrogenRuntimeArgumentsBuilder;
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.PgServerArguments;
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.TcpServerArguments;
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.WebServerArguments;
 
 /**
- * Test class for {@link HydrogenServerArgumentsBuilder}.
+ * Test class for {@link HydrogenRuntimeArgumentsBuilder}.
  *
  * @author Andrew Vojak
  */
 @SuppressWarnings("nls")
 @RunWith(MockitoJUnitRunner.class)
-public class HydrogenServerArgumentsBuilderTest {
+public class HydrogenRuntimeArgumentsBuilderTest {
 
 	private static final String EMPTY_STRING = " ";
 
@@ -41,7 +41,7 @@ public class HydrogenServerArgumentsBuilderTest {
 	@Mock
 	private PgServerArguments pgServerArguments;
 
-	private HydrogenServerArgumentsBuilder builder;
+	private HydrogenRuntimeArgumentsBuilder builder;
 	private List<String> webServerArgumentsStrings;
 	private List<String> tcpServerArgumentsStrings;
 	private List<String> pgServerArgumentsStrings;
@@ -55,7 +55,7 @@ public class HydrogenServerArgumentsBuilderTest {
 	 */
 	@Before
 	public void setup() {
-		builder = new HydrogenServerArgumentsBuilder();
+		builder = new HydrogenRuntimeArgumentsBuilder();
 
 		webServerArgumentsStrings = singletonList("webServerArguments");
 		tcpServerArgumentsStrings = singletonList("tcpServerArguments");
@@ -82,7 +82,7 @@ public class HydrogenServerArgumentsBuilderTest {
 
 	/**
 	 * Tests that
-	 * {@link HydrogenServerArgumentsBuilder#withWebServer(WebServerArguments)}
+	 * {@link HydrogenRuntimeArgumentsBuilder#withWebServer(WebServerArguments)}
 	 * throws an exception when the given {@link WebServerArguments} is
 	 * {@code null}.
 	 */
@@ -93,7 +93,7 @@ public class HydrogenServerArgumentsBuilderTest {
 
 	/**
 	 * Test
-	 * {@link HydrogenServerArgumentsBuilder#withWebServer(WebServerArguments)}.
+	 * {@link HydrogenRuntimeArgumentsBuilder#withWebServer(WebServerArguments)}.
 	 */
 	@Test
 	public void testWithWebServer() {
@@ -105,7 +105,7 @@ public class HydrogenServerArgumentsBuilderTest {
 
 	/**
 	 * Tests that
-	 * {@link HydrogenServerArgumentsBuilder#withTcpServer(TcpServerArguments)}
+	 * {@link HydrogenRuntimeArgumentsBuilder#withTcpServer(TcpServerArguments)}
 	 * throws an exception when the given {@link TcpServerArguments} is
 	 * {@code null}.
 	 */
@@ -116,7 +116,7 @@ public class HydrogenServerArgumentsBuilderTest {
 
 	/**
 	 * Test
-	 * {@link HydrogenServerArgumentsBuilder#withTcpServer(TcpServerArguments)}.
+	 * {@link HydrogenRuntimeArgumentsBuilder#withTcpServer(TcpServerArguments)}.
 	 */
 	@Test
 	public void testWithTcpServer() {
@@ -128,7 +128,7 @@ public class HydrogenServerArgumentsBuilderTest {
 
 	/**
 	 * Tests that
-	 * {@link HydrogenServerArgumentsBuilder#withPgServer(PgServerArguments)}
+	 * {@link HydrogenRuntimeArgumentsBuilder#withPgServer(PgServerArguments)}
 	 * throws an exception when the given {@link PgServerArguments} is
 	 * {@code null}.
 	 */
@@ -139,7 +139,7 @@ public class HydrogenServerArgumentsBuilderTest {
 
 	/**
 	 * Test
-	 * {@link HydrogenServerArgumentsBuilder#withPgServer(PgServerArguments)}.
+	 * {@link HydrogenRuntimeArgumentsBuilder#withPgServer(PgServerArguments)}.
 	 */
 	@Test
 	public void testWithPgServer() {
@@ -150,7 +150,7 @@ public class HydrogenServerArgumentsBuilderTest {
 	}
 
 	/**
-	 * Tests that {@link HydrogenServerArgumentsBuilder#withProperties(String)}
+	 * Tests that {@link HydrogenRuntimeArgumentsBuilder#withProperties(String)}
 	 * throws an exception if the given directory {@link String} is
 	 * {@code null}.
 	 */
@@ -160,7 +160,7 @@ public class HydrogenServerArgumentsBuilderTest {
 	}
 
 	/**
-	 * Tests that {@link HydrogenServerArgumentsBuilder#withProperties(String)}
+	 * Tests that {@link HydrogenRuntimeArgumentsBuilder#withProperties(String)}
 	 * throws an exception if the given directory {@link String} is empty.
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -169,7 +169,7 @@ public class HydrogenServerArgumentsBuilderTest {
 	}
 
 	/**
-	 * Tests {@link HydrogenServerArgumentsBuilder#withProperties(String)}.
+	 * Tests {@link HydrogenRuntimeArgumentsBuilder#withProperties(String)}.
 	 */
 	@Test
 	public void testWithProperties() {
@@ -181,8 +181,8 @@ public class HydrogenServerArgumentsBuilderTest {
 
 	/**
 	 * Tests that
-	 * {@link HydrogenServerArgumentsBuilder#setBaseDirectory(String)} throws an
-	 * exception if the given directory {@link String} is {@code null}.
+	 * {@link HydrogenRuntimeArgumentsBuilder#setBaseDirectory(String)} throws
+	 * an exception if the given directory {@link String} is {@code null}.
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetBaseDirectory_NullDatabaseDirectory() {
@@ -191,8 +191,8 @@ public class HydrogenServerArgumentsBuilderTest {
 
 	/**
 	 * Tests that
-	 * {@link HydrogenServerArgumentsBuilder#setBaseDirectory(String)} throws an
-	 * exception if the given directory {@link String} is empty.
+	 * {@link HydrogenRuntimeArgumentsBuilder#setBaseDirectory(String)} throws
+	 * an exception if the given directory {@link String} is empty.
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetBaseDirectory_EmptyDatabaseDirectory() {
@@ -200,7 +200,7 @@ public class HydrogenServerArgumentsBuilderTest {
 	}
 
 	/**
-	 * Tests {@link HydrogenServerArgumentsBuilder#setBaseDirectory(String)}.
+	 * Tests {@link HydrogenRuntimeArgumentsBuilder#setBaseDirectory(String)}.
 	 */
 	@Test
 	public void testSetBaseDirectory() {
@@ -211,7 +211,8 @@ public class HydrogenServerArgumentsBuilderTest {
 	}
 
 	/**
-	 * Tests {@link HydrogenServerArgumentsBuilder#onlyOpenExistingDatabases()}.
+	 * Tests
+	 * {@link HydrogenRuntimeArgumentsBuilder#onlyOpenExistingDatabases()}.
 	 */
 	@Test
 	public void testOnlyOpenExistingDatabase() {
@@ -221,7 +222,7 @@ public class HydrogenServerArgumentsBuilderTest {
 	}
 
 	/**
-	 * Tests {@link HydrogenServerArgumentsBuilder#enableTracing()}.
+	 * Tests {@link HydrogenRuntimeArgumentsBuilder#enableTracing()}.
 	 */
 	@Test
 	public void testEnableTracing() {
@@ -232,7 +233,7 @@ public class HydrogenServerArgumentsBuilderTest {
 
 	/**
 	 * Tests that
-	 * {@link HydrogenServerArgumentsBuilder#withDatabaseMapping(String, String)}
+	 * {@link HydrogenRuntimeArgumentsBuilder#withDatabaseMapping(String, String)}
 	 * throws an exception if the given 'from' database name is {@code null}.
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -242,7 +243,7 @@ public class HydrogenServerArgumentsBuilderTest {
 
 	/**
 	 * Tests that
-	 * {@link HydrogenServerArgumentsBuilder#withDatabaseMapping(String, String)}
+	 * {@link HydrogenRuntimeArgumentsBuilder#withDatabaseMapping(String, String)}
 	 * throws an exception if the given 'from' database name is empty.
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -252,7 +253,7 @@ public class HydrogenServerArgumentsBuilderTest {
 
 	/**
 	 * Tests that
-	 * {@link HydrogenServerArgumentsBuilder#withDatabaseMapping(String, String)}
+	 * {@link HydrogenRuntimeArgumentsBuilder#withDatabaseMapping(String, String)}
 	 * throws an exception if the given 'to' database name is {@code null}.
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -262,7 +263,7 @@ public class HydrogenServerArgumentsBuilderTest {
 
 	/**
 	 * Tests that
-	 * {@link HydrogenServerArgumentsBuilder#withDatabaseMapping(String, String)}
+	 * {@link HydrogenRuntimeArgumentsBuilder#withDatabaseMapping(String, String)}
 	 * throws an exception if the given 'to' database name is empty.
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -272,7 +273,7 @@ public class HydrogenServerArgumentsBuilderTest {
 
 	/**
 	 * Tests
-	 * {@link HydrogenServerArgumentsBuilder#withDatabaseMapping(String, String)}.
+	 * {@link HydrogenRuntimeArgumentsBuilder#withDatabaseMapping(String, String)}.
 	 */
 	@Test
 	public void testWithDatabaseMapping() {
@@ -284,7 +285,7 @@ public class HydrogenServerArgumentsBuilderTest {
 	}
 
 	/**
-	 * Tests {@link HydrogenServerArgumentsBuilder#build}.
+	 * Tests {@link HydrogenRuntimeArgumentsBuilder#build}.
 	 */
 	@Test
 	public void testBuild() {
@@ -312,7 +313,8 @@ public class HydrogenServerArgumentsBuilderTest {
 		expectedArguments.add(ServerOption.KEY.getParam());
 		expectedArguments.add(fromDatabaseName);
 		expectedArguments.add(toDatabaseName);
-		final HydrogenServerArguments expectedHydrogenServerArguments = new HydrogenServerArguments(expectedArguments);
+		final HydrogenRuntimeArguments expectedHydrogenServerArguments = new HydrogenRuntimeArguments(
+				expectedArguments);
 		assertEquals(expectedHydrogenServerArguments, builder.build());
 	}
 

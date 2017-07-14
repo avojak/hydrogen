@@ -16,6 +16,8 @@ import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.PortValidator;
+
 /**
  * Launch configuration tab with additional methods to create common UI
  * components.

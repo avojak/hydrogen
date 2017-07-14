@@ -1,4 +1,4 @@
-package com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.tab;
+package com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch;
 
 /**
  * Class to validate port numbers.
@@ -20,11 +20,20 @@ public class PortValidator {
 			return false;
 		}
 		try {
-			final int portNumber = Integer.valueOf(portString);
-			if (portNumber < 1024 || portNumber > 0xFFFF) {
-				return false;
-			}
+			return isValid(Integer.valueOf(portString));
 		} catch (final NumberFormatException e) {
+			return false;
+		}
+	}
+
+	/**
+	 * Returns whether or not the given port is a valid port number.
+	 *
+	 * @param portNumber The port number.
+	 * @return {@code true} if the given port is valid, otherwise {@code false}.
+	 */
+	public static boolean isValid(final int portNumber) {
+		if (portNumber < 1024 || portNumber > 0xFFFF) {
 			return false;
 		}
 		return true;

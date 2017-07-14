@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author Andrew Vojak
  */
-public class HydrogenServerArguments {
+public class HydrogenRuntimeArguments {
 
 	private final List<String> arguments;
 
@@ -17,7 +17,7 @@ public class HydrogenServerArguments {
 	 *
 	 * @param arguments The {@link List} of arguments. Cannot be null.
 	 */
-	public HydrogenServerArguments(final List<String> arguments) {
+	public HydrogenRuntimeArguments(final List<String> arguments) {
 		if (arguments == null) {
 			throw new IllegalArgumentException("arguments cannot be null"); //$NON-NLS-1$
 		}
@@ -66,7 +66,7 @@ public class HydrogenServerArguments {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final HydrogenServerArguments other = (HydrogenServerArguments) obj;
+		final HydrogenRuntimeArguments other = (HydrogenRuntimeArguments) obj;
 		if (!arguments.equals(other.arguments)) {
 			return false;
 		}

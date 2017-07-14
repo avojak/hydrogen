@@ -1,13 +1,8 @@
 package com.thedesertmonk.plugin.hydrogen.test.h2.model.arguments;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Before;
 import org.junit.Test;
 
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.ServerOption;
@@ -27,22 +22,45 @@ public class TcpServerArgumentsBuilderTest {
 	private static final String URL = "tcp://localhost";
 	private static final String PASSWORD = "password";
 
-	private TcpServerArgumentsBuilder builder;
+	private final String startTcp = "startTcp";
+	private final String allowOthers = "allowOthers";
+	private final String useDaemonThread = "useDaemonThread";
+	private final String port = "port";
+	private final String useSsl = "useSsl";
+	private final String shutdownUrl = "shutdownUrl";
+	private final String shutdownPassword = "shutdownPassword";
+	private final String forceShutdown = "forceShutdown";
 
 	/**
-	 * Setup test objects.
+	 * Tests the no-args constructor.
 	 */
-	@Before
-	public void setup() {
-		builder = new TcpServerArgumentsBuilder();
+	@Test
+	public void testNoArgsConstructor() {
+		final TcpServerArgumentsBuilder builder = new TcpServerArgumentsBuilder();
+		assertNull(builder.getAllowOthers());
+		assertNull(builder.getUseDaemonThread());
+		assertNull(builder.getPort());
+		assertNull(builder.getUseSsl());
+		assertNull(builder.getShutdownUrl());
+		assertNull(builder.getShutdownPassword());
+		assertNull(builder.getForceShutdown());
 	}
 
 	/**
-	 * Tests the constructor.
+	 * Tests the deep copy constructor.
 	 */
 	@Test
-	public void testConstructor() {
-		assertEquals(singletonList(ServerOption.START_TCP.getParam()), builder.getArguments());
+	public void testDeepCopyConstructor() {
+		final TcpServerArguments arguments = new TcpServerArguments(startTcp, allowOthers, useDaemonThread, port,
+				useSsl, shutdownUrl, shutdownPassword, forceShutdown);
+		final TcpServerArgumentsBuilder builder = new TcpServerArgumentsBuilder(arguments);
+		assertEquals(allowOthers, builder.getAllowOthers());
+		assertEquals(useDaemonThread, builder.getUseDaemonThread());
+		assertEquals(port, builder.getPort());
+		assertEquals(useSsl, builder.getUseSsl());
+		assertEquals(shutdownUrl, builder.getShutdownUrl());
+		assertEquals(shutdownPassword, builder.getShutdownPassword());
+		assertEquals(forceShutdown, builder.getForceShutdown());
 	}
 
 	/**
@@ -50,10 +68,8 @@ public class TcpServerArgumentsBuilderTest {
 	 */
 	@Test
 	public void testAllowOthers() {
-		final List<String> expectedArguments = asList(ServerOption.START_TCP.getParam(),
-				ServerOption.TCP_ALLOW_OTHERS.getParam());
-
-		assertEquals(expectedArguments, builder.allowOthers().getArguments());
+		final TcpServerArgumentsBuilder builder = new TcpServerArgumentsBuilder().allowOthers();
+		assertEquals(ServerOption.TCP_ALLOW_OTHERS.getParam(), builder.getAllowOthers());
 	}
 
 	/**
@@ -61,10 +77,8 @@ public class TcpServerArgumentsBuilderTest {
 	 */
 	@Test
 	public void testUseDaemonThread() {
-		final List<String> expectedArguments = asList(ServerOption.START_TCP.getParam(),
-				ServerOption.TCP_DAEMON.getParam());
-
-		assertEquals(expectedArguments, builder.useDaemonThread().getArguments());
+		final TcpServerArgumentsBuilder builder = new TcpServerArgumentsBuilder().useDaemonThread();
+		assertEquals(ServerOption.TCP_DAEMON.getParam(), builder.getUseDaemonThread());
 	}
 
 	/**
@@ -73,7 +87,7 @@ public class TcpServerArgumentsBuilderTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testWithPort_NullPort() {
-		builder.withPort((String) null);
+		new TcpServerArgumentsBuilder().withPort((String) null);
 	}
 
 	/**
@@ -82,7 +96,7 @@ public class TcpServerArgumentsBuilderTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testWithPort_EmptyPort() {
-		builder.withPort(EMPTY_STRING);
+		new TcpServerArgumentsBuilder().withPort(EMPTY_STRING);
 	}
 
 	/**
@@ -90,10 +104,8 @@ public class TcpServerArgumentsBuilderTest {
 	 */
 	@Test
 	public void testWithPort() {
-		final List<String> expectedArguments = asList(ServerOption.START_TCP.getParam(),
-				ServerOption.TCP_PORT.getParam(), PORT);
-
-		assertEquals(expectedArguments, builder.withPort(PORT).getArguments());
+		final TcpServerArgumentsBuilder builder = new TcpServerArgumentsBuilder().withPort(PORT);
+		assertEquals(PORT, builder.getPort());
 	}
 
 	/**
@@ -101,10 +113,8 @@ public class TcpServerArgumentsBuilderTest {
 	 */
 	@Test
 	public void testUseSsl() {
-		final List<String> expectedArguments = asList(ServerOption.START_TCP.getParam(),
-				ServerOption.TCP_SSL.getParam());
-
-		assertEquals(expectedArguments, builder.useSsl().getArguments());
+		final TcpServerArgumentsBuilder builder = new TcpServerArgumentsBuilder().useSsl();
+		assertEquals(ServerOption.TCP_SSL.getParam(), builder.getUseSsl());
 	}
 
 	/**
@@ -113,7 +123,7 @@ public class TcpServerArgumentsBuilderTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testWithShutdownUrl_NullUrl() {
-		builder.withShutdownUrl((String) null);
+		new TcpServerArgumentsBuilder().withShutdownUrl((String) null);
 	}
 
 	/**
@@ -122,7 +132,7 @@ public class TcpServerArgumentsBuilderTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testWithShutdownUrl_EmptyUrl() {
-		builder.withShutdownUrl(EMPTY_STRING);
+		new TcpServerArgumentsBuilder().withShutdownUrl(EMPTY_STRING);
 	}
 
 	/**
@@ -130,10 +140,8 @@ public class TcpServerArgumentsBuilderTest {
 	 */
 	@Test
 	public void testWithShutdownUrl() {
-		final List<String> expectedArguments = asList(ServerOption.START_TCP.getParam(),
-				ServerOption.TCP_SHUTDOWN_URL.getParam(), URL);
-
-		assertEquals(expectedArguments, builder.withShutdownUrl(URL).getArguments());
+		final TcpServerArgumentsBuilder builder = new TcpServerArgumentsBuilder().withShutdownUrl(URL);
+		assertEquals(URL, builder.getShutdownUrl());
 	}
 
 	/**
@@ -142,7 +150,7 @@ public class TcpServerArgumentsBuilderTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testWithShutdownPassword_NullPassword() {
-		builder.withShutdownPassword((String) null);
+		new TcpServerArgumentsBuilder().withShutdownPassword((String) null);
 	}
 
 	/**
@@ -151,7 +159,7 @@ public class TcpServerArgumentsBuilderTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testWithShutdownPassword_EmptyPassword() {
-		builder.withShutdownPassword(EMPTY_STRING);
+		new TcpServerArgumentsBuilder().withShutdownPassword(EMPTY_STRING);
 	}
 
 	/**
@@ -159,10 +167,8 @@ public class TcpServerArgumentsBuilderTest {
 	 */
 	@Test
 	public void testWithShutdownPassword() {
-		final List<String> expectedArguments = asList(ServerOption.START_TCP.getParam(),
-				ServerOption.TCP_SHUTDOWN_PASSWORD.getParam(), PASSWORD);
-
-		assertEquals(expectedArguments, builder.withShutdownPassword(PASSWORD).getArguments());
+		final TcpServerArgumentsBuilder builder = new TcpServerArgumentsBuilder().withShutdownPassword(PASSWORD);
+		assertEquals(PASSWORD, builder.getShutdownPassword());
 	}
 
 	/**
@@ -170,10 +176,8 @@ public class TcpServerArgumentsBuilderTest {
 	 */
 	@Test
 	public void testForceShutdown() {
-		final List<String> expectedArguments = asList(ServerOption.START_TCP.getParam(),
-				ServerOption.TCP_SHUTDOWN_FORCE.getParam());
-
-		assertEquals(expectedArguments, builder.forceShutdown().getArguments());
+		final TcpServerArgumentsBuilder builder = new TcpServerArgumentsBuilder().forceShutdown();
+		assertEquals(ServerOption.TCP_SHUTDOWN_FORCE.getParam(), builder.getForceShutdown());
 	}
 
 	/**
@@ -182,7 +186,8 @@ public class TcpServerArgumentsBuilderTest {
 	@Test
 	public void testBuild() {
 		//@formatter:off
-		builder.allowOthers()
+		final TcpServerArgumentsBuilder builder = new TcpServerArgumentsBuilder()
+			   .allowOthers()
 			   .useDaemonThread()
 			   .withPort(PORT)
 			   .useSsl()
@@ -190,20 +195,9 @@ public class TcpServerArgumentsBuilderTest {
 			   .withShutdownPassword(PASSWORD)
 			   .forceShutdown();
 		//@formatter:on
-
-		final List<String> expectedArguments = new ArrayList<String>();
-		expectedArguments.add(ServerOption.START_TCP.getParam());
-		expectedArguments.add(ServerOption.TCP_ALLOW_OTHERS.getParam());
-		expectedArguments.add(ServerOption.TCP_DAEMON.getParam());
-		expectedArguments.add(ServerOption.TCP_PORT.getParam());
-		expectedArguments.add(PORT);
-		expectedArguments.add(ServerOption.TCP_SSL.getParam());
-		expectedArguments.add(ServerOption.TCP_SHUTDOWN_URL.getParam());
-		expectedArguments.add(URL);
-		expectedArguments.add(ServerOption.TCP_SHUTDOWN_PASSWORD.getParam());
-		expectedArguments.add(PASSWORD);
-		expectedArguments.add(ServerOption.TCP_SHUTDOWN_FORCE.getParam());
-		final TcpServerArguments expectedServerArguments = new TcpServerArguments(expectedArguments);
+		final TcpServerArguments expectedServerArguments = new TcpServerArguments(ServerOption.START_TCP.getParam(),
+				ServerOption.TCP_ALLOW_OTHERS.getParam(), ServerOption.TCP_DAEMON.getParam(), PORT,
+				ServerOption.TCP_SSL.getParam(), URL, PASSWORD, ServerOption.TCP_SHUTDOWN_FORCE.getParam());
 		assertEquals(expectedServerArguments, builder.build());
 	}
 
