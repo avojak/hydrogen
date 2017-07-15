@@ -61,6 +61,7 @@ public class TcpServerArgumentsTest {
 	public void testGetters() {
 		final TcpServerArguments arguments = new TcpServerArguments(startTcp, allowOthers, useDaemonThread, port,
 				useSsl, shutdownUrl, shutdownPassword, forceShutdown);
+		assertEquals(startTcp, arguments.getStartTcp());
 		assertEquals(of(allowOthers), arguments.getAllowOthers());
 		assertEquals(of(useDaemonThread), arguments.getUseDaemonThread());
 		assertEquals(of(port), arguments.getPort());

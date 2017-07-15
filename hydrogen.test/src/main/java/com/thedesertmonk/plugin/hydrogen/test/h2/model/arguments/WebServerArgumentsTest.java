@@ -57,6 +57,7 @@ public class WebServerArgumentsTest {
 	public void testGetters() {
 		final WebServerArguments arguments = new WebServerArguments(startWeb, allowOthers, useDaemonThread, port,
 				useSsl, openBrowser);
+		assertEquals(startWeb, arguments.getStartWeb());
 		assertEquals(of(allowOthers), arguments.getAllowOthers());
 		assertEquals(of(useDaemonThread), arguments.getUseDaemonThread());
 		assertEquals(of(port), arguments.getPort());

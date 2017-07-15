@@ -53,6 +53,7 @@ public class PgServerArgumentsTest {
 	@Test
 	public void testGetters() {
 		final PgServerArguments arguments = new PgServerArguments(startPg, allowOthers, useDaemonThread, port);
+		assertEquals(startPg, arguments.getStartPg());
 		assertEquals(of(allowOthers), arguments.getAllowOthers());
 		assertEquals(of(useDaemonThread), arguments.getUseDaemonThread());
 		assertEquals(of(port), arguments.getPort());

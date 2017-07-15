@@ -5,10 +5,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Collections;
+import java.util.Optional;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
@@ -161,6 +163,42 @@ public class ProgramArgumentsTest {
 	public void testConstructor_NullConfiguration() {
 		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
 				pgServerArgumentsBuilder, (ILaunchConfiguration) null);
+	}
+
+	/**
+	 * Tests that the constructor throws an exception when the given
+	 * {@link HydrogenRuntimeArgumentsBuilder} is {@code null}.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructor_NullHydrogenRuntimeArgumentsBuilder() {
+		new ProgramArguments((HydrogenRuntimeArgumentsBuilder) null, webServerArguments, tcpServerArguments,
+				pgServerArguments);
+	}
+
+	/**
+	 * Tests the constructor when the arguments are absent.
+	 */
+	@Test
+	public void testConstructor_ArgumentsAbsent() {
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, (WebServerArguments) null, (TcpServerArguments) null,
+				(PgServerArguments) null);
+		verify(hydrogenRuntimeArgumentsBuilder, never()).withWebServer(webServerArguments);
+		verify(hydrogenRuntimeArgumentsBuilder, never()).withTcpServer(tcpServerArguments);
+		verify(hydrogenRuntimeArgumentsBuilder, never()).withPgServer(pgServerArguments);
+		verify(hydrogenRuntimeArgumentsBuilder).build();
+	}
+
+	/**
+	 * Tests the constructor when the arguments are present.
+	 */
+	@Test
+	public void testConstructor_ArgumentsPresent() {
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArguments, tcpServerArguments,
+				pgServerArguments);
+		verify(hydrogenRuntimeArgumentsBuilder).withWebServer(webServerArguments);
+		verify(hydrogenRuntimeArgumentsBuilder).withTcpServer(tcpServerArguments);
+		verify(hydrogenRuntimeArgumentsBuilder).withPgServer(pgServerArguments);
+		verify(hydrogenRuntimeArgumentsBuilder).build();
 	}
 
 	/**
@@ -462,6 +500,18 @@ public class ProgramArgumentsTest {
 		when(hydrogenRuntimeArgumentsBuilder.build()).thenReturn(arguments);
 		assertEquals(arguments, new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder,
 				tcpServerArgumentsBuilder, pgServerArgumentsBuilder, configuration).getArguments());
+	}
+
+	/**
+	 * Tests the getter methods.
+	 */
+	@Test
+	public void testGetters() {
+		final ProgramArguments programArguments = new ProgramArguments(hydrogenRuntimeArgumentsBuilder,
+				webServerArguments, tcpServerArguments, pgServerArguments);
+		assertEquals(Optional.of(webServerArguments), programArguments.getWebServerArguments());
+		assertEquals(Optional.of(tcpServerArguments), programArguments.getTcpServerArguments());
+		assertEquals(Optional.of(pgServerArguments), programArguments.getPgServerArguments());
 	}
 
 	/**
