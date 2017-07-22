@@ -64,6 +64,10 @@ I use [SemVer](http://semver.org/) for versioning. For the versions available, s
 
 This project is licensed under the Eclipse Public License v1.0 - see the [LICENSE.md](LICENSE.md) file for details.
 
+## Language Support
+
+Currently, only English (US) is supported.
+
 ## Error Messages
 
 This is a collection of error messages that you may encounter, and what they mean.
