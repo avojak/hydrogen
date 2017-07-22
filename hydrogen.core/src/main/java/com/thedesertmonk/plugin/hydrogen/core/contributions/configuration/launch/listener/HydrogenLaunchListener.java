@@ -1,8 +1,12 @@
 package com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.listener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.debug.core.ILaunch;
 
 import com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.LaunchDelegatePortPool;
+import com.thedesertmonk.plugin.hydrogen.core.h2.model.ServerOption;
 import com.thedesertmonk.plugin.hydrogen.core.logging.HydrogenLoggerFactory;
 import com.thedesertmonk.plugin.hydrogen.core.logging.IHydrogenLogger;
 
@@ -37,9 +41,22 @@ public class HydrogenLaunchListener extends LaunchesAdapter {
 	public void launchesTerminated(final ILaunch[] launches) {
 		// Return used ports to the pool so that they can be used in subsequent
 		// launches
-		// TODO: Fix this because if there are multiple launches, it will return
-		// all ports - not just those from the specific launch
-		portPool.returnDistributedPorts();
+		final List<Integer> portsToReturn = new ArrayList<Integer>();
+		for (final ILaunch launch : launches) {
+			final String webPort = launch.getAttribute(ServerOption.WEB_PORT.name());
+			if (webPort != null) {
+				portsToReturn.add(Integer.valueOf(webPort));
+			}
+			final String tcpPort = launch.getAttribute(ServerOption.TCP_PORT.name());
+			if (tcpPort != null) {
+				portsToReturn.add(Integer.valueOf(tcpPort));
+			}
+			final String pgPort = launch.getAttribute(ServerOption.PG_PORT.name());
+			if (pgPort != null) {
+				portsToReturn.add(Integer.valueOf(pgPort));
+			}
+		}
+		portPool.returnPorts(portsToReturn);
 
 		LOGGER.info("Launch terminated"); //$NON-NLS-1$
 	}

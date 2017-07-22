@@ -1,5 +1,7 @@
 package com.thedesertmonk.plugin.hydrogen.test.contributions.configuration.launch.listener;
 
+import java.util.Collections;
+
 import org.eclipse.core.runtime.ILog;
 import org.eclipse.debug.core.ILaunch;
 import org.junit.BeforeClass;
@@ -47,7 +49,7 @@ public class HydrogenLaunchListenerTest {
 	@Test
 	public void testLaunchesTerminated() {
 		new HydrogenLaunchListener(portPool).launchesTerminated(new ILaunch[] {});
-		Mockito.verify(portPool).returnDistributedPorts();
+		Mockito.verify(portPool).returnPorts(Collections.emptyList());
 	}
 
 }

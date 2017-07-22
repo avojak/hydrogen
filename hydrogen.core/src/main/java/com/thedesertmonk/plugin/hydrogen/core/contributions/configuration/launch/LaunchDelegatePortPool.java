@@ -2,6 +2,7 @@ package com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launc
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.exception.NoAvailablePortException;
@@ -129,10 +130,25 @@ public class LaunchDelegatePortPool {
 	 * @return A non-null, possibly empty {@link Collection} containing the
 	 *         ports which have been successfully added back to the pool.
 	 */
-	public Collection<Integer> returnDistributedPorts() {
+	public Collection<Integer> returnAllDistributedPorts() {
 		final Set<Integer> returnSet = new HashSet<Integer>(distributedPorts);
 		distributedPorts.clear();
 		return returnSet;
+	}
+
+	/**
+	 * Returns the specified ports back to the pool for re-distribution.
+	 *
+	 * @param ports The {@link List} of port numbers to be returned to the pool.
+	 *            Cannot be null.
+	 */
+	public void returnPorts(final List<Integer> ports) {
+		if (ports == null) {
+			throw new IllegalArgumentException("ports cannot be null"); //$NON-NLS-1$
+		}
+		for (final Integer port : ports) {
+			distributedPorts.remove(port);
+		}
 	}
 
 }

@@ -4,8 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.runtime.ILog;
@@ -153,7 +155,7 @@ public class LaunchDelegatePortPoolTest {
 	}
 
 	/**
-	 * Tests {@link LaunchDelegatePortPool#returnDistributedPorts()}
+	 * Tests {@link LaunchDelegatePortPool#returnAllDistributedPorts()}
 	 */
 	@Test
 	public void testReturnDistributedPorts() {
@@ -165,7 +167,35 @@ public class LaunchDelegatePortPoolTest {
 		expectedSet.add(MIN_PORT_NUMBER);
 		expectedSet.add(MIN_PORT_NUMBER + 1);
 
-		assertEquals(expectedSet, pool.returnDistributedPorts());
+		assertEquals(expectedSet, pool.returnAllDistributedPorts());
+	}
+
+	/**
+	 * Tests that {@link LaunchDelegatePortPool#returnPorts(List)} throws an
+	 * exception when the given {@link List} is {@code null}.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testReturnPorts_NullList() {
+		pool.returnPorts((List<Integer>) null);
+	}
+
+	/**
+	 * Tests {@link LaunchDelegatePortPool#returnPorts(List)}.
+	 */
+	@Test
+	public void testReturnPorts() {
+		Mockito.when(availabilityChecker.isPortFree(Matchers.anyInt())).thenReturn(true);
+		final int port1 = pool.getFreePort();
+		final int port2 = pool.getFreePort();
+
+		final Set<Integer> expectedSet = new HashSet<Integer>();
+		expectedSet.add(port1);
+		expectedSet.add(port2);
+		assertEquals(expectedSet, pool.getDistributedPorts());
+
+		pool.returnPorts(Arrays.asList(port1, port2));
+
+		assertEquals(Collections.EMPTY_SET, pool.getDiscoveredUsedPorts());
 	}
 
 }

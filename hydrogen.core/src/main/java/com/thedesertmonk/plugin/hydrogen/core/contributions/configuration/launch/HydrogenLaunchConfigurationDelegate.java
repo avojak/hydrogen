@@ -17,6 +17,7 @@ import org.eclipse.jdt.launching.VMRunnerConfiguration;
 import com.thedesertmonk.plugin.hydrogen.core.HydrogenActivator;
 import com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.listener.HydrogenLaunchListener;
 import com.thedesertmonk.plugin.hydrogen.core.contributions.preferencepage.PreferenceConstants;
+import com.thedesertmonk.plugin.hydrogen.core.h2.model.ServerOption;
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.PgServerArguments;
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.PgServerArgumentsBuilder;
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.arguments.ProgramArguments;
@@ -58,6 +59,7 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 	public HydrogenLaunchConfigurationDelegate() {
 		programArgumentsFactory = new ProgramArgumentsFactory();
 		portPool = new LaunchDelegatePortPool(new LaunchDelegatePortAvailabilityChecker(new ServerSocketFactory()));
+		getLaunchManager().addLaunchListener(new HydrogenLaunchListener(portPool));
 	}
 
 	/**
@@ -73,10 +75,6 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 		}
 
 		LOGGER.info("Preparing to launch: " + configuration.getName()); //$NON-NLS-1$
-
-		// TODO Fix this: Adds duplicate listeners when there are multiple
-		// launches. Maybe check if already added?
-		getLaunchManager().addLaunchListener(new HydrogenLaunchListener(portPool));
 
 		final IVMInstall vm = verifyVMInstall(configuration);
 		final IVMRunner runner = vm.getVMRunner(mode);
@@ -98,6 +96,7 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 
 		ProgramArguments programArguments = programArgumentsFactory.create(configuration);
 		programArguments = validatePortNumbers(programArguments);
+		setUsedPorts(launch, programArguments);
 		final String[] argArray = programArguments.getArguments().getArguments().toArray(new String[0]);
 		LOGGER.debug("Program arguments: " + Arrays.toString(argArray)); //$NON-NLS-1$
 		runConfig.setProgramArguments(argArray);
@@ -124,6 +123,27 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 		final String exceptionMessage = exception == null ? "[null]" : exception.getMessage(); //$NON-NLS-1$
 		LOGGER.error("Launch aborted {message=" + message + ", exception=" + exceptionMessage + ", code=" + code); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		super.abort(message, exception, code);
+	}
+
+	/**
+	 * Sets attributes on the {@link ILaunch} for which ports have been used.
+	 *
+	 * @param launch The {@link ILaunch} instance.
+	 * @param programArguments The {@link ProgramArguments}.
+	 */
+	private void setUsedPorts(final ILaunch launch, final ProgramArguments programArguments) {
+		final Optional<WebServerArguments> webServerArguments = programArguments.getWebServerArguments();
+		if (webServerArguments.isPresent()) {
+			launch.setAttribute(ServerOption.WEB_PORT.name(), webServerArguments.get().getPort().get());
+		}
+		final Optional<TcpServerArguments> tcpServerArguments = programArguments.getTcpServerArguments();
+		if (tcpServerArguments.isPresent()) {
+			launch.setAttribute(ServerOption.TCP_PORT.name(), tcpServerArguments.get().getPort().get());
+		}
+		final Optional<PgServerArguments> pgServerArguments = programArguments.getPgServerArguments();
+		if (tcpServerArguments.isPresent()) {
+			launch.setAttribute(ServerOption.PG_PORT.name(), pgServerArguments.get().getPort().get());
+		}
 	}
 
 	private void validateExecutablePreference(final String executablePreference) throws CoreException {
