@@ -15,6 +15,8 @@ import org.eclipse.swt.widgets.Text;
 
 import com.thedesertmonk.plugin.hydrogen.core.HydrogenActivator;
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.configuration.attributes.LaunchConfigurationAttributes;
+import com.thedesertmonk.plugin.hydrogen.core.logging.HydrogenLoggerFactory;
+import com.thedesertmonk.plugin.hydrogen.core.logging.IHydrogenLogger;
 
 /**
  * The launch configuration tab for the PostgreSQL server.
@@ -22,6 +24,8 @@ import com.thedesertmonk.plugin.hydrogen.core.h2.model.configuration.attributes.
  * @author Andrew Vojak
  */
 public class PgLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
+
+	private static final IHydrogenLogger LOGGER = HydrogenLoggerFactory.getForClass(PgLaunchConfigurationTab.class);
 
 	private Composite baseComposite;
 	private Button allowOthersButton;
@@ -87,7 +91,7 @@ public class PgLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 			port = configuration.getAttribute(LaunchConfigurationAttributes.PG_PORT.getName(), LaunchConfigurationAttributes.PG_PORT.getDefaultValue());
 			//@formatter:on
 		} catch (final CoreException e) {
-			e.printStackTrace();
+			LOGGER.error("Failed to initialize form", e); //$NON-NLS-1$
 			return;
 		}
 

@@ -15,6 +15,8 @@ import org.eclipse.swt.widgets.Text;
 
 import com.thedesertmonk.plugin.hydrogen.core.HydrogenActivator;
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.configuration.attributes.LaunchConfigurationAttributes;
+import com.thedesertmonk.plugin.hydrogen.core.logging.HydrogenLoggerFactory;
+import com.thedesertmonk.plugin.hydrogen.core.logging.IHydrogenLogger;
 
 /**
  * The launch configuration tab for the TCP server.
@@ -22,6 +24,8 @@ import com.thedesertmonk.plugin.hydrogen.core.h2.model.configuration.attributes.
  * @author Andrew Vojak
  */
 public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
+
+	private static final IHydrogenLogger LOGGER = HydrogenLoggerFactory.getForClass(TcpLaunchConfigurationTab.class);
 
 	private Composite baseComposite;
 	private Button allowOthersButton;
@@ -105,7 +109,7 @@ public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 			forceShutdown = configuration.getAttribute(LaunchConfigurationAttributes.TCP_SHUTDOWN_FORCE.getName(), LaunchConfigurationAttributes.TCP_SHUTDOWN_FORCE.getDefaultValue());
 			//@formatter:on
 		} catch (final CoreException e) {
-			e.printStackTrace();
+			LOGGER.error("Failed to initialize form", e); //$NON-NLS-1$
 			return;
 		}
 

@@ -1,6 +1,8 @@
 package com.thedesertmonk.plugin.hydrogen.test.contributions.configuration.launch.listener;
 
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.debug.core.ILaunch;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -9,6 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.LaunchDelegatePortPool;
 import com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.listener.HydrogenLaunchListener;
+import com.thedesertmonk.plugin.hydrogen.core.logging.HydrogenLoggerFactory;
 
 /**
  * Test class for {@link HydrogenLaunchListener}.
@@ -20,6 +23,14 @@ public class HydrogenLaunchListenerTest {
 
 	@Mock
 	private LaunchDelegatePortPool portPool;
+
+	/**
+	 * Setup static mocks.
+	 */
+	@BeforeClass
+	public static void setupClass() {
+		HydrogenLoggerFactory.init(Mockito.mock(ILog.class));
+	}
 
 	/**
 	 * Tests that the constructor throws an exception when the given

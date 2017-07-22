@@ -19,6 +19,8 @@ import org.eclipse.swt.widgets.Text;
 
 import com.thedesertmonk.plugin.hydrogen.core.HydrogenActivator;
 import com.thedesertmonk.plugin.hydrogen.core.h2.model.configuration.attributes.LaunchConfigurationAttributes;
+import com.thedesertmonk.plugin.hydrogen.core.logging.HydrogenLoggerFactory;
+import com.thedesertmonk.plugin.hydrogen.core.logging.IHydrogenLogger;
 
 /**
  * Launch configuration tab for general configuration settings.
@@ -26,6 +28,9 @@ import com.thedesertmonk.plugin.hydrogen.core.h2.model.configuration.attributes.
  * @author Andrew Vojak
  */
 public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
+
+	private static final IHydrogenLogger LOGGER = HydrogenLoggerFactory
+			.getForClass(GeneralLaunchConfigurationTab.class);
 
 	private Composite baseComposite;
 	private Text baseDirectoryField;
@@ -115,7 +120,7 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 			enableTracing = configuration.getAttribute(LaunchConfigurationAttributes.ENABLE_TRACING.getName(), LaunchConfigurationAttributes.ENABLE_TRACING.getDefaultValue());
 			//@formatter:on
 		} catch (final CoreException e) {
-			e.printStackTrace();
+			LOGGER.error("Failed to initialize form", e); //$NON-NLS-1$
 			return;
 		}
 
@@ -153,7 +158,7 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 			baseDirectory = launchConfig.getAttribute(LaunchConfigurationAttributes.BASE_DIRECTORY.getName(),
 					(String) null);
 		} catch (final CoreException e) {
-			e.printStackTrace();
+			LOGGER.error("Error retrieving BASE_DIRECTORY launch configuration attribute", e); //$NON-NLS-1$
 		} finally {
 			// If null, there was either an error reading the attribute, or no
 			// attribute was specified in the config. Either way, this is an

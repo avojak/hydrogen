@@ -3,6 +3,8 @@ package com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launc
 import org.eclipse.debug.core.ILaunch;
 
 import com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.LaunchDelegatePortPool;
+import com.thedesertmonk.plugin.hydrogen.core.logging.HydrogenLoggerFactory;
+import com.thedesertmonk.plugin.hydrogen.core.logging.IHydrogenLogger;
 
 /**
  * Implementation of {@link LaunchesAdapter} for the Hydrogen launch
@@ -11,6 +13,8 @@ import com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch
  * @author Andrew Vojak
  */
 public class HydrogenLaunchListener extends LaunchesAdapter {
+
+	private static final IHydrogenLogger LOGGER = HydrogenLoggerFactory.getForClass(HydrogenLaunchListener.class);
 
 	private final LaunchDelegatePortPool portPool;
 
@@ -33,9 +37,11 @@ public class HydrogenLaunchListener extends LaunchesAdapter {
 	public void launchesTerminated(final ILaunch[] launches) {
 		// Return used ports to the pool so that they can be used in subsequent
 		// launches
+		// TODO: Fix this because if there are multiple launches, it will return
+		// all ports - not just those from the specific launch
 		portPool.returnDistributedPorts();
 
-		// TODO Log message that the launch has terminated
+		LOGGER.info("Launch terminated"); //$NON-NLS-1$
 	}
 
 }

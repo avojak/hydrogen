@@ -8,7 +8,9 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.eclipse.core.runtime.ILog;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -20,6 +22,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.LaunchDelegatePortAvailabilityChecker;
 import com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.LaunchDelegatePortPool;
 import com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.exception.NoAvailablePortException;
+import com.thedesertmonk.plugin.hydrogen.core.logging.HydrogenLoggerFactory;
 
 /**
  * Test class for {@link LaunchDelegatePortPool}.
@@ -35,6 +38,14 @@ public class LaunchDelegatePortPoolTest {
 	private LaunchDelegatePortAvailabilityChecker availabilityChecker;
 
 	private LaunchDelegatePortPool pool;
+
+	/**
+	 * Setup static mocks.
+	 */
+	@BeforeClass
+	public static void setupClass() {
+		HydrogenLoggerFactory.init(Mockito.mock(ILog.class));
+	}
 
 	/**
 	 * Setup.

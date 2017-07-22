@@ -3,6 +3,9 @@ package com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launc
 import java.io.IOException;
 import java.net.ServerSocket;
 
+import com.thedesertmonk.plugin.hydrogen.core.logging.HydrogenLoggerFactory;
+import com.thedesertmonk.plugin.hydrogen.core.logging.IHydrogenLogger;
+
 /**
  * <p>
  * Class to handle last-resort checking of port availability by attempting to
@@ -17,6 +20,9 @@ import java.net.ServerSocket;
  * @author Andrew Vojak
  */
 public class LaunchDelegatePortAvailabilityChecker {
+
+	private static final IHydrogenLogger LOGGER = HydrogenLoggerFactory
+			.getForClass(LaunchDelegatePortAvailabilityChecker.class);
 
 	private final ServerSocketFactory serverSocketFactory;
 
@@ -56,6 +62,7 @@ public class LaunchDelegatePortAvailabilityChecker {
 					serverSocket.close();
 				}
 			} catch (final IOException e) {
+				LOGGER.debug("Failed to close socket during port availability test"); //$NON-NLS-1$
 			}
 		}
 	}

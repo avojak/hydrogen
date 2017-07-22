@@ -4,6 +4,8 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import com.thedesertmonk.plugin.hydrogen.core.logging.HydrogenLoggerFactory;
+
 /**
  * The activator class controls the plug-in life cycle
  *
@@ -42,6 +44,9 @@ public class HydrogenActivator extends AbstractUIPlugin {
 		super.start(context);
 		plugin = this;
 		started = true;
+
+		// Initialize the logger factory
+		HydrogenLoggerFactory.init(getLog());
 	}
 
 	/**

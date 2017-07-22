@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.net.ServerSocket;
 
+import org.eclipse.core.runtime.ILog;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -14,6 +16,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.LaunchDelegatePortAvailabilityChecker;
 import com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.ServerSocketFactory;
+import com.thedesertmonk.plugin.hydrogen.core.logging.HydrogenLoggerFactory;
 
 /**
  * Test class for {@link LaunchDelegatePortAvailabilityChecker}.
@@ -30,6 +33,14 @@ public class LaunchDelegatePortAvailabilityCheckerTest {
 
 	@Mock
 	private ServerSocket socket;
+
+	/**
+	 * Setup static mocks.
+	 */
+	@BeforeClass
+	public static void setupClass() {
+		HydrogenLoggerFactory.init(Mockito.mock(ILog.class));
+	}
 
 	/**
 	 * Tests that the constructor throws an exception when the given
