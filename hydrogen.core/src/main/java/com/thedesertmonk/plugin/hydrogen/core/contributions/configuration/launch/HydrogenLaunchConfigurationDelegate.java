@@ -41,6 +41,14 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 	private static final String MAIN_SERVER_CLASS = "org.h2.tools.Server"; //$NON-NLS-1$
 	private static final String LAUNCH_HEADLESS = "-Djava.awt.headless=true"; //$NON-NLS-1$
 
+	private static final String UNSET_EXECUTABLE_ERROR = "The executable location has not yet been set. " //$NON-NLS-1$
+			+ "Update the Hydrogen preferences and select the H2 executable before reattempting the launch."; //$NON-NLS-1$
+	private static final String EXECUTABLE_NOT_FILE_ERROR = "The specified H2 executable is not a file. " //$NON-NLS-1$
+			+ "Verify the Hydrogen preferences before reattempting the launch."; //$NON-NLS-1$
+	private static final String INSUFFICIENT_PRIVS_ERROR = "The specified H2 executable cannot be executed. " //$NON-NLS-1$
+			+ "Verify that the correct permissions are in place for Eclipse to launch the executable before " //$NON-NLS-1$
+			+ "reattempting the launch."; //$NON-NLS-1$
+
 	private final ProgramArgumentsFactory programArgumentsFactory;
 	private final LaunchDelegatePortPool portPool;
 
@@ -73,16 +81,15 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 		final IVMInstall vm = verifyVMInstall(configuration);
 		final IVMRunner runner = vm.getVMRunner(mode);
 
-		// TODO Fix this so that if attempting to run after install (before
-		// setting the executable location), the message prompts for it to be
-		// set instead of saying it doesn't exist or isn't a file.
-		final File executablePreference = new File(
-				HydrogenActivator.getDefault().getPreferenceStore().getString(PreferenceConstants.P_EXECUTABLE));
-		validateExecutablePermissions(executablePreference);
+		final String executablePreference = HydrogenActivator.getDefault().getPreferenceStore()
+				.getString(PreferenceConstants.P_EXECUTABLE);
+		validateExecutablePreference(executablePreference);
+		final File executable = new File(executablePreference);
+		validateExecutable(executable);
 
-		final String workingDirectory = executablePreference.getParent();
+		final String workingDirectory = executable.getParent();
 		LOGGER.debug("Working directory: " + workingDirectory); //$NON-NLS-1$
-		final String executableName = executablePreference.getName();
+		final String executableName = executable.getName();
 		LOGGER.debug("Executable name: " + executableName); //$NON-NLS-1$
 		final String[] classPath = new String[] { executableName };
 		LOGGER.debug("Classpath: " + Arrays.toString(classPath)); //$NON-NLS-1$
@@ -114,24 +121,31 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 	 */
 	@Override
 	protected void abort(final String message, final Throwable exception, final int code) throws CoreException {
-		LOGGER.error("Launch aborted {message=" + message + ", exception=" + exception.getMessage() + ", code=" + code); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		final String exceptionMessage = exception == null ? "[null]" : exception.getMessage(); //$NON-NLS-1$
+		LOGGER.error("Launch aborted {message=" + message + ", exception=" + exceptionMessage + ", code=" + code); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		super.abort(message, exception, code);
 	}
 
+	private void validateExecutablePreference(final String executablePreference) throws CoreException {
+		if (executablePreference == null || executablePreference.trim().isEmpty()) {
+			abort(UNSET_EXECUTABLE_ERROR, null, 0);
+		}
+	}
+
 	/**
-	 * Validate that the given {@link File} is both a file, and able to be
+	 * Validate that the given {@link File} exists, is a file, and able to be
 	 * executed.
 	 *
 	 * @param executable The {@link File} to execute.
 	 * @throws CoreException Thrown by
 	 *             {@link HydrogenLaunchConfigurationDelegate#abort(String, Throwable, int)}.
 	 */
-	private void validateExecutablePermissions(final File executable) throws CoreException {
+	private void validateExecutable(final File executable) throws CoreException {
 		if (!executable.isFile()) {
-			abort("Specified executable is not a file", null, 0); //$NON-NLS-1$
+			abort(EXECUTABLE_NOT_FILE_ERROR, null, 0);
 		}
 		if (!executable.canExecute()) {
-			abort("Specified executable cannot be executed", null, 0); //$NON-NLS-1$
+			abort(INSUFFICIENT_PRIVS_ERROR, null, 0);
 		}
 	}
 
