@@ -5,8 +5,8 @@
       version="1.0.0.qualifier"
       provider-name="avojak">
 
-   <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+   <description url="https://avojak.com/projects/hydrogen">
+      Plugin to configure and launch one or more H2 database servers. Server instances can be launched directly from the Eclipse Run Configuration menu.
    </description>
 
    <copyright url="http://www.example.com/copyright">
