@@ -3,7 +3,12 @@ package com.thedesertmonk.plugin.hydrogen.test.contributions.configuration.launc
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -15,15 +20,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Matchers;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.LaunchDelegatePortAvailabilityChecker;
 import com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.LaunchDelegatePortPool;
-import com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.exception.NoAvailablePortException;
+import com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.ServerSocketFactory;
 import com.thedesertmonk.plugin.hydrogen.core.logging.HydrogenLoggerFactory;
 
 /**
@@ -34,10 +36,14 @@ import com.thedesertmonk.plugin.hydrogen.core.logging.HydrogenLoggerFactory;
 @RunWith(MockitoJUnitRunner.class)
 public class LaunchDelegatePortPoolTest {
 
-	private static final int MIN_PORT_NUMBER = 49152;
-
 	@Mock
 	private LaunchDelegatePortAvailabilityChecker availabilityChecker;
+
+	@Mock
+	private ServerSocketFactory serverSocketFactory;
+
+	@Mock
+	private ServerSocket socket;
 
 	private LaunchDelegatePortPool pool;
 
@@ -46,15 +52,19 @@ public class LaunchDelegatePortPoolTest {
 	 */
 	@BeforeClass
 	public static void setupClass() {
-		HydrogenLoggerFactory.init(Mockito.mock(ILog.class));
+		HydrogenLoggerFactory.init(mock(ILog.class));
 	}
 
 	/**
 	 * Setup.
+	 *
+	 * @throws IOException Unexpected
 	 */
 	@Before
-	public void setup() {
-		pool = new LaunchDelegatePortPool(availabilityChecker);
+	public void setup() throws IOException {
+		pool = new LaunchDelegatePortPool(availabilityChecker, serverSocketFactory);
+		when(serverSocketFactory.create(0)).thenReturn(socket);
+		when(socket.getLocalPort()).thenReturn(5000);
 	}
 
 	/**
@@ -63,7 +73,16 @@ public class LaunchDelegatePortPoolTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor_NullAvailabilityChecker() {
-		new LaunchDelegatePortPool((LaunchDelegatePortAvailabilityChecker) null);
+		new LaunchDelegatePortPool((LaunchDelegatePortAvailabilityChecker) null, serverSocketFactory);
+	}
+
+	/**
+	 * Tests that the constructor throws an exception when the given
+	 * {@link ServerSocketFactory} is {@code null}.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructor_NullServerSocketFactory() {
+		new LaunchDelegatePortPool(availabilityChecker, (ServerSocketFactory) null);
 	}
 
 	/**
@@ -78,10 +97,12 @@ public class LaunchDelegatePortPoolTest {
 	/**
 	 * Tests {@link LaunchDelegatePortPool#isPortFree(int)} when the given port
 	 * has already been distributed.
+	 *
+	 * @throws IOException Unexpected.
 	 */
 	@Test
-	public void testIsPortFree_AlreadyDistributed() {
-		Mockito.when(availabilityChecker.isPortFree(Matchers.anyInt())).thenReturn(true);
+	public void testIsPortFree_AlreadyDistributed() throws IOException {
+		when(availabilityChecker.isPortFree(anyInt())).thenReturn(true);
 		final int port = pool.getFreePort();
 
 		assertFalse(pool.isPortFree(port));
@@ -93,12 +114,10 @@ public class LaunchDelegatePortPoolTest {
 	 */
 	@Test
 	public void testIsPortFree_DiscoveredUsed() {
-		final ArgumentCaptor<Integer> captor = ArgumentCaptor.forClass(Integer.class);
-		Mockito.when(availabilityChecker.isPortFree(Matchers.anyInt())).thenReturn(false, true);
-		pool.getFreePort();
-		Mockito.verify(availabilityChecker, Mockito.times(2)).isPortFree(captor.capture());
+		when(availabilityChecker.isPortFree(anyInt())).thenReturn(false);
 
-		assertFalse(pool.isPortFree(captor.getAllValues().get(0)));
+		assertFalse(pool.isPortFree(6000));
+		assertEquals(Collections.singleton(6000), pool.getDiscoveredUsedPorts());
 	}
 
 	/**
@@ -107,7 +126,7 @@ public class LaunchDelegatePortPoolTest {
 	 */
 	@Test
 	public void testIsPortFree_PortNotFree() {
-		Mockito.when(availabilityChecker.isPortFree(Matchers.anyInt())).thenReturn(false);
+		when(availabilityChecker.isPortFree(anyInt())).thenReturn(false);
 		assertFalse(pool.isPortFree(8082));
 	}
 
@@ -117,57 +136,41 @@ public class LaunchDelegatePortPoolTest {
 	 */
 	@Test
 	public void testIsPortFree_PortFree() {
-		Mockito.when(availabilityChecker.isPortFree(Matchers.anyInt())).thenReturn(true);
+		when(availabilityChecker.isPortFree(anyInt())).thenReturn(true);
 		assertTrue(pool.isPortFree(8082));
 	}
 
 	/**
-	 * Tests {@link LaunchDelegatePortPool#getFreePort()} when a port is found
-	 * that is already in use.
-	 */
-	@Test
-	public void testGetFreePort_FoundUsedPort() {
-		Mockito.when(availabilityChecker.isPortFree(Matchers.anyInt())).thenReturn(false, true);
-		final int port = pool.getFreePort();
-
-		assertEquals(MIN_PORT_NUMBER + 1, port);
-		assertEquals(Collections.singleton(MIN_PORT_NUMBER + 1), pool.getDistributedPorts());
-		assertEquals(Collections.singleton(MIN_PORT_NUMBER), pool.getDiscoveredUsedPorts());
-	}
-
-	/**
 	 * Tests that {@link LaunchDelegatePortPool#getFreePort()} throws an
-	 * exception when all valid ports are in use.
+	 * exception when there is an I/O exception.
+	 *
+	 * @throws IOException Expected.
 	 */
-	@Test(expected = NoAvailablePortException.class)
-	public void testGetFreePort_AllPortsUsed() {
-		Mockito.when(availabilityChecker.isPortFree(Matchers.anyInt())).thenReturn(false);
+	@Test(expected = IOException.class)
+	public void testGetFreePort_IOException() throws IOException {
+		when(serverSocketFactory.create(0)).thenThrow(new IOException());
 		pool.getFreePort();
 	}
 
 	/**
 	 * Tests {@link LaunchDelegatePortPool#getFreePort()}.
+	 *
+	 * @throws IOException Unexpected.
 	 */
 	@Test
-	public void testGetFreePort() {
-		Mockito.when(availabilityChecker.isPortFree(Matchers.anyInt())).thenReturn(true);
-		assertEquals(MIN_PORT_NUMBER, pool.getFreePort());
+	public void testGetFreePort() throws IOException {
+		assertEquals(5000, pool.getFreePort());
 	}
 
 	/**
 	 * Tests {@link LaunchDelegatePortPool#returnAllDistributedPorts()}
+	 *
+	 * @throws IOException Unexpected.
 	 */
 	@Test
-	public void testReturnDistributedPorts() {
-		Mockito.when(availabilityChecker.isPortFree(Matchers.anyInt())).thenReturn(true);
+	public void testReturnDistributedPorts() throws IOException {
 		pool.getFreePort();
-		pool.getFreePort();
-
-		final Set<Integer> expectedSet = new HashSet<Integer>();
-		expectedSet.add(MIN_PORT_NUMBER);
-		expectedSet.add(MIN_PORT_NUMBER + 1);
-
-		assertEquals(expectedSet, pool.returnAllDistributedPorts());
+		assertEquals(Collections.singleton(5000), pool.returnAllDistributedPorts());
 	}
 
 	/**
@@ -181,10 +184,12 @@ public class LaunchDelegatePortPoolTest {
 
 	/**
 	 * Tests {@link LaunchDelegatePortPool#returnPorts(List)}.
+	 *
+	 * @throws IOException Unexpected.
 	 */
 	@Test
-	public void testReturnPorts() {
-		Mockito.when(availabilityChecker.isPortFree(Matchers.anyInt())).thenReturn(true);
+	public void testReturnPorts() throws IOException {
+		when(availabilityChecker.isPortFree(anyInt())).thenReturn(true);
 		final int port1 = pool.getFreePort();
 		final int port2 = pool.getFreePort();
 

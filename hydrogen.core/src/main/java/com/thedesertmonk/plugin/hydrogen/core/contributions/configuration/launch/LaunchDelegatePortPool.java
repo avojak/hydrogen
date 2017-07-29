@@ -1,11 +1,12 @@
 package com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch;
 
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.exception.NoAvailablePortException;
 import com.thedesertmonk.plugin.hydrogen.core.logging.HydrogenLoggerFactory;
 import com.thedesertmonk.plugin.hydrogen.core.logging.IHydrogenLogger;
 
@@ -19,12 +20,8 @@ public class LaunchDelegatePortPool {
 
 	private static final IHydrogenLogger LOGGER = HydrogenLoggerFactory.getForClass(LaunchDelegatePortPool.class);
 
-	// An acceptable port number to return to the caller will be within the
-	// range [49152-65535].
-	private static final int MIN_PORT_NUMBER = 49152;
-	private static final int MAX_PORT_NUMBER = 65535;
-
 	private final LaunchDelegatePortAvailabilityChecker availabilityChecker;
+	private final ServerSocketFactory serverSocketFactory;
 	// A cache of the ports that we have distributed
 	private final Set<Integer> distributedPorts;
 	// A cache of the ports that we have discovered to already be in use
@@ -35,12 +32,19 @@ public class LaunchDelegatePortPool {
 	 *
 	 * @param availabilityChecker The
 	 *            {@link LaunchDelegatePortAvailabilityChecker}. Cannot be null.
+	 * @param serverSocketFactory The {@link ServerSocketFactory}. Cannot be
+	 *            null.
 	 */
-	public LaunchDelegatePortPool(final LaunchDelegatePortAvailabilityChecker availabilityChecker) {
+	public LaunchDelegatePortPool(final LaunchDelegatePortAvailabilityChecker availabilityChecker,
+			final ServerSocketFactory serverSocketFactory) {
 		if (availabilityChecker == null) {
 			throw new IllegalArgumentException("availabilityChecker cannot be null"); //$NON-NLS-1$
 		}
+		if (serverSocketFactory == null) {
+			throw new IllegalArgumentException("serverSocketFactory cannot be null"); //$NON-NLS-1$
+		}
 		this.availabilityChecker = availabilityChecker;
+		this.serverSocketFactory = serverSocketFactory;
 		distributedPorts = new HashSet<Integer>();
 		discoveredUsedPorts = new HashSet<Integer>();
 	}
@@ -75,32 +79,35 @@ public class LaunchDelegatePortPool {
 		}
 
 		// Attempt to bind to the port as a final check
-		return availabilityChecker.isPortFree(port);
+		final boolean isPortFree = availabilityChecker.isPortFree(port);
+		if (!isPortFree) {
+			discoveredUsedPorts.add(port);
+		}
+		return isPortFree;
 	}
 
 	/**
-	 * Finds and returns the first free port within an acceptable range of
-	 * non-'well-known' ports.
+	 * Finds and returns an unused port number.
 	 *
 	 * @return The port number.
+	 * @throws IOException If an I/O error occurs when checking the socket.
 	 */
-	public int getFreePort() {
-		for (int port = MIN_PORT_NUMBER; port <= MAX_PORT_NUMBER; ++port) {
-			if (isPortFree(port)) {
-				// Cache the port number so we don't try to hand it out again
-				distributedPorts.add(port);
-				LOGGER.debug("Distributing unused port " + port); //$NON-NLS-1$
-				return port;
-			}
-			// We found a used port that we did not distribute
-			if (!distributedPorts.contains(port)) {
-				discoveredUsedPorts.add(port);
+	public int getFreePort() throws IOException {
+		ServerSocket socket = null;
+		try {
+			socket = serverSocketFactory.create(0);
+			final int port = socket.getLocalPort();
+			distributedPorts.add(port);
+			return port;
+		} finally {
+			try {
+				if (socket != null) {
+					socket.close();
+				}
+			} catch (final IOException e) {
+				LOGGER.debug("Failed to close socket while attempting to find a free port"); //$NON-NLS-1$
 			}
 		}
-		final NoAvailablePortException exception = new NoAvailablePortException(
-				"No available port was found within the range [" + MIN_PORT_NUMBER + " - " + MAX_PORT_NUMBER + "]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		LOGGER.fatal("No available port could be found", exception); //$NON-NLS-1$
-		throw exception;
 	}
 
 	/**
@@ -148,6 +155,7 @@ public class LaunchDelegatePortPool {
 		}
 		for (final Integer port : ports) {
 			distributedPorts.remove(port);
+			discoveredUsedPorts.remove(port);
 		}
 	}
 

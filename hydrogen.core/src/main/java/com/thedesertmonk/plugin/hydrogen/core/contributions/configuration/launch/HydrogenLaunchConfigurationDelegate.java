@@ -1,6 +1,7 @@
 package com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -49,6 +50,7 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 	private static final String INSUFFICIENT_PRIVS_ERROR = "The specified H2 executable cannot be executed. " //$NON-NLS-1$
 			+ "Verify that the correct permissions are in place for Eclipse to launch the executable before " //$NON-NLS-1$
 			+ "reattempting the launch."; //$NON-NLS-1$
+	private static final String PORT_ERROR = "An error occured while finding an unused port."; //$NON-NLS-1$
 
 	private final ProgramArgumentsFactory programArgumentsFactory;
 	private final LaunchDelegatePortPool portPool;
@@ -58,7 +60,9 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 	 */
 	public HydrogenLaunchConfigurationDelegate() {
 		programArgumentsFactory = new ProgramArgumentsFactory();
-		portPool = new LaunchDelegatePortPool(new LaunchDelegatePortAvailabilityChecker(new ServerSocketFactory()));
+		final ServerSocketFactory serverSocketFactory = new ServerSocketFactory();
+		portPool = new LaunchDelegatePortPool(new LaunchDelegatePortAvailabilityChecker(serverSocketFactory),
+				serverSocketFactory);
 		getLaunchManager().addLaunchListener(new HydrogenLaunchListener(portPool));
 	}
 
@@ -170,7 +174,7 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 	}
 
 	// TODO Lots of repetition in this method - need to refactor
-	private ProgramArguments validatePortNumbers(final ProgramArguments programArguments) {
+	private ProgramArguments validatePortNumbers(final ProgramArguments programArguments) throws CoreException {
 		WebServerArguments updatedWebServerArguments = null;
 		TcpServerArguments updatedTcpServerArguments = null;
 		PgServerArguments updatedPgServerArguments = null;
@@ -185,7 +189,7 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 					LOGGER.debug(
 							"Port " + port.get() + " already in use. A new port will be selected for the web server."); //$NON-NLS-1$ //$NON-NLS-2$
 					updatedWebServerArguments = new WebServerArgumentsBuilder(webServerArguments.get())
-							.withPort(String.valueOf(portPool.getFreePort())).build();
+							.withPort(getFreePort()).build();
 				}
 			}
 		}
@@ -200,7 +204,7 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 					LOGGER.debug(
 							"Port " + port.get() + " already in use. A new port will be selected for the TCP server."); //$NON-NLS-1$ //$NON-NLS-2$
 					updatedTcpServerArguments = new TcpServerArgumentsBuilder(tcpServerArguments.get())
-							.withPort(String.valueOf(portPool.getFreePort())).build();
+							.withPort(getFreePort()).build();
 				}
 			}
 		}
@@ -215,7 +219,7 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 					LOGGER.debug("Port " + port.get() //$NON-NLS-1$
 							+ " already in use. A new port will be selected for the PostgreSQL server."); //$NON-NLS-1$
 					updatedPgServerArguments = new PgServerArgumentsBuilder(pgServerArguments.get())
-							.withPort(String.valueOf(portPool.getFreePort())).build();
+							.withPort(getFreePort()).build();
 				}
 			}
 		}
@@ -229,6 +233,15 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 		}
 
 		return programArguments;
+	}
+
+	private String getFreePort() throws CoreException {
+		try {
+			return String.valueOf(portPool.getFreePort());
+		} catch (final IOException e) {
+			abort(PORT_ERROR, e, 0);
+		}
+		return null;
 	}
 
 }
