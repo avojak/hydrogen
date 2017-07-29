@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="hydrogen.feature"
-      label="Hydrogen Feature"
+      id="com.thedesertmonk.plugin.hydrogen"
+      label="Hydrogen"
       version="1.0.0.qualifier"
       provider-name="avojak">
 
