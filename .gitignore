@@ -3,9 +3,9 @@
 
 .project
 
-hydrogen.core/target/*
-hydrogen.feature/target/*
-hydrogen.test/target/*
-hydrogen.test.dependencies/target/*
-hydrogen.test.report/target/*
-hydrogen.site/target/*
+com.thedesertmonk.plugin.hydrogen.core/target/*
+com.thedesertmonk.plugin.hydrogen.feature/target/*
+com.thedesertmonk.plugin.hydrogen.test/target/*
+com.thedesertmonk.plugin.hydrogen.test.dependencies/target/*
+com.thedesertmonk.plugin.hydrogen.test.report/target/*
+com.thedesertmonk.plugin.hydrogen.site/target/*

@@ -8,10 +8,10 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>hydrogen.test.report</artifactId>
+	<artifactId>com.thedesertmonk.plugin.hydrogen.test.report</artifactId>
 	<packaging>pom</packaging>
 	<name>hydrogen :: test report</name>
-	<description>hydrogen Test Report Plugin</description>
+	<description>Hydrogen Test Report</description>
 	<properties>
 		<maven.deploy.skip>true</maven.deploy.skip>
 	</properties>
@@ -65,13 +65,13 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.thedesertmonk.plugin</groupId>
-			<artifactId>hydrogen.core</artifactId>
+			<artifactId>${project.groupId}.hydrogen.core</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.thedesertmonk.plugin</groupId>
-			<artifactId>hydrogen.test</artifactId>
+			<artifactId>${project.groupId}.hydrogen.test</artifactId>
 			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>

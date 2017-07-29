@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: hydrogen Core Plugin
-Bundle-SymbolicName: hydrogen.core;singleton:=true
+Bundle-Name: Hydrogen Core
+Bundle-SymbolicName: com.thedesertmonk.plugin.hydrogen.core;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: com.thedesertmonk.plugin.hydrogen.core.HydrogenActivator
 Require-Bundle: org.eclipse.ui,
@@ -14,3 +14,4 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .
+Bundle-Vendor: Andrew Vojak

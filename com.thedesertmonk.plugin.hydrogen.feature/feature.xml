@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="hydrogen.feature"
+      id="com.thedesertmonk.plugin.hydrogen.feature"
       label="Hydrogen"
       version="1.0.0.qualifier"
-      provider-name="avojak">
+      provider-name="Andrew Vojak">
 
    <description url="https://avojak.com/projects/hydrogen">
       Plugin to configure and launch one or more H2 database servers. Server instances can be launched directly from the Eclipse Run Configuration menu.
    </description>
 
    <copyright url="http://www.example.com/copyright">
-      [Enter Copyright Description here.]
+      Copyright (c) 2017 Andrew Vojak
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License
+v1.0 which accompanies this distribution, and is available at https://www.eclipse.org/legal/epl-v10.html
    </copyright>
 
    <license url="https://www.eclipse.org/legal/epl-v10.html">
@@ -92,7 +95,7 @@ This Agreement is governed by the laws of the State of New York and the intellec
    </url>
 
    <plugin
-         id="hydrogen.core"
+         id="com.thedesertmonk.plugin.hydrogen.core"
          download-size="0"
          install-size="0"
          version="0.0.0"

@@ -6,7 +6,8 @@
 		<groupId>com.thedesertmonk.plugin</groupId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>hydrogen.site</artifactId>
+	<artifactId>com.thedesertmonk.plugin.hydrogen.site</artifactId>
 	<packaging>eclipse-repository</packaging>
 	<name>hydrogen :: update site</name>
+	<description>Hydrogen Update Site</description>
 </project>
