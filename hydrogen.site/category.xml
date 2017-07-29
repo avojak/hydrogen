@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/hydrogen.feature_0.0.0.jar" id="com.thedesertmonk.plugin.hydrogen" version="0.0.0">
+   <feature url="features/hydrogen.feature_0.0.0.jar" id="hydrogen.feature" version="0.0.0">
       <category name="hydrogen"/>
    </feature>
    <category-def name="hydrogen" label="Hydrogen">
