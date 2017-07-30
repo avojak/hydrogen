@@ -13,7 +13,7 @@ public class HydrogenLaunchToolbarAction extends AbstractLaunchToolbarAction {
 	 * Constructor.
 	 */
 	public HydrogenLaunchToolbarAction() {
-		this("hydrogen.core.launchGroup1"); //$NON-NLS-1$
+		this("com.thedesertmonk.plugin.hydrogen.core.launchGroup1"); //$NON-NLS-1$
 	}
 
 	/**

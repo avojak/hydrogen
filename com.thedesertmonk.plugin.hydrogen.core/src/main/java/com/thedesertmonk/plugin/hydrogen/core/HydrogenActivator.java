@@ -18,7 +18,7 @@ public class HydrogenActivator extends AbstractUIPlugin {
 	/**
 	 * The plug-in ID
 	 */
-	public static final String PLUGIN_ID = "hydrogen.core"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "com.thedesertmonk.plugin.hydrogen.core"; //$NON-NLS-1$
 
 	private static HydrogenActivator plugin;
 

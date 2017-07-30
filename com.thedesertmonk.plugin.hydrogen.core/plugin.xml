@@ -6,10 +6,10 @@
    <extension
          point="org.eclipse.debug.core.launchConfigurationTypes">
       <launchConfigurationType
-            category="hydrogen.core.launchCategory"
+            category="com.thedesertmonk.plugin.hydrogen.core.launchCategory"
             delegate="com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.HydrogenLaunchConfigurationDelegate"
             delegateName="Hydrogen H2 Server Launcher"
-            id="hydrogen.core.launchConfigurationType1"
+            id="com.thedesertmonk.plugin.hydrogen.core.launchConfigurationType1"
             modes="run"
             name="H2 Server">
       </launchConfigurationType>
@@ -17,17 +17,17 @@
    <extension
          point="org.eclipse.debug.ui.launchConfigurationTypeImages">
       <launchConfigurationTypeImage
-            configTypeID="hydrogen.core.launchConfigurationType1"
+            configTypeID="com.thedesertmonk.plugin.hydrogen.core.launchConfigurationType1"
             icon="icons/server-16.png"
-            id="hydrogen.core.launchConfigurationTypeImage1">
+            id="com.thedesertmonk.plugin.hydrogen.core.launchConfigurationTypeImage1">
       </launchConfigurationTypeImage>
    </extension>
    <extension
          point="org.eclipse.debug.ui.launchConfigurationTabGroups">
       <launchConfigurationTabGroup
             class="com.thedesertmonk.plugin.hydrogen.core.contributions.configuration.launch.tab.HydrogenLaunchConfigurationTabGroup"
-            id="hydrogen.core.launchConfigurationTabGroup1"
-            type="hydrogen.core.launchConfigurationType1">
+            id="com.thedesertmonk.plugin.hydrogen.core.launchConfigurationTabGroup1"
+            type="com.thedesertmonk.plugin.hydrogen.core.launchConfigurationType1">
       </launchConfigurationTabGroup>
    </extension>
    <extension
@@ -48,20 +48,20 @@
          point="org.eclipse.ui.actionSets">
       <actionSet
             description="Launch H2 Server"
-            id="hydrogen.core.actionSet1"
+            id="com.thedesertmonk.plugin.hydrogen.core.actionSet1"
             label="H2 Launch"
             visible="true">
          <action
                class="com.thedesertmonk.plugin.hydrogen.core.contributions.toolbar.HydrogenLaunchToolbarAction"
                icon="icons/server-16.png"
-               id="hydrogen.core.action1"
+               id="com.thedesertmonk.plugin.hydrogen.core.action1"
                label="H2 Launch"
                pulldown="true"
                style="pulldown"
                toolbarPath="org.eclipse.debug.ui.launchActionSet/run">
          </action>
          <menu
-               id="hydrogen.core.menu3"
+               id="com.thedesertmonk.plugin.hydrogen.core.menu3"
                label="H2 Launch">
          </menu>
       </actionSet>
@@ -70,8 +70,8 @@
          point="org.eclipse.debug.ui.launchGroups">
       <launchGroup
             bannerImage="icons/server-wizard.png"
-            category="hydrogen.core.launchCategory"
-            id="hydrogen.core.launchGroup1"
+            category="com.thedesertmonk.plugin.hydrogen.core.launchCategory"
+            id="com.thedesertmonk.plugin.hydrogen.core.launchGroup1"
             image="icons/server-16.png"
             label="H2 Launch"
             mode="run">
