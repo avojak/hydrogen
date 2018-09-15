@@ -3,9 +3,9 @@
 
 .project
 
-com.thedesertmonk.plugin.hydrogen.core/target/*
-com.thedesertmonk.plugin.hydrogen.feature/target/*
-com.thedesertmonk.plugin.hydrogen.test/target/*
-com.thedesertmonk.plugin.hydrogen.test.dependencies/target/*
-com.thedesertmonk.plugin.hydrogen.test.report/target/*
-com.thedesertmonk.plugin.hydrogen.site/target/*
+com.avojak.plugin.hydrogen.core/target/*
+com.avojak.plugin.hydrogen.feature/target/*
+com.avojak.plugin.hydrogen.test/target/*
+com.avojak.plugin.hydrogen.test.dependencies/target/*
+com.avojak.plugin.hydrogen.test.report/target/*
+com.avojak.plugin.hydrogen.site/target/*
