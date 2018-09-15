@@ -10,4 +10,23 @@
 	<packaging>eclipse-repository</packaging>
 	<name>hydrogen :: update site</name>
 	<description>Hydrogen Update Site</description>
+	<build>
+		<plugins>
+			<plugin>
+			    <groupId>com.avojak.mojo</groupId>
+			    <artifactId>aws-p2-maven-plugin</artifactId>
+			    <version>1.0</version>
+			    <configuration>
+			        <bucket>p2.avojak.com</bucket>
+			    </configuration>
+			    <executions>
+			        <execution>
+			            <goals>
+			                <goal>deploy</goal>
+			            </goals>
+			        </execution>
+			    </executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
