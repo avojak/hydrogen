@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/avojak/hydrogen.svg?branch=master)](https://travis-ci.org/avojak/hydrogen) [![Coverage Status](https://coveralls.io/repos/github/avojak/hydrogen/badge.svg?branch=master)](https://coveralls.io/github/avojak/hydrogen?branch=master) [![License](https://img.shields.io/badge/license-EPL%201.0-blue.svg)](https://opensource.org/licenses/EPL-1.0) ![Version](https://img.shields.io/badge/version-1.0.0--SNAPSHOT-yellow.svg)
 
-Hydrogen is an Eclipse plugin to configure and launch one or more [H2](http://www.h2database.com/html/main.html) database servers. Server instances can be launched directly from the Eclipse Run Configuration menu.
+Hydrogen is an Eclipse plugin to configure and launch one or more [H2](http://www.h2database.com/html/main.html) database servers. Server instances can be launched directly from the Eclipse toolbar.
 
 ## Getting Started
 
@@ -10,15 +10,15 @@ These instructions will get you setup to use Hydrogen in your local Eclipse inst
 
 ### Prerequisites
 
- - TODO: Eclipse minimum requirements
- - TODO: JRE minimum requirements
+ - Eclipse Neon (or later)
+ - Java 7+
  - The H2 JAR is not packaged with Hydrogen and must be [downloaded](http://www.h2database.com/html/download.html) separately
 
 ### Installing
 
-Hydrogen is currently only available as an archived Eclipse update site. 
+Hydrogen is currently only available from my p2 SNAPSHOT site: 
 
- - [1.0.0-SNAPSHOT](#)
+ - [1.0.0-SNAPSHOT](http://p2.avojak.com/snapshot/com.avojak.plugin.hydrogen.site/1.0.0-SNAPSHOT)
 
 End with an example of getting some data out of the system or using it for a little demo
 
