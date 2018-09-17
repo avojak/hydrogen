@@ -2,6 +2,7 @@
 *.prefs
 
 .project
+.settings/
 
 com.avojak.plugin.hydrogen.core/target/*
 com.avojak.plugin.hydrogen.feature/target/*
