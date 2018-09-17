@@ -31,8 +31,10 @@ public abstract class HydrogenLaunchConfigurationTab extends AbstractLaunchConfi
 	/**
 	 * Creates a text field.
 	 *
-	 * @param parent The parent {@link Composite}. Cannot be null.
-	 * @param label The label. Cannot be null, may be empty.
+	 * @param parent
+	 *            The parent {@link Composite}. Cannot be null.
+	 * @param label
+	 *            The label. Cannot be null, may be empty.
 	 * @return The new {@link Text} object.
 	 */
 	public Text createField(final Composite parent, final String label) {
@@ -51,8 +53,10 @@ public abstract class HydrogenLaunchConfigurationTab extends AbstractLaunchConfi
 	/**
 	 * Creates a directory text field.
 	 *
-	 * @param parent The parent {@link Composite}. Cannot be null.
-	 * @param label The label. Cannot be null, may be empty.
+	 * @param parent
+	 *            The parent {@link Composite}. Cannot be null.
+	 * @param label
+	 *            The label. Cannot be null, may be empty.
 	 * @return The new directory {@link Text} object.
 	 */
 	public Text createDirectoryField(final Composite parent, final String label) {
@@ -66,7 +70,7 @@ public abstract class HydrogenLaunchConfigurationTab extends AbstractLaunchConfi
 		addLabelToComposite(baseComposite, label);
 		final Text text = addTextToComposite(baseComposite);
 		((GridLayout) baseComposite.getLayout()).numColumns++;
-		final Button button = createPushButton(baseComposite, "Browse...", null); //$NON-NLS-1$
+		final Button button = createPushButton(baseComposite, "&Browse...", null); //$NON-NLS-1$
 		button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
@@ -124,17 +128,17 @@ public abstract class HydrogenLaunchConfigurationTab extends AbstractLaunchConfi
 	/**
 	 * Validates the given port number.
 	 *
-	 * @param port The port number String.
-	 * @return {@code true} if the port number is valid, otherwise
-	 *         {@code false}.
+	 * @param port
+	 *            The port number String.
+	 * @return {@code true} if the port number is valid, otherwise {@code false}.
 	 */
 	public boolean validatePortNumber(final String port) {
 		return PortValidator.isValid(port);
 	}
 
 	/**
-	 * Displays the message warning against allowing other computers to connect
-	 * to the server.
+	 * Displays the message warning against allowing other computers to connect to
+	 * the server.
 	 */
 	public void showAllowOthersWarning() {
 		setWarningMessage("Allowing other computers to connect to the server is potentially risky."); //$NON-NLS-1$

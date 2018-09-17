@@ -56,7 +56,7 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 
 		baseDirectoryField = createDirectoryField(databaseSettingsGroup, "Database base directory"); //$NON-NLS-1$
 		baseDirectoryField.addModifyListener(new HydrogenLaunchConfigurationTabChangeListener(this));
-		existingDatabaseButton = createCheckButton(databaseSettingsGroup, "Only open existing databases"); //$NON-NLS-1$
+		existingDatabaseButton = createCheckButton(databaseSettingsGroup, "Only open existing &databases"); //$NON-NLS-1$
 		existingDatabaseButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 
 		final Group serversToLaunchGroup = new Group(baseComposite, SWT.NONE);
@@ -64,14 +64,14 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 		serversToLaunchGroup.setLayout(new GridLayout());
 		serversToLaunchGroup.setText("Servers to launch"); //$NON-NLS-1$
 
-		launchWebServerButton = createCheckButton(serversToLaunchGroup, "Web"); //$NON-NLS-1$
+		launchWebServerButton = createCheckButton(serversToLaunchGroup, "We&b"); //$NON-NLS-1$
 		launchWebServerButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
-		launchTcpServerButton = createCheckButton(serversToLaunchGroup, "TCP"); //$NON-NLS-1$
+		launchTcpServerButton = createCheckButton(serversToLaunchGroup, "T&CP"); //$NON-NLS-1$
 		launchTcpServerButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
-		launchPgServerButton = createCheckButton(serversToLaunchGroup, "PostgreSQL"); //$NON-NLS-1$
+		launchPgServerButton = createCheckButton(serversToLaunchGroup, "PostgreS&QL"); //$NON-NLS-1$
 		launchPgServerButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 
-		tracingButton = createCheckButton(baseComposite, "Enable tracing"); //$NON-NLS-1$
+		tracingButton = createCheckButton(baseComposite, "Enab&le tracing"); //$NON-NLS-1$
 		tracingButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 	}
 
@@ -206,7 +206,7 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 	 */
 	@Override
 	public String getName() {
-		return "General"; //$NON-NLS-1$
+		return "&General"; //$NON-NLS-1$
 	}
 
 	/**

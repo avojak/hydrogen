@@ -51,11 +51,11 @@ public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 		allowOthersButton = createCheckButton(connectionSettingsGroup,
 				"Allow other computers to connect (Discouraged)"); //$NON-NLS-1$
 		allowOthersButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
-		useDaemonThreadButton = createCheckButton(connectionSettingsGroup, "Use a daemon thread"); //$NON-NLS-1$
+		useDaemonThreadButton = createCheckButton(connectionSettingsGroup, "Use a &daemon thread"); //$NON-NLS-1$
 		useDaemonThreadButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 		portText = createField(connectionSettingsGroup, "Port"); //$NON-NLS-1$
 		portText.addModifyListener(new HydrogenLaunchConfigurationTabChangeListener(this));
-		useSslButton = createCheckButton(connectionSettingsGroup, "Use encrypted (SSL) connections"); //$NON-NLS-1$
+		useSslButton = createCheckButton(connectionSettingsGroup, "Use encrypted (&SSL) connections"); //$NON-NLS-1$
 		useSslButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 
 		final Group shutdownSettingsGroup = new Group(baseComposite, SWT.NONE);
@@ -63,7 +63,7 @@ public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 		shutdownSettingsGroup.setLayout(new GridLayout());
 		shutdownSettingsGroup.setText("Shutdown Settings"); //$NON-NLS-1$
 
-		forceShutdownButton = createCheckButton(shutdownSettingsGroup, "Force shutdown"); //$NON-NLS-1$
+		forceShutdownButton = createCheckButton(shutdownSettingsGroup, "&Force shutdown"); //$NON-NLS-1$
 		forceShutdownButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 	}
 
@@ -170,7 +170,7 @@ public class TcpLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 	 */
 	@Override
 	public String getName() {
-		return "TCP"; //$NON-NLS-1$
+		return "&TCP"; //$NON-NLS-1$
 	}
 
 	/**

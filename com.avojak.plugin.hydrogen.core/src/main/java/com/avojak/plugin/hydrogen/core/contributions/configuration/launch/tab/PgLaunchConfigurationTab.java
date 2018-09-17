@@ -49,7 +49,7 @@ public class PgLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 		allowOthersButton = createCheckButton(connectionSettingsGroup,
 				"Allow other computers to connect (Discouraged)"); //$NON-NLS-1$
 		allowOthersButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
-		useDaemonThreadButton = createCheckButton(connectionSettingsGroup, "Use a daemon thread"); //$NON-NLS-1$
+		useDaemonThreadButton = createCheckButton(connectionSettingsGroup, "Use a &daemon thread"); //$NON-NLS-1$
 		useDaemonThreadButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 		portText = createField(connectionSettingsGroup, "Port"); //$NON-NLS-1$
 		portText.addModifyListener(new HydrogenLaunchConfigurationTabChangeListener(this));
@@ -148,7 +148,7 @@ public class PgLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 	 */
 	@Override
 	public String getName() {
-		return "PostgreSQL"; //$NON-NLS-1$
+		return "&PostgreSQL"; //$NON-NLS-1$
 	}
 
 	/**

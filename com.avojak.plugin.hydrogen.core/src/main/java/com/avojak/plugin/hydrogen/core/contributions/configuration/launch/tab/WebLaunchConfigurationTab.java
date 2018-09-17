@@ -51,14 +51,14 @@ public class WebLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 		allowOthersButton = createCheckButton(connectionSettingsGroup,
 				"Allow other computers to connect (Discouraged)"); //$NON-NLS-1$
 		allowOthersButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
-		useDaemonThreadButton = createCheckButton(connectionSettingsGroup, "Use a daemon thread"); //$NON-NLS-1$
+		useDaemonThreadButton = createCheckButton(connectionSettingsGroup, "Use a &daemon thread"); //$NON-NLS-1$
 		useDaemonThreadButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 		portText = createField(connectionSettingsGroup, "Port"); //$NON-NLS-1$
 		portText.addModifyListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 		useSslButton = createCheckButton(connectionSettingsGroup, "Use encrypted (HTTPS) connections"); //$NON-NLS-1$
 		useSslButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 
-		openBrowserButton = createCheckButton(baseComposite, "Open browser"); //$NON-NLS-1$
+		openBrowserButton = createCheckButton(baseComposite, "Open &browser"); //$NON-NLS-1$
 		openBrowserButton.addSelectionListener(new HydrogenLaunchConfigurationTabChangeListener(this));
 	}
 
@@ -165,7 +165,7 @@ public class WebLaunchConfigurationTab extends HydrogenLaunchConfigurationTab {
 	 */
 	@Override
 	public String getName() {
-		return "Web"; //$NON-NLS-1$
+		return "&Web"; //$NON-NLS-1$
 	}
 
 	/**
