@@ -27,17 +27,23 @@ public class TcpServerArguments {
 	/**
 	 * Constructor.
 	 *
-	 * @param startTcp The argument for starting the TCP server. Cannot be null
-	 *            or empty.
-	 * @param allowOthers The argument for allowing connections to the server
-	 *            outside of the host machine.
-	 * @param useDaemonThread The argument for running the server on a daemon
-	 *            thread.
-	 * @param port The argument for specifying a port number.
-	 * @param useSsl The argument for enabling SSL.
-	 * @param shutdownUrl The argument for specifying a shutdown URL.
-	 * @param shutdownPassword The argument for specifying a shutdown password.
-	 * @param forceShutdown The argument for allowing a forced shutdown.
+	 * @param startTcp
+	 *            The argument for starting the TCP server. Cannot be null or empty.
+	 * @param allowOthers
+	 *            The argument for allowing connections to the server outside of the
+	 *            host machine.
+	 * @param useDaemonThread
+	 *            The argument for running the server on a daemon thread.
+	 * @param port
+	 *            The argument for specifying a port number.
+	 * @param useSsl
+	 *            The argument for enabling SSL.
+	 * @param shutdownUrl
+	 *            The argument for specifying a shutdown URL.
+	 * @param shutdownPassword
+	 *            The argument for specifying a shutdown password.
+	 * @param forceShutdown
+	 *            The argument for allowing a forced shutdown.
 	 */
 	public TcpServerArguments(final String startTcp, final String allowOthers, final String useDaemonThread,
 			final String port, final String useSsl, final String shutdownUrl, final String shutdownPassword,
@@ -181,7 +187,6 @@ public class TcpServerArguments {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + allowOthers.hashCode();
-		result = prime * result + arguments.hashCode();
 		result = prime * result + forceShutdown.hashCode();
 		result = prime * result + port.hashCode();
 		result = prime * result + shutdownPassword.hashCode();
@@ -208,9 +213,6 @@ public class TcpServerArguments {
 		}
 		final TcpServerArguments other = (TcpServerArguments) obj;
 		if (!allowOthers.equals(other.allowOthers)) {
-			return false;
-		}
-		if (!arguments.equals(other.arguments)) {
 			return false;
 		}
 		if (!forceShutdown.equals(other.forceShutdown)) {

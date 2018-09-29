@@ -37,6 +37,15 @@ public class PgServerArgumentsBuilderTest {
 	}
 
 	/**
+	 * Tests that the deep copy constructor throws an exception when the old
+	 * arguments are null.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testDeepCopyConstructor_NullArguments() {
+		new PgServerArgumentsBuilder(null);
+	}
+
+	/**
 	 * Tests the deep copy constructor.
 	 */
 	@Test

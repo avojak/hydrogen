@@ -15,8 +15,13 @@ import org.eclipse.jdt.launching.IVMInstall;
 import org.eclipse.jdt.launching.IVMRunner;
 import org.eclipse.jdt.launching.VMRunnerConfiguration;
 
-import com.avojak.plugin.hydrogen.core.HydrogenActivator;
+import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.factory.FileFactory;
+import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.factory.ServerSocketFactory;
+import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.factory.VMRunnerConfigurationFactory;
 import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.listener.HydrogenLaunchListener;
+import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.wrapper.DebugPluginWrapper;
+import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.wrapper.HydrogenActivatorWrapper;
+import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.wrapper.JavaRuntimeWrapper;
 import com.avojak.plugin.hydrogen.core.contributions.preferencepage.PreferenceConstants;
 import com.avojak.plugin.hydrogen.core.h2.model.ServerOption;
 import com.avojak.plugin.hydrogen.core.h2.model.arguments.PgServerArguments;
@@ -52,6 +57,11 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 			+ "reattempting the launch."; //$NON-NLS-1$
 	private static final String PORT_ERROR = "An error occured while finding an unused port."; //$NON-NLS-1$
 
+	private final JavaRuntimeWrapper javaRuntimeWrapper;
+	private final DebugPluginWrapper debugPluginWrapper;
+	private final HydrogenActivatorWrapper hydrogenActivatorWrapper;
+	private final FileFactory fileFactory;
+	private final VMRunnerConfigurationFactory vmRunnerConfigurationFactory;
 	private final ProgramArgumentsFactory programArgumentsFactory;
 	private final LaunchDelegatePortPool portPool;
 
@@ -59,10 +69,41 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 	 * Constructor.
 	 */
 	public HydrogenLaunchConfigurationDelegate() {
-		programArgumentsFactory = new ProgramArgumentsFactory();
-		final ServerSocketFactory serverSocketFactory = new ServerSocketFactory();
-		portPool = new LaunchDelegatePortPool(new LaunchDelegatePortAvailabilityChecker(serverSocketFactory),
-				serverSocketFactory);
+		this(new JavaRuntimeWrapper(), new DebugPluginWrapper(), new HydrogenActivatorWrapper(), new FileFactory(),
+				new VMRunnerConfigurationFactory(), new ProgramArgumentsFactory(),
+				new LaunchDelegatePortPool(new LaunchDelegatePortAvailabilityChecker(new ServerSocketFactory()),
+						new ServerSocketFactory()));
+	}
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param javaRuntimeWrapper
+	 *            The {@link JavaRuntimeWrapper}.
+	 * @param debugPluginWrapper
+	 *            The {@link DebugPluginWrapper}.
+	 * @param hydrogenActivatorWrapper
+	 *            The {@link HydrogenActivatorWrapper}.
+	 * @param fileFactory
+	 *            The {@link FileFactory}.
+	 * @param vmRunnerConfigurationFactory
+	 *            The {@link VMRunnerConfigurationFactory}.
+	 * @param programArgumentsFactory
+	 *            The {@link ProgramArgumentsFactory}.
+	 * @param portPool
+	 *            The {@link LaunchDelegatePortPool}.
+	 */
+	public HydrogenLaunchConfigurationDelegate(final JavaRuntimeWrapper javaRuntimeWrapper,
+			final DebugPluginWrapper debugPluginWrapper, final HydrogenActivatorWrapper hydrogenActivatorWrapper,
+			final FileFactory fileFactory, final VMRunnerConfigurationFactory vmRunnerConfigurationFactory,
+			final ProgramArgumentsFactory programArgumentsFactory, final LaunchDelegatePortPool portPool) {
+		this.javaRuntimeWrapper = javaRuntimeWrapper;
+		this.debugPluginWrapper = debugPluginWrapper;
+		this.hydrogenActivatorWrapper = hydrogenActivatorWrapper;
+		this.fileFactory = fileFactory;
+		this.vmRunnerConfigurationFactory = vmRunnerConfigurationFactory;
+		this.programArgumentsFactory = programArgumentsFactory;
+		this.portPool = portPool;
 		getLaunchManager().addLaunchListener(new HydrogenLaunchListener(portPool));
 	}
 
@@ -83,10 +124,10 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 		final IVMInstall vm = verifyVMInstall(configuration);
 		final IVMRunner runner = vm.getVMRunner(mode);
 
-		final String executablePreference = HydrogenActivator.getDefault().getPreferenceStore()
+		final String executablePreference = hydrogenActivatorWrapper.getDefault().getPreferenceStore()
 				.getString(PreferenceConstants.P_EXECUTABLE);
 		validateExecutablePreference(executablePreference);
-		final File executable = new File(executablePreference);
+		final File executable = fileFactory.create(executablePreference);
 		validateExecutable(executable);
 
 		final String workingDirectory = executable.getParent();
@@ -95,7 +136,7 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 		LOGGER.debug("Executable name: " + executableName); //$NON-NLS-1$
 		final String[] classPath = new String[] { executableName };
 		LOGGER.debug("Classpath: " + Arrays.toString(classPath)); //$NON-NLS-1$
-		final VMRunnerConfiguration runConfig = new VMRunnerConfiguration(MAIN_SERVER_CLASS, classPath);
+		final VMRunnerConfiguration runConfig = vmRunnerConfigurationFactory.create(MAIN_SERVER_CLASS, classPath);
 		runConfig.setWorkingDirectory(workingDirectory);
 
 		ProgramArguments programArguments = programArgumentsFactory.create(configuration);
@@ -130,10 +171,30 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 	}
 
 	/**
+	 * Override to call our wrapper instead to allow for mocking. The underlying
+	 * call is unchanged.
+	 */
+	@Override
+	public IVMInstall getVMInstall(final ILaunchConfiguration configuration) throws CoreException {
+		return javaRuntimeWrapper.computeVMInstall(configuration);
+	}
+
+	/**
+	 * Override to call our wrapper instead to allow for mocking. The underlying
+	 * call is unchanged.
+	 */
+	@Override
+	protected ILaunchManager getLaunchManager() {
+		return debugPluginWrapper.getDefault().getLaunchManager();
+	}
+
+	/**
 	 * Sets attributes on the {@link ILaunch} for which ports have been used.
 	 *
-	 * @param launch The {@link ILaunch} instance.
-	 * @param programArguments The {@link ProgramArguments}.
+	 * @param launch
+	 *            The {@link ILaunch} instance.
+	 * @param programArguments
+	 *            The {@link ProgramArguments}.
 	 */
 	private void setUsedPorts(final ILaunch launch, final ProgramArguments programArguments) {
 		final Optional<WebServerArguments> webServerArguments = programArguments.getWebServerArguments();
@@ -160,8 +221,10 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 	 * Validate that the given {@link File} exists, is a file, and able to be
 	 * executed.
 	 *
-	 * @param executable The {@link File} to execute.
-	 * @throws CoreException Thrown by
+	 * @param executable
+	 *            The {@link File} to execute.
+	 * @throws CoreException
+	 *             Thrown by
 	 *             {@link HydrogenLaunchConfigurationDelegate#abort(String, Throwable, int)}.
 	 */
 	private void validateExecutable(final File executable) throws CoreException {

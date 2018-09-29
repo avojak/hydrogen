@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.factory.ServerSocketFactory;
 import com.avojak.plugin.hydrogen.core.logging.HydrogenLoggerFactory;
 import com.avojak.plugin.hydrogen.core.logging.IHydrogenLogger;
 
@@ -30,10 +31,10 @@ public class LaunchDelegatePortPool {
 	/**
 	 * Constructor.
 	 *
-	 * @param availabilityChecker The
-	 *            {@link LaunchDelegatePortAvailabilityChecker}. Cannot be null.
-	 * @param serverSocketFactory The {@link ServerSocketFactory}. Cannot be
-	 *            null.
+	 * @param availabilityChecker
+	 *            The {@link LaunchDelegatePortAvailabilityChecker}. Cannot be null.
+	 * @param serverSocketFactory
+	 *            The {@link ServerSocketFactory}. Cannot be null.
 	 */
 	public LaunchDelegatePortPool(final LaunchDelegatePortAvailabilityChecker availabilityChecker,
 			final ServerSocketFactory serverSocketFactory) {
@@ -50,10 +51,11 @@ public class LaunchDelegatePortPool {
 	}
 
 	/**
-	 * Returns whether or not the given port number represents a valid, free,
-	 * and unused port.
+	 * Returns whether or not the given port number represents a valid, free, and
+	 * unused port.
 	 *
-	 * @param port The port number.
+	 * @param port
+	 *            The port number.
 	 * @return {@code true} if the port is free, otherwise {@code false}.
 	 */
 	public boolean isPortFree(final int port) {
@@ -90,42 +92,32 @@ public class LaunchDelegatePortPool {
 	 * Finds and returns an unused port number.
 	 *
 	 * @return The port number.
-	 * @throws IOException If an I/O error occurs when checking the socket.
+	 * @throws IOException
+	 *             If an I/O error occurs when checking the socket.
 	 */
 	public int getFreePort() throws IOException {
-		ServerSocket socket = null;
-		try {
-			socket = serverSocketFactory.create(0);
+		try (final ServerSocket socket = serverSocketFactory.create(0)) {
 			final int port = socket.getLocalPort();
 			distributedPorts.add(port);
 			return port;
-		} finally {
-			try {
-				if (socket != null) {
-					socket.close();
-				}
-			} catch (final IOException e) {
-				LOGGER.debug("Failed to close socket while attempting to find a free port"); //$NON-NLS-1$
-			}
 		}
 	}
 
 	/**
 	 * Returns all ports which have been distributed by the pool.
 	 *
-	 * @return A non-null, possibly empty {@link Collection} containing the
-	 *         ports numbers.
+	 * @return A non-null, possibly empty {@link Collection} containing the ports
+	 *         numbers.
 	 */
 	public Collection<Integer> getDistributedPorts() {
 		return new HashSet<Integer>(distributedPorts);
 	}
 
 	/**
-	 * Returns all ports which have been discovered to be in use by other
-	 * services.
+	 * Returns all ports which have been discovered to be in use by other services.
 	 *
-	 * @return A non-null, possibly empty {@link Collection} containing the
-	 *         ports numbers.
+	 * @return A non-null, possibly empty {@link Collection} containing the ports
+	 *         numbers.
 	 */
 	public Collection<Integer> getDiscoveredUsedPorts() {
 		return new HashSet<Integer>(discoveredUsedPorts);
@@ -134,8 +126,8 @@ public class LaunchDelegatePortPool {
 	/**
 	 * Returns all distributed ports back to the pool for re-distribution.
 	 *
-	 * @return A non-null, possibly empty {@link Collection} containing the
-	 *         ports which have been successfully added back to the pool.
+	 * @return A non-null, possibly empty {@link Collection} containing the ports
+	 *         which have been successfully added back to the pool.
 	 */
 	public Collection<Integer> returnAllDistributedPorts() {
 		final Set<Integer> returnSet = new HashSet<Integer>(distributedPorts);
@@ -146,7 +138,8 @@ public class LaunchDelegatePortPool {
 	/**
 	 * Returns the specified ports back to the pool for re-distribution.
 	 *
-	 * @param ports The {@link List} of port numbers to be returned to the pool.
+	 * @param ports
+	 *            The {@link List} of port numbers to be returned to the pool.
 	 *            Cannot be null.
 	 */
 	public void returnPorts(final List<Integer> ports) {

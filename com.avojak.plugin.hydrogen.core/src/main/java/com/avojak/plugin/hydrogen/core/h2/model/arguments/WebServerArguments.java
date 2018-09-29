@@ -25,16 +25,20 @@ public class WebServerArguments {
 	/**
 	 * Constructor.
 	 *
-	 * @param startWeb The argument for starting the web server. Cannot be null
-	 *            or empty.
-	 * @param allowOthers The argument for allowing connections to the server
-	 *            outside of the host machine.
-	 * @param useDaemonThread The argument for running the server on a daemon
-	 *            thread.
-	 * @param port The argument for specifying a port number.
-	 * @param useSsl The argument for enabling SSL.
-	 * @param openBrowser The argument for opening the web browser by default to
-	 *            connect to the web interface.
+	 * @param startWeb
+	 *            The argument for starting the web server. Cannot be null or empty.
+	 * @param allowOthers
+	 *            The argument for allowing connections to the server outside of the
+	 *            host machine.
+	 * @param useDaemonThread
+	 *            The argument for running the server on a daemon thread.
+	 * @param port
+	 *            The argument for specifying a port number.
+	 * @param useSsl
+	 *            The argument for enabling SSL.
+	 * @param openBrowser
+	 *            The argument for opening the web browser by default to connect to
+	 *            the web interface.
 	 */
 	public WebServerArguments(final String startWeb, final String allowOthers, final String useDaemonThread,
 			final String port, final String useSsl, final String openBrowser) {
@@ -149,7 +153,6 @@ public class WebServerArguments {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + allowOthers.hashCode();
-		result = prime * result + arguments.hashCode();
 		result = prime * result + openBrowser.hashCode();
 		result = prime * result + port.hashCode();
 		result = prime * result + startWeb.hashCode();
@@ -174,9 +177,6 @@ public class WebServerArguments {
 		}
 		final WebServerArguments other = (WebServerArguments) obj;
 		if (!allowOthers.equals(other.allowOthers)) {
-			return false;
-		}
-		if (!arguments.equals(other.arguments)) {
 			return false;
 		}
 		if (!openBrowser.equals(other.openBrowser)) {

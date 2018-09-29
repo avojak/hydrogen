@@ -41,6 +41,15 @@ public class WebServerArgumentsBuilderTest {
 	}
 
 	/**
+	 * Tests that the deep copy constructor throws an exception when the old
+	 * arguments are null.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testDeepCopyConstructor_NullArguments() {
+		new WebServerArgumentsBuilder(null);
+	}
+
+	/**
 	 * Tests the deep copy constructor.
 	 */
 	@Test

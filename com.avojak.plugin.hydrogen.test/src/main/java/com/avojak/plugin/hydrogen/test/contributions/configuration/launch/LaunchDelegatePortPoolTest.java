@@ -25,7 +25,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.LaunchDelegatePortAvailabilityChecker;
 import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.LaunchDelegatePortPool;
-import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.ServerSocketFactory;
+import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.factory.ServerSocketFactory;
 import com.avojak.plugin.hydrogen.core.logging.HydrogenLoggerFactory;
 
 /**

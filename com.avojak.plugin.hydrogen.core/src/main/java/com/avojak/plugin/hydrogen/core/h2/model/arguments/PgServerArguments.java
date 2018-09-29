@@ -23,13 +23,16 @@ public class PgServerArguments {
 	/**
 	 * Constructor.
 	 *
-	 * @param startPg The argument for starting the PostgreSQL server. Cannot be
-	 *            null or empty.
-	 * @param allowOthers The argument for allowing connections to the server
-	 *            outside of the host machine.
-	 * @param useDaemonThread The argument for running the server on a daemon
-	 *            thread.
-	 * @param port The argument for specifying a port number.
+	 * @param startPg
+	 *            The argument for starting the PostgreSQL server. Cannot be null or
+	 *            empty.
+	 * @param allowOthers
+	 *            The argument for allowing connections to the server outside of the
+	 *            host machine.
+	 * @param useDaemonThread
+	 *            The argument for running the server on a daemon thread.
+	 * @param port
+	 *            The argument for specifying a port number.
 	 */
 	public PgServerArguments(final String startPg, final String allowOthers, final String useDaemonThread,
 			final String port) {
@@ -58,8 +61,7 @@ public class PgServerArguments {
 	/**
 	 * Gets the {@link List} of arguments.
 	 *
-	 * @return The non-null, non-empty {@link List} of PostgreSQL server
-	 *         arguments.
+	 * @return The non-null, non-empty {@link List} of PostgreSQL server arguments.
 	 */
 	public List<String> getArguments() {
 		return new ArrayList<String>(arguments);
@@ -118,7 +120,6 @@ public class PgServerArguments {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + allowOthers.hashCode();
-		result = prime * result + arguments.hashCode();
 		result = prime * result + port.hashCode();
 		result = prime * result + startPg.hashCode();
 		result = prime * result + useDaemonThread.hashCode();
@@ -141,9 +142,6 @@ public class PgServerArguments {
 		}
 		final PgServerArguments other = (PgServerArguments) obj;
 		if (!allowOthers.equals(other.allowOthers)) {
-			return false;
-		}
-		if (!arguments.equals(other.arguments)) {
 			return false;
 		}
 		if (!port.equals(other.port)) {

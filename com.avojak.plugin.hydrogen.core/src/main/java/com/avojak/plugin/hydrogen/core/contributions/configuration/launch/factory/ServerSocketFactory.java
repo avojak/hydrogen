@@ -1,4 +1,4 @@
-package com.avojak.plugin.hydrogen.core.contributions.configuration.launch;
+package com.avojak.plugin.hydrogen.core.contributions.configuration.launch.factory;
 
 import java.io.IOException;
 import java.net.ServerSocket;

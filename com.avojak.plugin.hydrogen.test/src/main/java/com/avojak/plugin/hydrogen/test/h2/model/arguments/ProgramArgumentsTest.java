@@ -17,6 +17,7 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -62,7 +63,8 @@ public class ProgramArgumentsTest {
 	/**
 	 * Setup mocks.
 	 *
-	 * @throws CoreException unexpected.
+	 * @throws CoreException
+	 *             unexpected.
 	 */
 	@Before
 	public void setup() throws CoreException {
@@ -202,8 +204,8 @@ public class ProgramArgumentsTest {
 	}
 
 	/**
-	 * Tests that the constructor throws a {@link RuntimeException} when unable
-	 * to retrieve attributes from the configuration.
+	 * Tests that the constructor throws a {@link RuntimeException} when unable to
+	 * retrieve attributes from the configuration.
 	 */
 	@SuppressWarnings("unchecked")
 	@Test
@@ -262,8 +264,7 @@ public class ProgramArgumentsTest {
 
 	/**
 	 * Tests that the constructor throws an exception when the
-	 * {@link LaunchConfigurationAttributes#ENABLE_TRACING} attribute is
-	 * missing.
+	 * {@link LaunchConfigurationAttributes#ENABLE_TRACING} attribute is missing.
 	 *
 	 * @throws CoreException
 	 */
@@ -289,8 +290,7 @@ public class ProgramArgumentsTest {
 
 	/**
 	 * Tests that the constructor throws an exception when the
-	 * {@link LaunchConfigurationAttributes#WEB_ALLOW_OTHERS} attribute is
-	 * missing.
+	 * {@link LaunchConfigurationAttributes#WEB_ALLOW_OTHERS} attribute is missing.
 	 *
 	 * @throws CoreException
 	 */
@@ -368,8 +368,7 @@ public class ProgramArgumentsTest {
 
 	/**
 	 * Tests that the constructor throws an exception when the
-	 * {@link LaunchConfigurationAttributes#TCP_ALLOW_OTHERS} attribute is
-	 * missing.
+	 * {@link LaunchConfigurationAttributes#TCP_ALLOW_OTHERS} attribute is missing.
 	 *
 	 * @throws CoreException
 	 */
@@ -422,8 +421,7 @@ public class ProgramArgumentsTest {
 
 	/**
 	 * Tests that the constructor throws an exception when the
-	 * {@link LaunchConfigurationAttributes#PG_ALLOW_OTHERS} attribute is
-	 * missing.
+	 * {@link LaunchConfigurationAttributes#PG_ALLOW_OTHERS} attribute is missing.
 	 *
 	 * @throws CoreException
 	 */
@@ -458,6 +456,28 @@ public class ProgramArgumentsTest {
 		when(configuration.hasAttribute(LaunchConfigurationAttributes.PG_PORT.getName())).thenReturn(false);
 		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
 				pgServerArgumentsBuilder, configuration);
+	}
+
+	/**
+	 * Tests the constructor when there are no servers configured to start.
+	 * 
+	 * @throws CoreException
+	 */
+	@Test
+	public void testNoServerArguments() throws CoreException {
+		when(configuration.getAttribute(LaunchConfigurationAttributes.START_WEB.getName(),
+				LaunchConfigurationAttributes.START_WEB.getDefaultValue())).thenReturn(false);
+		when(configuration.getAttribute(LaunchConfigurationAttributes.START_TCP.getName(),
+				LaunchConfigurationAttributes.START_WEB.getDefaultValue())).thenReturn(false);
+		when(configuration.getAttribute(LaunchConfigurationAttributes.START_PG.getName(),
+				LaunchConfigurationAttributes.START_WEB.getDefaultValue())).thenReturn(false);
+
+		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
+				pgServerArgumentsBuilder, configuration);
+
+		verify(hydrogenRuntimeArgumentsBuilder, never()).withWebServer(Matchers.any());
+		verify(hydrogenRuntimeArgumentsBuilder, never()).withTcpServer(Matchers.any());
+		verify(hydrogenRuntimeArgumentsBuilder, never()).withPgServer(Matchers.any());
 	}
 
 	/**
@@ -527,7 +547,8 @@ public class ProgramArgumentsTest {
 	/**
 	 * Tests {@link ProgramArguments#hashCode()}.
 	 *
-	 * @throws CoreException Unexpected.
+	 * @throws CoreException
+	 *             Unexpected.
 	 */
 	@Test
 	public void testHashCode() throws CoreException {

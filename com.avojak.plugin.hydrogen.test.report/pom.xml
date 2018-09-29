@@ -33,10 +33,13 @@
 								<exclude>**/*Factory.*</exclude>
 								<!-- Exclude adaptor classes -->
 								<exclude>**/*Adapter.*</exclude>
+								<!-- Exclude wrapper classes -->
+								<exclude>**/*Wrapper.*</exclude>
 								<!-- Exclude UI classes which cannot be easily tested -->
 								<exclude>**/HydrogenPreferencePage.*</exclude>
 								<exclude>**/GeneralLaunchConfigurationTab.*</exclude>
 								<exclude>**/HydrogenLaunchConfigurationTab.*</exclude>
+								<exclude>**/HydrogenLaunchConfigurationTab$*.class</exclude>
 								<exclude>**/PgLaunchConfigurationTab.*</exclude>
 								<exclude>**/TcpLaunchConfigurationTab.*</exclude>
 								<exclude>**/WebLaunchConfigurationTab.*</exclude>

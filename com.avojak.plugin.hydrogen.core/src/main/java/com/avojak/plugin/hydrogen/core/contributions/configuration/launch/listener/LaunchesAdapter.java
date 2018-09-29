@@ -15,6 +15,7 @@ public abstract class LaunchesAdapter implements ILaunchesListener2 {
 	 */
 	@Override
 	public void launchesRemoved(final ILaunch[] launches) {
+		// Empty default implementation
 	}
 
 	/**
@@ -22,6 +23,7 @@ public abstract class LaunchesAdapter implements ILaunchesListener2 {
 	 */
 	@Override
 	public void launchesAdded(final ILaunch[] launches) {
+		// Empty default implementation
 	}
 
 	/**
@@ -29,6 +31,7 @@ public abstract class LaunchesAdapter implements ILaunchesListener2 {
 	 */
 	@Override
 	public void launchesChanged(final ILaunch[] launches) {
+		// Empty default implementation
 	}
 
 	/**
@@ -36,6 +39,7 @@ public abstract class LaunchesAdapter implements ILaunchesListener2 {
 	 */
 	@Override
 	public void launchesTerminated(final ILaunch[] launches) {
+		// Empty default implementation
 	}
 
 }

@@ -47,6 +47,15 @@ public class TcpServerArgumentsBuilderTest {
 	}
 
 	/**
+	 * Tests that the deep copy constructor throws an exception when the old
+	 * arguments are null.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testDeepCopyConstructor_NullArguments() {
+		new TcpServerArgumentsBuilder(null);
+	}
+
+	/**
 	 * Tests the deep copy constructor.
 	 */
 	@Test
@@ -118,8 +127,8 @@ public class TcpServerArgumentsBuilderTest {
 	}
 
 	/**
-	 * Tests that {@link TcpServerArgumentsBuilder#withShutdownUrl(String)}
-	 * throws an exception when the given URL is {@code null}.
+	 * Tests that {@link TcpServerArgumentsBuilder#withShutdownUrl(String)} throws
+	 * an exception when the given URL is {@code null}.
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testWithShutdownUrl_NullUrl() {
@@ -127,8 +136,8 @@ public class TcpServerArgumentsBuilderTest {
 	}
 
 	/**
-	 * Tests that {@link TcpServerArgumentsBuilder#withShutdownUrl(String)}
-	 * throws an exception when the given URL is empty.
+	 * Tests that {@link TcpServerArgumentsBuilder#withShutdownUrl(String)} throws
+	 * an exception when the given URL is empty.
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testWithShutdownUrl_EmptyUrl() {
