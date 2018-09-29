@@ -183,7 +183,15 @@ public class GeneralLaunchConfigurationTab extends HydrogenLaunchConfigurationTa
 			return false;
 		}
 
-		final boolean isValid = isDirectory && isReadable && isWritable;
+		// Verify that at least one server is selected for launch
+		final boolean areAnyServersSelected = launchWebServerButton.getSelection()
+				|| launchTcpServerButton.getSelection() || launchPgServerButton.getSelection();
+		if (!areAnyServersSelected) {
+			setErrorMessage("At least one server must be selected for launch"); //$NON-NLS-1$
+			return false;
+		}
+
+		final boolean isValid = isDirectory && isReadable && isWritable && areAnyServersSelected;
 
 		// If valid, clear any error messages
 		if (isValid) {
