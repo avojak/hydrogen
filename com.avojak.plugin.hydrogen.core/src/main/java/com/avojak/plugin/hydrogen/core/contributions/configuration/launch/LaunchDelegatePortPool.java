@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.factory.ServerSocketFactory;
+import com.avojak.plugin.hydrogen.core.factory.ServerSocketFactory;
 import com.avojak.plugin.hydrogen.core.logging.HydrogenLoggerFactory;
 import com.avojak.plugin.hydrogen.core.logging.IHydrogenLogger;
 

@@ -1,4 +1,4 @@
-package com.avojak.plugin.hydrogen.core.contributions.configuration.launch.factory;
+package com.avojak.plugin.hydrogen.core.factory;
 
 import org.eclipse.jdt.launching.VMRunnerConfiguration;
 

@@ -1,6 +1,7 @@
 package com.avojak.plugin.hydrogen.core.contributions.configuration.launch;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Optional;
@@ -15,14 +16,11 @@ import org.eclipse.jdt.launching.IVMInstall;
 import org.eclipse.jdt.launching.IVMRunner;
 import org.eclipse.jdt.launching.VMRunnerConfiguration;
 
-import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.factory.FileFactory;
-import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.factory.ServerSocketFactory;
-import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.factory.VMRunnerConfigurationFactory;
 import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.listener.HydrogenLaunchListener;
-import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.wrapper.DebugPluginWrapper;
-import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.wrapper.HydrogenActivatorWrapper;
-import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.wrapper.JavaRuntimeWrapper;
 import com.avojak.plugin.hydrogen.core.contributions.preferencepage.PreferenceConstants;
+import com.avojak.plugin.hydrogen.core.factory.FileFactory;
+import com.avojak.plugin.hydrogen.core.factory.ServerSocketFactory;
+import com.avojak.plugin.hydrogen.core.factory.VMRunnerConfigurationFactory;
 import com.avojak.plugin.hydrogen.core.h2.model.ServerOption;
 import com.avojak.plugin.hydrogen.core.h2.model.arguments.PgServerArguments;
 import com.avojak.plugin.hydrogen.core.h2.model.arguments.PgServerArgumentsBuilder;
@@ -34,6 +32,10 @@ import com.avojak.plugin.hydrogen.core.h2.model.arguments.WebServerArguments;
 import com.avojak.plugin.hydrogen.core.h2.model.arguments.WebServerArgumentsBuilder;
 import com.avojak.plugin.hydrogen.core.logging.HydrogenLoggerFactory;
 import com.avojak.plugin.hydrogen.core.logging.IHydrogenLogger;
+import com.avojak.plugin.hydrogen.core.util.EmbeddedExecutableLocator;
+import com.avojak.plugin.hydrogen.core.wrapper.DebugPluginWrapper;
+import com.avojak.plugin.hydrogen.core.wrapper.HydrogenActivatorWrapper;
+import com.avojak.plugin.hydrogen.core.wrapper.JavaRuntimeWrapper;
 
 /**
  * The Hydrogen launch configuration delegate.
@@ -48,6 +50,7 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 	private static final String MAIN_SERVER_CLASS = "org.h2.tools.Server"; //$NON-NLS-1$
 	private static final String LAUNCH_HEADLESS = "-Djava.awt.headless=true"; //$NON-NLS-1$
 
+	private static final String EMBEDDED_EXECUTABLE_NOT_FOUND_ERROR = "The embedded H2 executable could not be found"; //$NON-NLS-1$
 	private static final String UNSET_EXECUTABLE_ERROR = "The executable location has not yet been set. " //$NON-NLS-1$
 			+ "Update the Hydrogen preferences and select the H2 executable before reattempting the launch."; //$NON-NLS-1$
 	private static final String EXECUTABLE_NOT_FILE_ERROR = "The specified H2 executable is not a file. " //$NON-NLS-1$
@@ -63,6 +66,7 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 	private final FileFactory fileFactory;
 	private final VMRunnerConfigurationFactory vmRunnerConfigurationFactory;
 	private final ProgramArgumentsFactory programArgumentsFactory;
+	private final EmbeddedExecutableLocator executableLocator;
 	private final LaunchDelegatePortPool portPool;
 
 	/**
@@ -70,7 +74,7 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 	 */
 	public HydrogenLaunchConfigurationDelegate() {
 		this(new JavaRuntimeWrapper(), new DebugPluginWrapper(), new HydrogenActivatorWrapper(), new FileFactory(),
-				new VMRunnerConfigurationFactory(), new ProgramArgumentsFactory(),
+				new VMRunnerConfigurationFactory(), new ProgramArgumentsFactory(), new EmbeddedExecutableLocator(),
 				new LaunchDelegatePortPool(new LaunchDelegatePortAvailabilityChecker(new ServerSocketFactory()),
 						new ServerSocketFactory()));
 	}
@@ -90,19 +94,23 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 	 *            The {@link VMRunnerConfigurationFactory}.
 	 * @param programArgumentsFactory
 	 *            The {@link ProgramArgumentsFactory}.
+	 * @param executableLocator
+	 *            The {@link EmbeddedExecutableLocator}.
 	 * @param portPool
 	 *            The {@link LaunchDelegatePortPool}.
 	 */
 	public HydrogenLaunchConfigurationDelegate(final JavaRuntimeWrapper javaRuntimeWrapper,
 			final DebugPluginWrapper debugPluginWrapper, final HydrogenActivatorWrapper hydrogenActivatorWrapper,
 			final FileFactory fileFactory, final VMRunnerConfigurationFactory vmRunnerConfigurationFactory,
-			final ProgramArgumentsFactory programArgumentsFactory, final LaunchDelegatePortPool portPool) {
+			final ProgramArgumentsFactory programArgumentsFactory, final EmbeddedExecutableLocator executableLocator,
+			final LaunchDelegatePortPool portPool) {
 		this.javaRuntimeWrapper = javaRuntimeWrapper;
 		this.debugPluginWrapper = debugPluginWrapper;
 		this.hydrogenActivatorWrapper = hydrogenActivatorWrapper;
 		this.fileFactory = fileFactory;
 		this.vmRunnerConfigurationFactory = vmRunnerConfigurationFactory;
 		this.programArgumentsFactory = programArgumentsFactory;
+		this.executableLocator = executableLocator;
 		this.portPool = portPool;
 		getLaunchManager().addLaunchListener(new HydrogenLaunchListener(portPool));
 	}
@@ -124,11 +132,27 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 		final IVMInstall vm = verifyVMInstall(configuration);
 		final IVMRunner runner = vm.getVMRunner(mode);
 
-		final String executablePreference = hydrogenActivatorWrapper.getDefault().getPreferenceStore()
-				.getString(PreferenceConstants.P_EXECUTABLE);
-		validateExecutablePreference(executablePreference);
-		final File executable = fileFactory.create(executablePreference);
+		final boolean runExternalPreference = hydrogenActivatorWrapper.getDefault().getPreferenceStore()
+				.getBoolean(PreferenceConstants.P_RUN_EXTERNAL);
+		final String externalExecutablePreference = hydrogenActivatorWrapper.getDefault().getPreferenceStore()
+				.getString(PreferenceConstants.P_EXT_EXE_PATH);
+
+		File executable = null;
+		if (runExternalPreference) {
+			validateExecutablePreference(externalExecutablePreference);
+			executable = fileFactory.create(externalExecutablePreference);
+		} else {
+			try {
+				executable = fileFactory.create(executableLocator.locate());
+			} catch (final FileNotFoundException e) {
+				abort(EMBEDDED_EXECUTABLE_NOT_FOUND_ERROR, e, 0);
+			}
+		}
+
 		validateExecutable(executable);
+
+		// TODO: Should the executable be copied to a temp location instead of running
+		// from within the bundle?
 
 		final String workingDirectory = executable.getParent();
 		LOGGER.debug("Working directory: " + workingDirectory); //$NON-NLS-1$

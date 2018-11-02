@@ -3,7 +3,7 @@ package com.avojak.plugin.hydrogen.core.contributions.configuration.launch;
 import java.io.IOException;
 import java.net.ServerSocket;
 
-import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.factory.ServerSocketFactory;
+import com.avojak.plugin.hydrogen.core.factory.ServerSocketFactory;
 
 /**
  * <p>

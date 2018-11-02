@@ -37,13 +37,10 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.avojak.plugin.hydrogen.core.HydrogenActivator;
 import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.HydrogenLaunchConfigurationDelegate;
 import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.LaunchDelegatePortPool;
-import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.factory.FileFactory;
-import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.factory.VMRunnerConfigurationFactory;
 import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.listener.HydrogenLaunchListener;
-import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.wrapper.DebugPluginWrapper;
-import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.wrapper.HydrogenActivatorWrapper;
-import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.wrapper.JavaRuntimeWrapper;
 import com.avojak.plugin.hydrogen.core.contributions.preferencepage.PreferenceConstants;
+import com.avojak.plugin.hydrogen.core.factory.FileFactory;
+import com.avojak.plugin.hydrogen.core.factory.VMRunnerConfigurationFactory;
 import com.avojak.plugin.hydrogen.core.h2.model.ServerOption;
 import com.avojak.plugin.hydrogen.core.h2.model.arguments.HydrogenRuntimeArguments;
 import com.avojak.plugin.hydrogen.core.h2.model.arguments.PgServerArguments;
@@ -55,6 +52,10 @@ import com.avojak.plugin.hydrogen.core.h2.model.arguments.TcpServerArgumentsBuil
 import com.avojak.plugin.hydrogen.core.h2.model.arguments.WebServerArguments;
 import com.avojak.plugin.hydrogen.core.h2.model.arguments.WebServerArgumentsBuilder;
 import com.avojak.plugin.hydrogen.core.logging.HydrogenLoggerFactory;
+import com.avojak.plugin.hydrogen.core.util.EmbeddedExecutableLocator;
+import com.avojak.plugin.hydrogen.core.wrapper.DebugPluginWrapper;
+import com.avojak.plugin.hydrogen.core.wrapper.HydrogenActivatorWrapper;
+import com.avojak.plugin.hydrogen.core.wrapper.JavaRuntimeWrapper;
 
 /**
  * Test class for {@link HydrogenLaunchConfigurationDelegate}.
@@ -123,6 +124,9 @@ public class HydrogenLaunchConfigurationDelegateTest {
 	private PgServerArguments pgServerArguments;
 
 	@Mock
+	private EmbeddedExecutableLocator executableLocator;
+
+	@Mock
 	private LaunchDelegatePortPool portPool;
 
 	@Mock
@@ -170,7 +174,7 @@ public class HydrogenLaunchConfigurationDelegateTest {
 		when(hydrogenActivatorWrapper.getDefault()).thenReturn(hydrogenActivator);
 		when(hydrogenActivator.getPreferenceStore()).thenReturn(preferenceStore);
 		// Mock the preference store
-		when(preferenceStore.getString(PreferenceConstants.P_EXECUTABLE)).thenReturn(executablePathname);
+		when(preferenceStore.getString(PreferenceConstants.P_EXT_EXE_PATH)).thenReturn(executablePathname);
 		// Mock the executable
 		when(fileFactory.create(executablePathname)).thenReturn(executable);
 		when(executable.isFile()).thenReturn(true);
@@ -205,11 +209,14 @@ public class HydrogenLaunchConfigurationDelegateTest {
 		// Mock the Hydrogen runtime arguments
 		when(programArguments.getArguments()).thenReturn(runtimeArguments);
 		when(runtimeArguments.getArguments()).thenReturn(runtimeArgumentsList);
+		// Mock the embedded executable locator
+		when(executableLocator.locate()).thenReturn(executablePathname);
 		// Mock the port pool
 		when(portPool.isPortFree(Matchers.anyInt())).thenReturn(true);
 
 		delegate = new HydrogenLaunchConfigurationDelegate(javaRuntimeWrapper, debugPluginWrapper,
-				hydrogenActivatorWrapper, fileFactory, vmRunnerConfigurationFactory, programArgumentsFactory, portPool);
+				hydrogenActivatorWrapper, fileFactory, vmRunnerConfigurationFactory, programArgumentsFactory,
+				executableLocator, portPool);
 	}
 
 	/**
@@ -245,11 +252,13 @@ public class HydrogenLaunchConfigurationDelegateTest {
 	}
 
 	/**
-	 * Tests that the launch aborts if the executable preference is null.
+	 * Tests that the launch aborts if the external executable path preference is
+	 * null.
 	 */
 	@Test
-	public void testLaunch_NullExecutablePreference() {
-		when(preferenceStore.getString(PreferenceConstants.P_EXECUTABLE)).thenReturn(null);
+	public void testLaunch_NullExecutablePathPreference() {
+		when(preferenceStore.getBoolean(PreferenceConstants.P_RUN_EXTERNAL)).thenReturn(true);
+		when(preferenceStore.getString(PreferenceConstants.P_EXT_EXE_PATH)).thenReturn(null);
 
 		try {
 			delegate.launch(launchConfiguration, ILaunchManager.RUN_MODE, launch, progressMonitor);
@@ -264,7 +273,8 @@ public class HydrogenLaunchConfigurationDelegateTest {
 	 */
 	@Test
 	public void testLaunch_EmptyExecutablePreference() {
-		when(preferenceStore.getString(PreferenceConstants.P_EXECUTABLE)).thenReturn(" ");
+		when(preferenceStore.getBoolean(PreferenceConstants.P_RUN_EXTERNAL)).thenReturn(true);
+		when(preferenceStore.getString(PreferenceConstants.P_EXT_EXE_PATH)).thenReturn(" ");
 
 		try {
 			delegate.launch(launchConfiguration, ILaunchManager.RUN_MODE, launch, progressMonitor);

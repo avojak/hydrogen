@@ -4,9 +4,9 @@
 .project
 .settings/
 
+com.avojak.plugin.hydrogen.lib/target/*
 com.avojak.plugin.hydrogen.core/target/*
 com.avojak.plugin.hydrogen.feature/target/*
 com.avojak.plugin.hydrogen.test/target/*
-com.avojak.plugin.hydrogen.test.dependencies/target/*
 com.avojak.plugin.hydrogen.test.report/target/*
 com.avojak.plugin.hydrogen.site/target/*

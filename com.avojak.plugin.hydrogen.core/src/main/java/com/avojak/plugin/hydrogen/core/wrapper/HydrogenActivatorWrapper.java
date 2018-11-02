@@ -1,4 +1,4 @@
-package com.avojak.plugin.hydrogen.core.contributions.configuration.launch.wrapper;
+package com.avojak.plugin.hydrogen.core.wrapper;
 
 import com.avojak.plugin.hydrogen.core.HydrogenActivator;
 

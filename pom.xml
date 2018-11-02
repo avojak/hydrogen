@@ -267,6 +267,7 @@
 	</profiles>
 	
 	<modules>
+		<module>${project.groupId}.hydrogen.lib</module>
 		<module>${project.groupId}.hydrogen.core</module>
 		<module>${project.groupId}.hydrogen.test</module>
 		<module>${project.groupId}.hydrogen.test.report</module>

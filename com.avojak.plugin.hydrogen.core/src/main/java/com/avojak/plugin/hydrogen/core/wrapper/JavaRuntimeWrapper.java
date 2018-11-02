@@ -1,4 +1,4 @@
-package com.avojak.plugin.hydrogen.core.contributions.configuration.launch.wrapper;
+package com.avojak.plugin.hydrogen.core.wrapper;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;

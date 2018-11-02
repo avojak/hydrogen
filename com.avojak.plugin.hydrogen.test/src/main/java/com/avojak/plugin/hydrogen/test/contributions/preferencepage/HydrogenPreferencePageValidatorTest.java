@@ -8,7 +8,6 @@ import java.nio.file.FileSystem;
 import java.nio.file.Path;
 
 import org.eclipse.jface.preference.FileFieldEditor;
-import org.eclipse.jface.preference.StringFieldEditor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -55,132 +54,67 @@ public class HydrogenPreferencePageValidatorTest {
 
 	/**
 	 * Tests that
-	 * {@link HydrogenPreferencePageValidator#isValuePresent(StringFieldEditor)}
-	 * throws an exception when the given {@link StringFieldEditor} is
-	 * {@code null}.
-	 */
-	@Test(expected = IllegalArgumentException.class)
-	public void testIsValuePresent_NullStringFieldEditor() {
-		new HydrogenPreferencePageValidator(fileSystem, fileValidator).isValuePresent((StringFieldEditor) null);
-	}
-
-	/**
-	 * Tests that
-	 * {@link HydrogenPreferencePageValidator#isValuePresent(StringFieldEditor)}
-	 * returns {@code false} when the given {@link StringFieldEditor} contains a
-	 * {@code null} value.
+	 * {@link HydrogenPreferencePageValidator#validateExecutableFile(String)}
+	 * returns {@code false} when the given location is {@code null}.
 	 */
 	@Test
-	public void testIsValuePresent_NullValue() {
-		when(editor.getStringValue()).thenReturn(null);
-		assertFalse(new HydrogenPreferencePageValidator(fileSystem, fileValidator).isValuePresent(editor));
+	public void testValidateExecutableFile_NullFileLocation() {
+		assertFalse(new HydrogenPreferencePageValidator(fileSystem, fileValidator).validateExecutableFile(null));
 	}
 
 	/**
 	 * Tests that
-	 * {@link HydrogenPreferencePageValidator#isValuePresent(StringFieldEditor)}
-	 * returns {@code false} when the given {@link StringFieldEditor} contains
-	 * an empty value.
+	 * {@link HydrogenPreferencePageValidator#validateExecutableFile(String)}
+	 * returns {@code false} when the given location is an empty value.
 	 */
 	@Test
-	public void testIsValuePresent_EmptyValue() {
-		when(editor.getStringValue()).thenReturn(" ");
-		assertFalse(new HydrogenPreferencePageValidator(fileSystem, fileValidator).isValuePresent(editor));
+	public void testValidateExecutableFile_EmptyLocation() {
+		assertFalse(new HydrogenPreferencePageValidator(fileSystem, fileValidator).validateExecutableFile(" "));
 	}
 
 	/**
 	 * Tests that
-	 * {@link HydrogenPreferencePageValidator#isValuePresent(StringFieldEditor)}
-	 * returns {@code true} when the given {@link StringFieldEditor} contains an
-	 * non-empty and non-null {@code String} value.
-	 */
-	@Test
-	public void testIsValuePresent() {
-		when(editor.getStringValue()).thenReturn("mock");
-		assertTrue(new HydrogenPreferencePageValidator(fileSystem, fileValidator).isValuePresent(editor));
-	}
-
-	/**
-	 * Tests that
-	 * {@link HydrogenPreferencePageValidator#validateExecutableFile(FileFieldEditor)}
-	 * throws an exception when the given {@link FileFieldEditor} is
-	 * {@code null}.
-	 */
-	@Test(expected = IllegalArgumentException.class)
-	public void testValidateExecutableFile_NullFileFieldEditor() {
-		new HydrogenPreferencePageValidator(fileSystem, fileValidator).validateExecutableFile((FileFieldEditor) null);
-	}
-
-	/**
-	 * Tests that
-	 * {@link HydrogenPreferencePageValidator#validateExecutableFile(FileFieldEditor)}
-	 * returns {@code false} when the given {@link FileFieldEditor} contains a
-	 * {@code null} value.
-	 */
-	@Test
-	public void testValidateExecutableFile_NullValue() {
-		when(editor.getStringValue()).thenReturn(null);
-		assertFalse(new HydrogenPreferencePageValidator(fileSystem, fileValidator).validateExecutableFile(editor));
-	}
-
-	/**
-	 * Tests that
-	 * {@link HydrogenPreferencePageValidator#validateExecutableFile(FileFieldEditor)}
-	 * returns {@code false} when the given {@link FileFieldEditor} contains an
-	 * empty value.
-	 */
-	@Test
-	public void testValidateExecutableFile_EmptyValue() {
-		when(editor.getStringValue()).thenReturn(" ");
-		assertFalse(new HydrogenPreferencePageValidator(fileSystem, fileValidator).validateExecutableFile(editor));
-	}
-
-	/**
-	 * Tests that
-	 * {@link HydrogenPreferencePageValidator#validateExecutableFile(FileFieldEditor)}
+	 * {@link HydrogenPreferencePageValidator#validateExecutableFile(String)}
 	 * returns {@code false} when the given {@link FileFieldEditor} contains an
 	 * value which refers to a directory.
 	 */
 	@Test
 	public void testValidateExecutableFile_NotFile() {
-		when(editor.getStringValue()).thenReturn("mock");
 		when(fileSystem.getPath("mock")).thenReturn(path);
 		when(fileValidator.isDirectory(path)).thenReturn(true);
 		when(fileValidator.isExecutable(path)).thenReturn(true);
 
-		assertFalse(new HydrogenPreferencePageValidator(fileSystem, fileValidator).validateExecutableFile(editor));
+		assertFalse(new HydrogenPreferencePageValidator(fileSystem, fileValidator).validateExecutableFile("mock"));
 	}
 
 	/**
 	 * Tests that
-	 * {@link HydrogenPreferencePageValidator#validateExecutableFile(FileFieldEditor)}
+	 * {@link HydrogenPreferencePageValidator#validateExecutableFile(String)}
 	 * returns {@code false} when the given {@link FileFieldEditor} contains an
 	 * value which refers to a non-executable file.
 	 */
 	@Test
 	public void testValidateExecutableFile_NotExecutable() {
-		when(editor.getStringValue()).thenReturn("mock");
 		when(fileSystem.getPath("mock")).thenReturn(path);
 		when(fileValidator.isDirectory(path)).thenReturn(false);
 		when(fileValidator.isExecutable(path)).thenReturn(false);
 
-		assertFalse(new HydrogenPreferencePageValidator(fileSystem, fileValidator).validateExecutableFile(editor));
+		assertFalse(new HydrogenPreferencePageValidator(fileSystem, fileValidator).validateExecutableFile("mock"));
 	}
 
 	/**
 	 * Tests that
-	 * {@link HydrogenPreferencePageValidator#validateExecutableFile(FileFieldEditor)}
-	 * returns {@code true} when the given {@link FileFieldEditor} contains an
-	 * value which refers to an executable file.
+	 * {@link HydrogenPreferencePageValidator#validateExecutableFile(String)}
+	 * returns {@code true} when the given {@link FileFieldEditor} contains an value
+	 * which refers to an executable file.
 	 */
 	@Test
 	public void testValidateExecutableFile() {
-		when(editor.getStringValue()).thenReturn("mock");
 		when(fileSystem.getPath("mock")).thenReturn(path);
 		when(fileValidator.isDirectory(path)).thenReturn(false);
 		when(fileValidator.isExecutable(path)).thenReturn(true);
 
-		assertTrue(new HydrogenPreferencePageValidator(fileSystem, fileValidator).validateExecutableFile(editor));
+		assertTrue(new HydrogenPreferencePageValidator(fileSystem, fileValidator).validateExecutableFile("mock"));
 	}
 
 }

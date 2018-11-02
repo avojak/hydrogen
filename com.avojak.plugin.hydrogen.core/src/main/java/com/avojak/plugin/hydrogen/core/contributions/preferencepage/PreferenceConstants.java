@@ -8,8 +8,13 @@ package com.avojak.plugin.hydrogen.core.contributions.preferencepage;
 public class PreferenceConstants {
 
 	/**
-	 * Preference which represents the absolute path to the H2 executable.
+	 * Preference which represents the absolute path to the external H2 executable.
 	 */
-	public static final String P_EXECUTABLE = "executablePreference"; //$NON-NLS-1$
+	public static final String P_EXT_EXE_PATH = "externalExecutablePath"; //$NON-NLS-1$
+
+	/**
+	 * Preference which represents whether or not to run an external H2 executable.
+	 */
+	public static final String P_RUN_EXTERNAL = "runExternal"; //$NON-NLS-1$
 
 }
