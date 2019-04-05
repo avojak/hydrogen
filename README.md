@@ -10,9 +10,8 @@ These instructions will get you setup to use Hydrogen in your local Eclipse inst
 
 ### Prerequisites
 
- - Eclipse Neon (or later)
- - Java 7+
- - The H2 JAR is not packaged with Hydrogen and must be [downloaded](http://www.h2database.com/html/download.html) separately
+ - Eclipse Oxygen (or later)
+ - Java 8+
 
 ### Installing
 
@@ -24,7 +23,11 @@ End with an example of getting some data out of the system or using it for a lit
 
 ### Configuration
 
-Configuring Hydrogen
+TODO: Configuring Hydrogen
+
+### Updating H2
+
+TODO: Updating H2
 
 ## Building
 
@@ -39,6 +42,14 @@ An archived Eclipse update site will be generated in the `hydrogen.site` module:
 ```
 hydrogen/hydrogen.site/target/hydrogen.site-${version}.zip
 ```
+
+### Eclipse Run Configuration
+
+You will need a Run Configuration to test Hydrogen from within Eclipse during development.
+
+1. Create a new Run Configuration of type Eclipse Application
+2. In the Main tab, under Program to Run, select the radio button for "Run an application"
+	a. If it is not already selected in the dropdown, select `org.eclipse.ui.ide.workbench`
 
 ## Running the tests
 

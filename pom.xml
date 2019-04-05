@@ -72,8 +72,26 @@
 				<version>${tycho.version}</version>
 				<configuration>
 					<resolver>p2</resolver>
+					<target>
+						<artifact>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>${project.groupId}.hydrogen.target</artifactId>
+							<version>${project.version}</version>
+						</artifact>
+					</target>
+					<!-- TODO: Do I still need this? -->
 					<pomDependencies>consider</pomDependencies>
 					<ignoreTychoRepositories>true</ignoreTychoRepositories>
+					<dependency-resolution>
+						<!-- https://stackoverflow.com/a/49277372/3300205 -->
+						<extraRequirements>
+							<requirement>
+								<type>eclipse-plugin</type>
+								<id>org.hamcrest</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+						</extraRequirements>
+					</dependency-resolution>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -96,6 +114,60 @@
 						<argLine>${tycho.test.jvmArgs} ${os.jvm.flags} ${jacoco.agent.argLine}</argLine>
 						<!-- kill test JVM if tests take more than 1 minute (60 seconds) to finish -->
 						<forkedProcessTimeoutInSeconds>60</forkedProcessTimeoutInSeconds>
+					</configuration>
+				</plugin>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-clean-plugin</artifactId>
+										<versionRange>[2.5,)</versionRange>
+										<goals>
+											<goal>clean</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.eclipse.tycho</groupId>
+										<artifactId>tycho-packaging-plugin</artifactId>
+										<versionRange>[0.26.0,)</versionRange>
+										<goals>
+											<goal>build-qualifier-aggregator</goal>
+											<goal>build-qualifier</goal>
+											<goal>validate-id</goal>
+											<goal>validate-version</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.eclipse.tycho</groupId>
+										<artifactId>tycho-compiler-plugin</artifactId>
+										<versionRange>[0.26.0,)</versionRange>
+										<goals>
+											<goal>compile</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin>
 			</plugins>
@@ -273,6 +345,7 @@
 		<module>${project.groupId}.hydrogen.test.report</module>
 		<module>${project.groupId}.hydrogen.feature</module>
 		<module>${project.groupId}.hydrogen.site</module>
+		<module>${project.groupId}.hydrogen.target</module>
 	</modules>
 	
 	<distributionManagement>

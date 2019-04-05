@@ -1,11 +1,14 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: hydrogen Test Fragment
-Bundle-SymbolicName: com.avojak.plugin.hydrogen.test
+Bundle-SymbolicName: com.avojak.plugin.hydrogen.test;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Fragment-Host: com.avojak.plugin.hydrogen.core;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Bundle-ClassPath: lib/guava-19.0.jar,
- lib/mockito-all-1.9.5.jar,
- lib/swt-unit-1.0.jar,
+Bundle-ClassPath: lib/swt-unit-1.0.jar,
  .
+Require-Bundle: org.junit;bundle-version="4.12.0",
+ com.google.guava;bundle-version="21.0.0",
+ com.google.guava.source;bundle-version="21.0.0",
+ org.mockito;bundle-version="1.9.5",
+ org.mockito.source;bundle-version="1.9.5"

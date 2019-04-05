@@ -4,13 +4,10 @@ Bundle-Name: Hydrogen Core
 Bundle-SymbolicName: com.avojak.plugin.hydrogen.core;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: com.avojak.plugin.hydrogen.core.HydrogenActivator
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
- org.eclipse.debug.core,
- org.eclipse.debug.ui,
- org.eclipse.jdt.launching,
- org.eclipse.jdt.core,
- org.junit
+Require-Bundle: org.eclipse.ui;bundle-version="3.109.0",
+ org.eclipse.core.runtime;bundle-version="3.13.0",
+ org.eclipse.debug.ui;bundle-version="3.12.50",
+ org.eclipse.jdt.launching;bundle-version="3.9.100"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .
