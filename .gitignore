@@ -10,3 +10,5 @@ com.avojak.plugin.hydrogen.feature/target/*
 com.avojak.plugin.hydrogen.test/target/*
 com.avojak.plugin.hydrogen.test.report/target/*
 com.avojak.plugin.hydrogen.site/target/*
+
+target/
