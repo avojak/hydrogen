@@ -20,7 +20,9 @@ public class JarInputStreamFactory {
 	 *            The path to the JAR file.
 	 * @return The non-null {@link JarInputStream}.
 	 * @throws FileNotFoundException
+	 *             If the given path refers to a non-existent file.
 	 * @throws IOException
+	 *             If an I/O error occurs.
 	 */
 	public JarInputStream create(final String jarPath) throws FileNotFoundException, IOException {
 		return new JarInputStream(new FileInputStream(jarPath));

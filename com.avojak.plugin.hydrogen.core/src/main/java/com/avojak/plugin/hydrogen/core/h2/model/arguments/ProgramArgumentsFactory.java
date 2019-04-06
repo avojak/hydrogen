@@ -12,7 +12,8 @@ public class ProgramArgumentsFactory {
 	/**
 	 * Creates and returns a new instance of {@link ProgramArguments}.
 	 *
-	 * @param configuration The {@link ILaunchConfiguration}. Cannot be null.
+	 * @param configuration
+	 *            The {@link ILaunchConfiguration}. Cannot be null.
 	 *
 	 * @return The non-null {@link ProgramArguments}.
 	 */
@@ -27,9 +28,12 @@ public class ProgramArgumentsFactory {
 	/**
 	 * Creates and returns a new instance of {@link ProgramArguments}.
 	 *
-	 * @param webServerArguments The {@link WebServerArguments}.
-	 * @param tcpServerArguments The {@lik TcpServerArguments}.
-	 * @param pgServerArguments The {@link PgServerArguments}.
+	 * @param webServerArguments
+	 *            The {@link WebServerArguments}.
+	 * @param tcpServerArguments
+	 *            The {@link TcpServerArguments}.
+	 * @param pgServerArguments
+	 *            The {@link PgServerArguments}.
 	 * @return The non-null {@link ProgramArguments}.
 	 */
 	public ProgramArguments create(final WebServerArguments webServerArguments,

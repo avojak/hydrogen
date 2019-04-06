@@ -13,8 +13,9 @@ public class FileValidator {
 	/**
 	 * Returns whether or not the given {@link Path} refers to a directory.
 	 *
-	 * @param path The {@link Path}. Cannot be null.
-	 * @return {@code true} if the {@Path} refers to a directory, otherwise
+	 * @param path
+	 *            The {@link Path}. Cannot be null.
+	 * @return {@code true} if the {@link Path} refers to a directory, otherwise
 	 *         {@code false}.
 	 */
 	public boolean isDirectory(final Path path) {
@@ -28,9 +29,10 @@ public class FileValidator {
 	 * Returns whether or not the given {@link Path} refers to a file which is
 	 * executable.
 	 *
-	 * @param path The {@link Path}. Cannot be null.
-	 * @return {@code true} if the {@Path} refers to a file which is executable,
-	 *         otherwise {@code false}.
+	 * @param path
+	 *            The {@link Path}. Cannot be null.
+	 * @return {@code true} if the {@link Path} refers to a file which is
+	 *         executable, otherwise {@code false}.
 	 */
 	public boolean isExecutable(final Path path) {
 		if (path == null) {
