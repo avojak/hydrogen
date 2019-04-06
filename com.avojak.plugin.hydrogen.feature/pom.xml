@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>hydrogen</artifactId>
 		<groupId>com.avojak.plugin</groupId>
-		<version>1.0.0</version>
+		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>com.avojak.plugin.hydrogen.feature</artifactId>
 	<packaging>eclipse-feature</packaging>
