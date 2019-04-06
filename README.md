@@ -55,11 +55,19 @@ The latest release will be available at: https://p2.avojak.com/content/hydrogen/
 
 ### Configuration
 
-TODO: Configuring Hydrogen
+To configure the launch configuration, click on the down arrow next to the toolbar icon and select "H2 Launch Configurations..."
+
+[[https://github.com/avojak/hydrogen/blob/master/img/toolbar.png|alt=toolbar]]
+
+From the launch configuration dialog, you can create a new launch configuration, and select which servers you would like to run. Each server can be configured with a specific port number, as well as a few other settings.
+
+[[https://github.com/avojak/hydrogen/blob/master/img/launch-config.png|alt=launch-config]]
 
 ### Updating H2
 
-TODO: Updating H2
+Hydrogen is pre-packaged with the H2 JAR, however it can be easily updated if desired. Open the Eclipse preference dialog, and select Hydrogen from the list on the left. By default, the embedded version is selected, however you can browse to a different JAR on the file system as well.
+
+[[https://github.com/avojak/hydrogen/blob/master/img/preferences.png|alt=preferences]]
 
 ## Built With
 
