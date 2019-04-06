@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static org.mockito.Mockito.anyString;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -17,8 +17,8 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.avojak.plugin.hydrogen.core.h2.model.arguments.HydrogenRuntimeArguments;
@@ -226,6 +226,7 @@ public class ProgramArgumentsTest {
 	 * {@link LaunchConfigurationAttributes#START_WEB} attribute is missing.
 	 *
 	 * @throws CoreException
+	 *             Unexpected.
 	 */
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_START_WEB() throws CoreException {
@@ -239,6 +240,7 @@ public class ProgramArgumentsTest {
 	 * {@link LaunchConfigurationAttributes#START_TCP} attribute is missing.
 	 *
 	 * @throws CoreException
+	 *             Unexpected.
 	 */
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_START_TCP() throws CoreException {
@@ -252,6 +254,7 @@ public class ProgramArgumentsTest {
 	 * {@link LaunchConfigurationAttributes#START_PG} attribute is missing.
 	 *
 	 * @throws CoreException
+	 *             Unexpected.
 	 */
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_START_PG() throws CoreException {
@@ -265,6 +268,7 @@ public class ProgramArgumentsTest {
 	 * {@link LaunchConfigurationAttributes#ENABLE_TRACING} attribute is missing.
 	 *
 	 * @throws CoreException
+	 *             Unexpected.
 	 */
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_ENABLE_TRACING() throws CoreException {
@@ -278,6 +282,7 @@ public class ProgramArgumentsTest {
 	 * {@link LaunchConfigurationAttributes#IF_EXISTS} attribute is missing.
 	 *
 	 * @throws CoreException
+	 *             Unexpected.
 	 */
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_IF_EXISTS() throws CoreException {
@@ -291,6 +296,7 @@ public class ProgramArgumentsTest {
 	 * {@link LaunchConfigurationAttributes#WEB_ALLOW_OTHERS} attribute is missing.
 	 *
 	 * @throws CoreException
+	 *             Unexpected.
 	 */
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_WEB_ALLOW_OTHERS() throws CoreException {
@@ -304,6 +310,7 @@ public class ProgramArgumentsTest {
 	 * {@link LaunchConfigurationAttributes#WEB_DAEMON} attribute is missing.
 	 *
 	 * @throws CoreException
+	 *             Unexpected.
 	 */
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_WEB_DAEMON() throws CoreException {
@@ -317,6 +324,7 @@ public class ProgramArgumentsTest {
 	 * {@link LaunchConfigurationAttributes#WEB_SSL} attribute is missing.
 	 *
 	 * @throws CoreException
+	 *             Unexpected.
 	 */
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_WEB_SSL() throws CoreException {
@@ -330,6 +338,7 @@ public class ProgramArgumentsTest {
 	 * {@link LaunchConfigurationAttributes#WEB_BROWSER} attribute is missing.
 	 *
 	 * @throws CoreException
+	 *             Unexpected.
 	 */
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_WEB_BROWSER() throws CoreException {
@@ -343,6 +352,7 @@ public class ProgramArgumentsTest {
 	 * {@link LaunchConfigurationAttributes#WEB_PORT} attribute is missing.
 	 *
 	 * @throws CoreException
+	 *             Unexpected.
 	 */
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_WEB_PORT() throws CoreException {
@@ -356,6 +366,7 @@ public class ProgramArgumentsTest {
 	 * {@link LaunchConfigurationAttributes#TCP_SSL} attribute is missing.
 	 *
 	 * @throws CoreException
+	 *             Unexpected.
 	 */
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_TCP_SSL() throws CoreException {
@@ -369,6 +380,7 @@ public class ProgramArgumentsTest {
 	 * {@link LaunchConfigurationAttributes#TCP_ALLOW_OTHERS} attribute is missing.
 	 *
 	 * @throws CoreException
+	 *             Unexpected.
 	 */
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_TCP_ALLOW_OTHERS() throws CoreException {
@@ -382,6 +394,7 @@ public class ProgramArgumentsTest {
 	 * {@link LaunchConfigurationAttributes#TCP_DAEMON} attribute is missing.
 	 *
 	 * @throws CoreException
+	 *             Unexpected.
 	 */
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_TCP_DAEMON() throws CoreException {
@@ -396,6 +409,7 @@ public class ProgramArgumentsTest {
 	 * missing.
 	 *
 	 * @throws CoreException
+	 *             Unexpected.
 	 */
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_TCP_SHUTDOWN_FORCE() throws CoreException {
@@ -409,6 +423,7 @@ public class ProgramArgumentsTest {
 	 * {@link LaunchConfigurationAttributes#TCP_PORT} attribute is missing.
 	 *
 	 * @throws CoreException
+	 *             Unexpected.
 	 */
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_TCP_PORT() throws CoreException {
@@ -422,6 +437,7 @@ public class ProgramArgumentsTest {
 	 * {@link LaunchConfigurationAttributes#PG_ALLOW_OTHERS} attribute is missing.
 	 *
 	 * @throws CoreException
+	 *             Unexpected.
 	 */
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_PG_ALLOW_OTHERS() throws CoreException {
@@ -435,6 +451,7 @@ public class ProgramArgumentsTest {
 	 * {@link LaunchConfigurationAttributes#PG_DAEMON} attribute is missing.
 	 *
 	 * @throws CoreException
+	 *             Unexpected.
 	 */
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_PG_DAEMON() throws CoreException {
@@ -448,6 +465,7 @@ public class ProgramArgumentsTest {
 	 * {@link LaunchConfigurationAttributes#PG_PORT} attribute is missing.
 	 *
 	 * @throws CoreException
+	 *             Unexpected.
 	 */
 	@Test(expected = IllegalStateException.class)
 	public void testMissingAttribute_PG_PORT() throws CoreException {
@@ -460,6 +478,7 @@ public class ProgramArgumentsTest {
 	 * Tests the constructor when there are no servers configured to start.
 	 * 
 	 * @throws CoreException
+	 *             Unexpected.
 	 */
 	@Test
 	public void testNoServerArguments() throws CoreException {

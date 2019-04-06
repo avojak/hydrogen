@@ -31,9 +31,12 @@ public class H2Tester {
 	}
 
 	/**
-	 *
+	 * Main.
+	 * 
 	 * @param args
+	 *            Program args.
 	 * @throws Exception
+	 *             unexpected.
 	 */
 	public static void main(final String... args) throws Exception {
 		Class.forName(H2_DRIVER_CLASS);

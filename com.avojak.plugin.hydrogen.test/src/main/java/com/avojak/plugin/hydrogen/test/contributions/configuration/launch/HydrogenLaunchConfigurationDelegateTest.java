@@ -158,6 +158,7 @@ public class HydrogenLaunchConfigurationDelegateTest {
 	 * @throws CoreException
 	 *             Unexpected.
 	 * @throws IOException
+	 *             Unexpected.
 	 */
 	@Before
 	public void setup() throws CoreException, IOException {
@@ -331,9 +332,9 @@ public class HydrogenLaunchConfigurationDelegateTest {
 
 	@Test
 	public void testLaunch_NoPortsSpecified() throws CoreException {
-//		when(webServerArguments.getPort()).thenReturn(Optional.empty());
-//		when(tcpServerArguments.getPort()).thenReturn(Optional.empty());
-//		when(pgServerArguments.getPort()).thenReturn(Optional.empty());
+		// when(webServerArguments.getPort()).thenReturn(Optional.empty());
+		// when(tcpServerArguments.getPort()).thenReturn(Optional.empty());
+		// when(pgServerArguments.getPort()).thenReturn(Optional.empty());
 
 		// TODO: Need to handle this case in the code
 	}
