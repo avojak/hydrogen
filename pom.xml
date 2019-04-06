@@ -2,43 +2,43 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<groupId>com.avojak.plugin</groupId>
 	<artifactId>hydrogen</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	
+
 	<name>hydrogen :: parent</name>
 	<description>hydrogen parent</description>
 	<url>https://github.com/avojak/hydrogen</url>
-	
+
 	<licenses>
-        <license>
-            <name>Eclipse Public License - v 2.0</name>
-            <url>https://www.eclipse.org/legal/epl-2.0/</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-    
-    <developers>
-        <developer>
-            <name>Andrew Vojak</name>
-            <id>avojak</id>
-            <url>https://avojak.com</url>
-        </developer>
-    </developers>
-    
-    <scm>
-        <url>git@github.com:avojak/hydrogen.git</url>
-        <connection>scm:git:https://github.com/avojak/hydrogen.git</connection>
-        <developerConnection>scm:git:https://github.com/avojak/hydrogen.git</developerConnection>
-        <tag>HEAD</tag>
-    </scm>
-	
+		<license>
+			<name>Eclipse Public License - v 2.0</name>
+			<url>https://www.eclipse.org/legal/epl-2.0/</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Andrew Vojak</name>
+			<id>avojak</id>
+			<url>https://avojak.com</url>
+		</developer>
+	</developers>
+
+	<scm>
+		<url>git@github.com:avojak/hydrogen.git</url>
+		<connection>scm:git:https://github.com/avojak/hydrogen.git</connection>
+		<developerConnection>scm:git:https://github.com/avojak/hydrogen.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
+
 	<prerequisites>
 		<maven>3.0</maven>
 	</prerequisites>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -49,7 +49,7 @@
 		<jarsigner.version>1.4</jarsigner.version>
 		<jacoco.version>0.8.0</jacoco.version>
 	</properties>
-	
+
 	<build>
 		<plugins>
 			<plugin>
@@ -127,8 +127,10 @@
 					<version>${tycho.version}</version>
 					<configuration>
 						<useUIHarness>false</useUIHarness>
-						<argLine>${tycho.test.jvmArgs} ${os.jvm.flags} ${jacoco.agent.argLine}</argLine>
-						<!-- kill test JVM if tests take more than 1 minute (60 seconds) to finish -->
+						<argLine>${tycho.test.jvmArgs} ${os.jvm.flags}
+							${jacoco.agent.argLine}</argLine>
+						<!-- kill test JVM if tests take more than 1 minute (60 seconds) to 
+							finish -->
 						<forkedProcessTimeoutInSeconds>60</forkedProcessTimeoutInSeconds>
 					</configuration>
 				</plugin>
@@ -138,9 +140,12 @@
 					<version>2.5.3</version>
 					<configuration>
 						<tagNameFormat>v${project.version}</tagNameFormat>
+						<remoteTagging>false</remoteTagging>
+						<suppressCommitBeforeTag>false</suppressCommitBeforeTag>
 					</configuration>
 				</plugin>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -197,7 +202,7 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-	
+
 	<profiles>
 		<profile>
 			<id>macosx</id>
@@ -361,7 +366,7 @@
 			</build>
 		</profile>
 	</profiles>
-	
+
 	<modules>
 		<module>${project.groupId}.hydrogen.core</module>
 		<module>${project.groupId}.hydrogen.lib</module>
@@ -371,17 +376,17 @@
 		<module>${project.groupId}.hydrogen.site</module>
 		<module>${project.groupId}.hydrogen.target</module>
 	</modules>
-	
+
 	<distributionManagement>
 		<snapshotRepository>
-            <id>ossrh</id>
-            <name>OSSRH Snapshot Repository</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh</id>
-            <name>OSSRH Staging Repository</name>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
+			<id>ossrh</id>
+			<name>OSSRH Snapshot Repository</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<name>OSSRH Staging Repository</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
 	</distributionManagement>
 </project>
