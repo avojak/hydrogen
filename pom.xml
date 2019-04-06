@@ -140,8 +140,6 @@
 					<version>2.5.3</version>
 					<configuration>
 						<tagNameFormat>v${project.version}</tagNameFormat>
-						<remoteTagging>false</remoteTagging>
-						<suppressCommitBeforeTag>false</suppressCommitBeforeTag>
 					</configuration>
 				</plugin>
 				<!--This plugin's configuration is used to store Eclipse m2e settings 
