@@ -2,7 +2,7 @@
 <feature
       id="com.avojak.plugin.hydrogen.feature"
       label="Hydrogen"
-      version="1.0.0.qualifier"
+      version="1.0.0"
       provider-name="Andrew Vojak">
 
    <description url="https://avojak.com/projects/hydrogen">
