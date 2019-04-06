@@ -12,24 +12,8 @@ These instructions will get you setup to use Hydrogen in your local Eclipse inst
 
  - Eclipse Oxygen (or later)
  - Java 8+
-
-### Installing
-
-Hydrogen is currently only available from my p2 SNAPSHOT site: 
-
- - [1.0.0-SNAPSHOT](http://p2.avojak.com/snapshot/com.avojak.plugin.hydrogen.site/1.0.0-SNAPSHOT)
-
-End with an example of getting some data out of the system or using it for a little demo
-
-### Configuration
-
-TODO: Configuring Hydrogen
-
-### Updating H2
-
-TODO: Updating H2
-
-## Building
+ 
+### Building
 
 To build Hydrogen in a development environment, simply use the following Maven command:
 
@@ -43,15 +27,7 @@ An archived Eclipse update site will be generated in the `hydrogen.site` module:
 hydrogen/hydrogen.site/target/hydrogen.site-${version}.zip
 ```
 
-### Eclipse Run Configuration
-
-You will need a Run Configuration to test Hydrogen from within Eclipse during development.
-
-1. Create a new Run Configuration of type Eclipse Application
-2. In the Main tab, under Program to Run, select the radio button for "Run an application"
-	a. If it is not already selected in the dropdown, select `org.eclipse.ui.ide.workbench`
-
-## Running the tests
+### Running the tests
 
 The [JUnit](http://junit.org/junit4/) tests can be run via the following Maven command:
 
@@ -60,6 +36,30 @@ mvn clean verify [-Pjacoco]
 ```
 
 The JaCoCo profile will generate code coverage information if used.
+
+### Eclipse Run Configuration
+
+You will need a Run Configuration to test Hydrogen from within Eclipse during development.
+
+1. Create a new Run Configuration of type Eclipse Application
+2. In the Main tab, under Program to Run, select the radio button for "Run an application"
+	a. If it is not already selected in the dropdown, select `org.eclipse.ui.ide.workbench`
+
+## Installing
+
+Hydrogen is currently only available from my p2 repository site (https://p2.avojak.com): 
+
+ - [1.0.0-SNAPSHOT](https://p2.avojak.com/content/hydrogen/snapshots/1.0.0-SNAPSHOT)
+
+The latest release will be available at: https://p2.avojak.com/content/hydrogen/releases/latest
+
+### Configuration
+
+TODO: Configuring Hydrogen
+
+### Updating H2
+
+TODO: Updating H2
 
 ## Built With
 
