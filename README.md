@@ -69,6 +69,43 @@ Hydrogen is pre-packaged with the H2 JAR, however it can be easily updated if de
 
 ![preferences](img/preferences.png)
 
+## Releasing
+
+First, update the following files to drop the `.qualifier` from the version, as they are not automatically updated by the Maven Release Plugin:
+
+* com.avojak.plugin.hydrogen.core/META-INF/MANIFEST.MF
+* com.avojak.plugin.hydrogen.feature/feature.xml
+* com.avojak.plugin.hydrogen.lib/META-INF/MANIFEST.MF
+* com.avojak.plugin.hydrogen.test/META-INF/MANIFEST.MF
+
+Prepare for release:
+
+```console
+$ mvn clean release:clean release:preapre -Dusername=<GitHub Username> -Dpassword=<GitHub Token>
+```
+
+If the preparation fails, simply rollback with `mvn release:rollback`.
+
+Perform the release:
+
+```console
+$ mvn release:perform
+```
+
+When prompted, enter the GPG passphrase.
+
+### Post-Release Cleanup
+
+After a successful release, we need to cleanup and prepare for the next development iteration.
+
+Ensure that the local branches are in sync with the remote:
+
+```console
+$ git fetch; git pull
+```
+
+Update the files mentioned previously to add back the `.qualifier` and update the version accordingly.
+
 ## Built With
 
 * [Maven](https://maven.apache.org/) - Dependency Management
