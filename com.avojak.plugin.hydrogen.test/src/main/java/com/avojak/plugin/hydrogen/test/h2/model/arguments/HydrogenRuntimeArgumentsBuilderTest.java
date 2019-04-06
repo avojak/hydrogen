@@ -14,7 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import com.avojak.plugin.hydrogen.core.h2.model.ServerOption;
 import com.avojak.plugin.hydrogen.core.h2.model.arguments.HydrogenRuntimeArguments;
@@ -28,7 +28,6 @@ import com.avojak.plugin.hydrogen.core.h2.model.arguments.WebServerArguments;
  *
  * @author Andrew Vojak
  */
-@SuppressWarnings("nls")
 @RunWith(MockitoJUnitRunner.class)
 public class HydrogenRuntimeArgumentsBuilderTest {
 

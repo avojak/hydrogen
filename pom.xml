@@ -50,14 +50,6 @@
 		<jacoco.version>0.8.0</jacoco.version>
 	</properties>
 	
-	<repositories>
-		<repository>
-			<id>neon</id>
-			<layout>p2</layout>
-			<url>http://download.eclipse.org/releases/neon</url>
-		</repository>
-	</repositories>
-	
 	<build>
 		<plugins>
 			<plugin>
@@ -79,9 +71,33 @@
 							<version>${project.version}</version>
 						</artifact>
 					</target>
-					<!-- TODO: Do I still need this? -->
-					<pomDependencies>consider</pomDependencies>
-					<ignoreTychoRepositories>true</ignoreTychoRepositories>
+					<environments>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86</arch>
+						</environment>
+					</environments>
 					<dependency-resolution>
 						<!-- https://stackoverflow.com/a/49277372/3300205 -->
 						<extraRequirements>
@@ -339,8 +355,8 @@
 	</profiles>
 	
 	<modules>
-		<module>${project.groupId}.hydrogen.lib</module>
 		<module>${project.groupId}.hydrogen.core</module>
+		<module>${project.groupId}.hydrogen.lib</module>
 		<module>${project.groupId}.hydrogen.test</module>
 		<module>${project.groupId}.hydrogen.test.report</module>
 		<module>${project.groupId}.hydrogen.feature</module>

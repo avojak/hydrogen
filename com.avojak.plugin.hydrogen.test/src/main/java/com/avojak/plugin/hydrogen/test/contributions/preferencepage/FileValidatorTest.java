@@ -18,7 +18,6 @@ import com.avojak.plugin.hydrogen.core.contributions.preferencepage.FileValidato
  *
  * @author Andrew Vojak
  */
-@SuppressWarnings("nls")
 public class FileValidatorTest {
 
 	private FileValidator validator;

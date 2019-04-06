@@ -14,7 +14,6 @@ import com.avojak.plugin.hydrogen.core.h2.model.arguments.WebServerArgumentsBuil
  *
  * @author Andrew Vojak
  */
-@SuppressWarnings("nls")
 public class WebServerArgumentsBuilderTest {
 
 	private static final String EMPTY_STRING = " ";

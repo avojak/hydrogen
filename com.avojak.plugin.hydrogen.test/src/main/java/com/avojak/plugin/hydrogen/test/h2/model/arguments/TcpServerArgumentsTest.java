@@ -19,7 +19,6 @@ import com.avojak.plugin.hydrogen.core.h2.model.arguments.TcpServerArguments;
  *
  * @author Andrew Vojak
  */
-@SuppressWarnings("nls")
 public class TcpServerArgumentsTest {
 
 	private final String startTcp = "startTcp";

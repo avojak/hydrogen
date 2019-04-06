@@ -5,10 +5,13 @@ Bundle-SymbolicName: com.avojak.plugin.hydrogen.test;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Fragment-Host: com.avojak.plugin.hydrogen.core;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Bundle-ClassPath: lib/swt-unit-1.0.jar,
- .
+Bundle-ClassPath: .
 Require-Bundle: org.junit;bundle-version="4.12.0",
  com.google.guava;bundle-version="21.0.0",
  com.google.guava.source;bundle-version="21.0.0",
  org.mockito;bundle-version="1.9.5",
- org.mockito.source;bundle-version="1.9.5"
+ org.mockito.source;bundle-version="1.9.5",
+ org.objenesis;bundle-version="2.6.0",
+ net.bytebuddy.byte-buddy;bundle-version="1.9.0",
+ net.bytebuddy.byte-buddy-agent;bundle-version="1.9.0"
+Automatic-Module-Name: com.avojak.plugin.hydrogen.test

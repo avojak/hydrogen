@@ -13,7 +13,6 @@ import com.avojak.plugin.hydrogen.core.h2.model.configuration.attributes.LaunchC
  *
  * @author Andrew Vojak
  */
-@SuppressWarnings("nls")
 public class LaunchConfigurationAttributesTest {
 
 	/**

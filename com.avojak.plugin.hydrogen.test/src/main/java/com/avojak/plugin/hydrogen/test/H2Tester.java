@@ -7,7 +7,6 @@ import java.sql.DriverManager;
  * @author andrewvojak
  *
  */
-@SuppressWarnings("nls")
 public class H2Tester {
 
 	private static final String H2_DRIVER_CLASS = "org.h2.Driver";

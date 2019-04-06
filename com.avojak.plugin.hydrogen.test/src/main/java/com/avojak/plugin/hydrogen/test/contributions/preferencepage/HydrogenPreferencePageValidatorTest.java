@@ -11,7 +11,7 @@ import org.eclipse.jface.preference.FileFieldEditor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import com.avojak.plugin.hydrogen.core.contributions.preferencepage.FileValidator;
 import com.avojak.plugin.hydrogen.core.contributions.preferencepage.HydrogenPreferencePageValidator;
@@ -21,7 +21,6 @@ import com.avojak.plugin.hydrogen.core.contributions.preferencepage.HydrogenPref
  *
  * @author Andrew Vojak
  */
-@SuppressWarnings("nls")
 @RunWith(MockitoJUnitRunner.class)
 public class HydrogenPreferencePageValidatorTest {
 

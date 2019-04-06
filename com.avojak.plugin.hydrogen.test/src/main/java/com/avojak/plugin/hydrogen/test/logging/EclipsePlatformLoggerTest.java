@@ -1,6 +1,6 @@
 package com.avojak.plugin.hydrogen.test.logging;
 
-import static org.mockito.Matchers.refEq;
+import static org.mockito.Mockito.refEq;
 import static org.mockito.Mockito.verify;
 
 import java.text.MessageFormat;
@@ -11,7 +11,7 @@ import org.eclipse.core.runtime.Status;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import com.avojak.plugin.hydrogen.core.logging.EclipsePlatformLogger;
 
@@ -20,7 +20,6 @@ import com.avojak.plugin.hydrogen.core.logging.EclipsePlatformLogger;
  *
  * @author Andrew Vojak
  */
-@SuppressWarnings("nls")
 @RunWith(MockitoJUnitRunner.class)
 public class EclipsePlatformLoggerTest {
 

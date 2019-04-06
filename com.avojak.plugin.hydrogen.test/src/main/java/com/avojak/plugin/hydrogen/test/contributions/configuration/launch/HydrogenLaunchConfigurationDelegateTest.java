@@ -29,10 +29,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import com.avojak.plugin.hydrogen.core.HydrogenActivator;
 import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.HydrogenLaunchConfigurationDelegate;
@@ -62,7 +61,6 @@ import com.avojak.plugin.hydrogen.core.wrapper.JavaRuntimeWrapper;
  * 
  * @author Andrew Vojak
  */
-@SuppressWarnings("nls")
 @RunWith(MockitoJUnitRunner.class)
 public class HydrogenLaunchConfigurationDelegateTest {
 
@@ -166,7 +164,7 @@ public class HydrogenLaunchConfigurationDelegateTest {
 		// Mock the JVM install
 		when(javaRuntimeWrapper.computeVMInstall(launchConfiguration)).thenReturn(vmInstall);
 		when(vmInstall.getInstallLocation()).thenReturn(Files.createTempFile("mock-jvm", null).toFile());
-		when(vmInstall.getVMRunner(Matchers.anyString())).thenReturn(vmRunner);
+		when(vmInstall.getVMRunner(Mockito.anyString())).thenReturn(vmRunner);
 		// Mock the DebugPlugin
 		when(debugPluginWrapper.getDefault()).thenReturn(debugPlugin);
 		when(debugPlugin.getLaunchManager()).thenReturn(launchManager);
@@ -212,7 +210,7 @@ public class HydrogenLaunchConfigurationDelegateTest {
 		// Mock the embedded executable locator
 		when(executableLocator.locate()).thenReturn(executablePathname);
 		// Mock the port pool
-		when(portPool.isPortFree(Matchers.anyInt())).thenReturn(true);
+		when(portPool.isPortFree(Mockito.anyInt())).thenReturn(true);
 
 		delegate = new HydrogenLaunchConfigurationDelegate(javaRuntimeWrapper, debugPluginWrapper,
 				hydrogenActivatorWrapper, fileFactory, vmRunnerConfigurationFactory, programArgumentsFactory,
@@ -224,7 +222,7 @@ public class HydrogenLaunchConfigurationDelegateTest {
 	 */
 	@Test
 	public void testConstructor() {
-		verify(launchManager).addLaunchListener(Matchers.refEq(new HydrogenLaunchListener(portPool)));
+		verify(launchManager).addLaunchListener(Mockito.refEq(new HydrogenLaunchListener(portPool)));
 	}
 
 	/**
@@ -324,18 +322,18 @@ public class HydrogenLaunchConfigurationDelegateTest {
 
 		delegate.launch(launchConfiguration, ILaunchManager.RUN_MODE, launch, progressMonitor);
 
-		verify(launch, never()).setAttribute(Matchers.eq(ServerOption.WEB_PORT.name()), Matchers.anyString());
-		verify(launch, never()).setAttribute(Matchers.eq(ServerOption.TCP_PORT.name()), Matchers.anyString());
-		verify(launch, never()).setAttribute(Matchers.eq(ServerOption.PG_PORT.name()), Matchers.anyString());
+		verify(launch, never()).setAttribute(Mockito.eq(ServerOption.WEB_PORT.name()), Mockito.anyString());
+		verify(launch, never()).setAttribute(Mockito.eq(ServerOption.TCP_PORT.name()), Mockito.anyString());
+		verify(launch, never()).setAttribute(Mockito.eq(ServerOption.PG_PORT.name()), Mockito.anyString());
 
 		// TODO: Revisit this test with issue #37
 	}
 
 	@Test
 	public void testLaunch_NoPortsSpecified() throws CoreException {
-		when(webServerArguments.getPort()).thenReturn(Optional.empty());
-		when(tcpServerArguments.getPort()).thenReturn(Optional.empty());
-		when(pgServerArguments.getPort()).thenReturn(Optional.empty());
+//		when(webServerArguments.getPort()).thenReturn(Optional.empty());
+//		when(tcpServerArguments.getPort()).thenReturn(Optional.empty());
+//		when(pgServerArguments.getPort()).thenReturn(Optional.empty());
 
 		// TODO: Need to handle this case in the code
 	}
@@ -351,7 +349,7 @@ public class HydrogenLaunchConfigurationDelegateTest {
 	 */
 	@Test
 	public void testLaunch_PortsAlreadyInUse() throws CoreException, IOException {
-		when(portPool.isPortFree(Matchers.anyInt())).thenReturn(false);
+		when(portPool.isPortFree(Mockito.anyInt())).thenReturn(false);
 		when(portPool.getFreePort()).thenReturn(8000, 8001, 8002);
 
 		final WebServerArguments expectedWebServerArguments = new WebServerArgumentsBuilder(webServerArguments)
@@ -388,7 +386,7 @@ public class HydrogenLaunchConfigurationDelegateTest {
 	 */
 	@Test
 	public void testLaunch_FailedToGetFreePort() throws IOException {
-		when(portPool.isPortFree(Matchers.anyInt())).thenReturn(false);
+		when(portPool.isPortFree(Mockito.anyInt())).thenReturn(false);
 		Mockito.doThrow(IOException.class).when(portPool).getFreePort();
 
 		try {

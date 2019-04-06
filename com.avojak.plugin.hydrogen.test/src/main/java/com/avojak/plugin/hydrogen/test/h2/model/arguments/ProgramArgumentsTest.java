@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -17,9 +17,9 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
+import org.mockito.Mockito;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import com.avojak.plugin.hydrogen.core.h2.model.arguments.HydrogenRuntimeArguments;
 import com.avojak.plugin.hydrogen.core.h2.model.arguments.HydrogenRuntimeArgumentsBuilder;
@@ -37,7 +37,6 @@ import com.avojak.plugin.hydrogen.core.h2.model.configuration.attributes.LaunchC
  *
  * @author Andrew Vojak
  */
-@SuppressWarnings("nls")
 @RunWith(MockitoJUnitRunner.class)
 public class ProgramArgumentsTest {
 
@@ -207,7 +206,6 @@ public class ProgramArgumentsTest {
 	 * Tests that the constructor throws a {@link RuntimeException} when unable to
 	 * retrieve attributes from the configuration.
 	 */
-	@SuppressWarnings("unchecked")
 	@Test
 	public void testUnableToRetrieveAttributes() {
 		try {
@@ -475,9 +473,9 @@ public class ProgramArgumentsTest {
 		new ProgramArguments(hydrogenRuntimeArgumentsBuilder, webServerArgumentsBuilder, tcpServerArgumentsBuilder,
 				pgServerArgumentsBuilder, configuration);
 
-		verify(hydrogenRuntimeArgumentsBuilder, never()).withWebServer(Matchers.any());
-		verify(hydrogenRuntimeArgumentsBuilder, never()).withTcpServer(Matchers.any());
-		verify(hydrogenRuntimeArgumentsBuilder, never()).withPgServer(Matchers.any());
+		verify(hydrogenRuntimeArgumentsBuilder, never()).withWebServer(Mockito.any());
+		verify(hydrogenRuntimeArgumentsBuilder, never()).withTcpServer(Mockito.any());
+		verify(hydrogenRuntimeArgumentsBuilder, never()).withPgServer(Mockito.any());
 	}
 
 	/**

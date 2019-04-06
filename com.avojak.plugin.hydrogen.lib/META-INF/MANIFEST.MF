@@ -8,3 +8,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .,
  lib/h2-1.4.197.jar
 Eclipse-BundleShape: dir
+Automatic-Module-Name: com.avojak.plugin.hydrogen.lib

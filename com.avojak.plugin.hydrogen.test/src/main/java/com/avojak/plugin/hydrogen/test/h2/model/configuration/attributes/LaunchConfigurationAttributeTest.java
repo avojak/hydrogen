@@ -14,7 +14,6 @@ import com.avojak.plugin.hydrogen.core.h2.model.configuration.attributes.LaunchC
  *
  * @author Andrew Vojak
  */
-@SuppressWarnings("nls")
 public class LaunchConfigurationAttributeTest {
 
 	private final ServerOption serverOption = ServerOption.BASE_DIRECTORY;

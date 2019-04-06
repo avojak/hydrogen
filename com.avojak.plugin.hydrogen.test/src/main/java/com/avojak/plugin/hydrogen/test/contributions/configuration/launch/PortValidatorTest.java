@@ -12,7 +12,6 @@ import com.avojak.plugin.hydrogen.core.contributions.configuration.launch.PortVa
  *
  * @author Andrew Vojak
  */
-@SuppressWarnings("nls")
 public class PortValidatorTest {
 
 	/**

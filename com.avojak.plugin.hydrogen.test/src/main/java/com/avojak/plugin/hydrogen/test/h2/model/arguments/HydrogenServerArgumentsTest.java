@@ -18,7 +18,6 @@ import com.avojak.plugin.hydrogen.core.h2.model.arguments.HydrogenRuntimeArgumen
  *
  * @author Andrew Vojak
  */
-@SuppressWarnings("nls")
 public class HydrogenServerArgumentsTest {
 
 	private final List<String> argumentStrings = singletonList("arg");

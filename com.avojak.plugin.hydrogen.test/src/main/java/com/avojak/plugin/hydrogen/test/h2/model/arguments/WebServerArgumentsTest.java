@@ -19,7 +19,6 @@ import com.avojak.plugin.hydrogen.core.h2.model.arguments.WebServerArguments;
  *
  * @author Andrew Vojak
  */
-@SuppressWarnings("nls")
 public class WebServerArgumentsTest {
 
 	private final String startWeb = "startWeb";
