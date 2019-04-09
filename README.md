@@ -52,6 +52,7 @@ You will need a Run Configuration to test Hydrogen from within Eclipse during de
 In addition to the Eclipse Marketplace, Hydrogen is also available from my p2 repository site: https://p2.avojak.com.
 
 The latest release will be available at: https://p2.avojak.com/content/hydrogen/releases/latest
+
 The latest snapshots will be available at: https://p2.avojak.com/content/hydrogen/snapshots/latest
 
 ### Configuration
