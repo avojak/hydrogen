@@ -12,8 +12,8 @@ These instructions will get you setup to use Hydrogen in your local Eclipse inst
 
 ### Prerequisites
 
- - Eclipse Oxygen (or later)
- - Java 8+
+ - Eclipse Neon (or later)
+ - Java 7+
  
 ### Building
 
