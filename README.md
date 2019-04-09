@@ -45,7 +45,7 @@ You will need a Run Configuration to test Hydrogen from within Eclipse during de
 
 1. Create a new Run Configuration of type Eclipse Application
 2. In the Main tab, under Program to Run, select the radio button for "Run an application"
-	a. If it is not already selected in the dropdown, select `org.eclipse.ui.ide.workbench`
+   - If it is not already selected in the dropdown, select `org.eclipse.ui.ide.workbench`
 
 ## Installing
 
