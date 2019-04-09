@@ -3,6 +3,8 @@ package com.avojak.plugin.hydrogen.core.contributions.configuration.launch;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.attribute.AclFileAttributeView;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -149,6 +151,7 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 			}
 		}
 
+		setExecutablePermissions(executable);
 		validateExecutable(executable);
 
 		// TODO: Should the executable be copied to a temp location instead of running
@@ -239,6 +242,18 @@ public class HydrogenLaunchConfigurationDelegate extends AbstractJavaLaunchConfi
 		if (executablePreference == null || executablePreference.trim().isEmpty()) {
 			abort(UNSET_EXECUTABLE_ERROR, null, 0);
 		}
+	}
+
+	/**
+	 * Attempts to set the permissions on the executable such that it can be read
+	 * and executed.
+	 * 
+	 * @param executable
+	 *            The {@link File} to execute.
+	 */
+	private void setExecutablePermissions(final File executable) {
+		executable.setReadable(true);
+		executable.setExecutable(true);
 	}
 
 	/**
