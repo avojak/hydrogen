@@ -65,6 +65,10 @@ From the launch configuration dialog, you can create a new launch configuration,
 
 ![launch-config](img/launch-config.png)
 
+After launching, the console will display the connection details for each server that has been launched:
+
+![console](img/console.png)
+
 ### Updating H2
 
 Hydrogen is pre-packaged with the H2 JAR, however it can be easily updated if desired. Open the Eclipse preference dialog, and select Hydrogen from the list on the left. By default, the embedded version is selected, however you can browse to a different JAR on the file system as well.
