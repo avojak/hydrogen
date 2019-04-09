@@ -4,6 +4,8 @@
 
 Hydrogen is an Eclipse plugin to configure and launch one or more [H2](http://www.h2database.com/html/main.html) database servers. Server instances can be launched directly from the Eclipse toolbar.
 
+[![Drag to your running Eclipse* workspace. *Requires Eclipse Marketplace Client](https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png)](http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=4581942 "Drag to your running Eclipse* workspace. *Requires Eclipse Marketplace Client")
+
 ## Getting Started
 
 These instructions will get you setup to use Hydrogen in your local Eclipse installation.
@@ -47,11 +49,10 @@ You will need a Run Configuration to test Hydrogen from within Eclipse during de
 
 ## Installing
 
-Hydrogen is currently only available from my p2 repository site (https://p2.avojak.com): 
-
- - [1.0.0-SNAPSHOT](https://p2.avojak.com/content/hydrogen/snapshots/1.0.0-SNAPSHOT)
+In addition to the Eclipse Marketplace, Hydrogen is also available from my p2 repository site: https://p2.avojak.com.
 
 The latest release will be available at: https://p2.avojak.com/content/hydrogen/releases/latest
+The latest snapshots will be available at: https://p2.avojak.com/content/hydrogen/snapshots/latest
 
 ### Configuration
 
