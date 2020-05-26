@@ -1,6 +1,6 @@
 # Hydrogen
 
-[![Build Status](https://travis-ci.org/avojak/hydrogen.svg?branch=master)](https://travis-ci.org/avojak/hydrogen) [![Coverage Status](https://coveralls.io/repos/github/avojak/hydrogen/badge.svg?branch=master)](https://coveralls.io/github/avojak/hydrogen?branch=master) [![License](https://img.shields.io/badge/license-EPL%201.0-blue.svg)](https://opensource.org/licenses/EPL-1.0) ![Eclipse Marketplace](https://img.shields.io/eclipse-marketplace/v/hydrogen.svg) ![Eclipse Marketplace](https://img.shields.io/eclipse-marketplace/dt/Hydrogen.svg)
+[![Build Status](https://travis-ci.org/avojak/hydrogen.svg?branch=master)](https://travis-ci.org/avojak/hydrogen) [![Coverage Status](https://coveralls.io/repos/github/avojak/hydrogen/badge.svg?branch=master)](https://coveralls.io/github/avojak/hydrogen?branch=master) [![License](https://img.shields.io/badge/license-EPL%201.0-blue.svg)](https://opensource.org/licenses/EPL-1.0) ![Eclipse Marketplace](https://img.shields.io/eclipse-marketplace/v/hydrogen.svg) ![Eclipse Marketplace](https://img.shields.io/eclipse-marketplace/dt/Hydrogen.svg) [![Eclipse Marketplace](https://img.shields.io/eclipse-marketplace/favorites/hydrogen)](https://marketplace.eclipse.org/content/hydrogen)
 
 Hydrogen is an Eclipse plugin to configure and launch one or more [H2](http://www.h2database.com/html/main.html) database servers. Server instances can be launched directly from the Eclipse toolbar.
 
